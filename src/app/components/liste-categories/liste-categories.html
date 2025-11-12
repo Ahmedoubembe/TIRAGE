@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="categories-card">
+    <h1>Sélectionnez une catégorie</h1>
+    
+    <div class="categories-liste">
+      <div 
+        *ngFor="let categorie of categories"
+        class="categorie-item"
+        [class.selectionnee]="categorieChoisie === categorie.categorie"
+        [class.tiree]="categorie.tiree"
+        (click)="!categorie.tiree && selectionnerCategorie(categorie.categorie)">
+        
+        <div class="categorie-info">
+          <h3>{{ categorie.categorie }}</h3>
+          <div class="details">
+            <span>Score: {{ categorie.score }}</span>
+            <span>Gagnants: {{ categorie.nombre_gagnants }}</span>
+            <span class="prix">{{ categorie.prix }}</span>
+          </div>
+        </div>
+        
+        <div class="statut" *ngIf="categorie.tiree">
+          Tirage effectué
+        </div>
+      </div>
+    </div>
+
+    <button 
+      class="btn-lancer"
+      [disabled]="!categorieChoisie"
+      (click)="lancerTirage()">
+      Lancer le tirage
+    </button>
+  </div>
+</div>

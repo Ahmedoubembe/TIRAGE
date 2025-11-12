@@ -1,0 +1,32 @@
+<div class="overlay-gagnants" [class.plein-ecran]="tirageTermine">
+  <div class="confettis" *ngIf="afficherConfettis">
+    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+  </div>
+
+  <div class="gagnants-panel">
+    <h1 class="titre-felicitations">GAGNANTS</h1>
+    
+    <div class="gagnants-liste">
+      <div 
+        *ngFor="let gagnant of gagnantsAffiches; let i = index"
+        class="gagnant-item"
+        [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine">
+        
+        <div class="gagnant-info">
+          <h2>{{ gagnant.prenom }} {{ gagnant.nom }}</h2>
+          <p class="numero">{{ gagnant.numero_telephone }}</p>
+          <p class="prix">{{ gagnant.prix }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions" *ngIf="tirageTermine">
+      <button class="btn-retour" (click)="retourALaSelection()">
+        Retour à la sélection
+      </button>
+      <button class="btn-plein-ecran" (click)="activerPleinEcran()">
+        Mode Plein Écran
+      </button>
+    </div>
+  </div>
+</div>

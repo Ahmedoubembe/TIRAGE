@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="upload-card">
+    <h1>Tirage au Sort</h1>
+    <p>Importez votre fichier CSV pour commencer</p>
+    
+    <div class="upload-zone">
+      <input 
+        type="file" 
+        accept=".csv" 
+        (change)="onFileSelected($event)"
+        id="fileInput"
+        [disabled]="chargementEnCours">
+      
+      <label for="fileInput" class="upload-label">
+        <span *ngIf="!chargementEnCours">Choisir un fichier CSV</span>
+        <span *ngIf="chargementEnCours">Chargement en cours...</span>
+      </label>
+    </div>
+
+    <div *ngIf="erreur" class="erreur">
+      {{ erreur }}
+    </div>
+
+    <button class="btn-plein-ecran" (click)="activerPleinEcran()">
+      Mode Plein Écran
+    </button>
+  </div>
+</div>

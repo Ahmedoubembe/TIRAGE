@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+}
+
+.tirage-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}

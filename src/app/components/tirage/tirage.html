@@ -1,0 +1,29 @@
+<div class="container-tirage">
+  <div class="tirage-card">
+    <h1>Tirage en cours...</h1>
+    
+    <div class="numeros-container" *ngIf="!afficherGagnantFixe">
+      <div 
+        *ngFor="let numero of numerosAffiches; let i = index"
+        class="numero-item"
+        [style.animation-delay]="i * 0.1 + 's'">
+        {{ numero }}
+      </div>
+    </div>
+
+    <div class="gagnant-fixe-container" *ngIf="afficherGagnantFixe && gagnantActuelFixe">
+      <div class="gagnant-fixe">
+        <h2>GAGNANT</h2>
+        <div class="gagnant-details">
+          <p class="nom">{{ gagnantActuelFixe.prenom }} {{ gagnantActuelFixe.nom }}</p>
+          <p class="numero-gagnant">{{ gagnantActuelFixe.numero_telephone }}</p>
+          <p class="prix-gagnant">{{ gagnantActuelFixe.prix }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="loader" *ngIf="tirageEnCours && !afficherGagnantFixe">
+      <div class="spinner"></div>
+    </div>
+  </div>
+</div>

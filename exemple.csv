@@ -1,0 +1,16 @@
+[CATEGORIES]
+S1,0-100,50,2, 111111 MRU
+S2,101-500,300,3,10000 MRU
+S3,501-1000,750,2,10000 MRU
+S4,1001+,1500,1, 10000 MRU
+
+[CLIENTS]
+nom,prenom,numero_telephone,id_categS3ie,prix
+Bemba,Amadou,+222 45 12 34 56,S1, 10000 MRU
+Muhamdi,Fatima,+222 46 23 45 67,S1, 10000 MRU
+Diallo,issa,+222 47 34 56 78,S2, 10000 MRU
+Haroun,Ba,+222 48 45 67 89,S2, 10000 MRU
+Abeibeck,Sidi med,+222 49 56 78 90,S2, 10000 MRU
+Deddah,Elhamd,+222 45 67 89 01,S3, 10000 MRU
+Ahmed,Cheibani,+222 46 78 90 12,S3, 10000 MRU
+Camara,Fatoumata,+222 47 89 01 23,S4, 10000 MRU
