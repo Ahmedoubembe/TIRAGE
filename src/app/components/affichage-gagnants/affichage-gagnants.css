@@ -1,3 +1,9 @@
+/* ====================================
+   AFFICHAGE DES GAGNANTS - VERSION CELEBRATOIRE
+   Feux d'artifice spectaculaires aux couleurs mauritaniennes
+   Vert #00A854, Jaune #FFD700, Rouge #D21034
+   ==================================== */
+
 .overlay-gagnants {
   position: fixed;
   top: 0;
@@ -10,14 +16,22 @@
   display: flex;
   flex-direction: column;
   transition: width 0.5s ease, left 0.5s ease;
+  border-left: 5px solid var(--mauritanie-rouge);
 }
 
 .overlay-gagnants.plein-ecran {
   width: 100%;
   left: 0;
   right: auto;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  border-left: none;
+  overflow: hidden;
 }
+
+/* ====================================
+   FEUX D'ARTIFICE EXPLOSIFS
+   Animations multiples avec particules
+   ==================================== */
 
 .confettis {
   position: fixed;
@@ -27,29 +41,37 @@
   height: 100%;
   pointer-events: none;
   z-index: 1000;
+  overflow: hidden;
 }
 
+/* Particule de base pour confettis/feux d'artifice */
 .confetti {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: #f0f;
+  border-radius: 50%;
   top: -10px;
-  animation: fall 4s linear forwards;
+  animation: chute-confetti 4s linear forwards;
 }
 
-.confetti:nth-child(odd) {
-  background: #ff0;
+/* Couleurs mauritaniennes pour les confettis */
+.confetti:nth-child(3n+1) {
+  background: var(--mauritanie-vert);
+  box-shadow: 0 0 10px var(--mauritanie-vert);
+}
+
+.confetti:nth-child(3n+2) {
+  background: var(--mauritanie-jaune);
+  box-shadow: 0 0 10px var(--mauritanie-jaune);
+  animation: chute-confetti-brillant 4s linear forwards;
 }
 
 .confetti:nth-child(3n) {
-  background: #0ff;
+  background: var(--mauritanie-rouge);
+  box-shadow: 0 0 10px var(--mauritanie-rouge);
 }
 
-.confetti:nth-child(4n) {
-  background: #0f0;
-}
-
+/* Positions et delais varies pour effet naturel */
 .confetti:nth-child(1) { left: 5%; animation-delay: 0s; }
 .confetti:nth-child(2) { left: 10%; animation-delay: 0.2s; }
 .confetti:nth-child(3) { left: 15%; animation-delay: 0.4s; }
@@ -71,11 +93,165 @@
 .confetti:nth-child(19) { left: 95%; animation-delay: 0.3s; }
 .confetti:nth-child(20) { left: 97%; animation-delay: 0.5s; }
 
-@keyframes fall {
-  to {
-    transform: translateY(100vh) rotate(360deg);
+/* Animation de chute avec rotation et balancement */
+@keyframes chute-confetti {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) translateX(50px);
+    opacity: 0.3;
   }
 }
+
+/* Variante brillante pour les confettis dores */
+@keyframes chute-confetti-brillant {
+  0% {
+    transform: translateY(0) rotate(0deg) translateX(0) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--mauritanie-jaune);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--mauritanie-jaune), 0 0 30px var(--mauritanie-jaune);
+    transform: translateY(50vh) rotate(360deg) translateX(25px) scale(1.2);
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg) translateX(-50px) scale(0.8);
+    opacity: 0.3;
+    box-shadow: 0 0 5px var(--mauritanie-jaune);
+  }
+}
+
+/* ====================================
+   FEUX D'ARTIFICE EXPLOSIFS
+   Explosions radiales avec trainees
+   ==================================== */
+
+/* Conteneur pour les feux d'artifice en mode plein ecran */
+.plein-ecran .confettis::before,
+.plein-ecran .confettis::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: feu-artifice-explosion 3s ease-out infinite;
+}
+
+.plein-ecran .confettis::before {
+  left: 20%;
+  top: 30%;
+  background: var(--mauritanie-jaune);
+  animation-delay: 0.5s;
+}
+
+.plein-ecran .confettis::after {
+  right: 20%;
+  top: 40%;
+  background: var(--mauritanie-rouge);
+  animation-delay: 1.5s;
+}
+
+/* Animation d'explosion radiale */
+@keyframes feu-artifice-explosion {
+  0% {
+    transform: scale(0);
+    box-shadow:
+      0 0 0 var(--mauritanie-jaune),
+      0 0 0 var(--mauritanie-jaune);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    box-shadow:
+      0 0 100px 40px var(--mauritanie-jaune),
+      0 0 150px 60px rgba(255, 215, 0, 0.5),
+      0 0 200px 80px rgba(255, 215, 0, 0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    box-shadow:
+      0 0 20px 10px transparent,
+      0 0 40px 20px transparent,
+      0 0 60px 30px transparent;
+    opacity: 0;
+  }
+}
+
+/* ====================================
+   ETINCELLES QUI JAILLISSENT
+   Particules continues depuis les coins
+   ==================================== */
+
+.plein-ecran::before,
+.plein-ecran::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--mauritanie-jaune);
+  animation: etincelles-jaillissantes 2s ease-out infinite;
+  z-index: 999;
+}
+
+.plein-ecran::before {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0.3s;
+}
+
+.plein-ecran::after {
+  top: 10%;
+  right: 10%;
+  animation-delay: 0.8s;
+}
+
+@keyframes etincelles-jaillissantes {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--mauritanie-jaune);
+  }
+  100% {
+    transform: translate(
+      calc(var(--random-x, 50px) * 1px),
+      calc(var(--random-y, 80px) * 1px)
+    ) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ====================================
+   PLUIE DOREE EN ARRIERE-PLAN
+   Effet de particules continues
+   ==================================== */
+
+@keyframes pluie-doree {
+  0% {
+    transform: translateY(-100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+/* ====================================
+   PANEL DES GAGNANTS
+   ==================================== */
 
 .gagnants-panel {
   padding: 2rem;
@@ -83,19 +259,50 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+  z-index: 2;
 }
 
 .titre-felicitations {
   margin: 0 0 2rem 0;
-  color: #667eea;
+  color: var(--mauritanie-vert);
   text-align: center;
   font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
 }
 
 .plein-ecran .titre-felicitations {
-  color: white;
-  font-size: 3rem;
+  color: var(--mauritanie-jaune);
+  font-size: 4rem;
+  animation: titre-celebration 3s ease-in-out infinite;
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 60px rgba(255, 215, 0, 0.4),
+    4px 4px 10px rgba(0, 0, 0, 0.3);
 }
+
+@keyframes titre-celebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    text-shadow:
+      0 0 20px rgba(255, 215, 0, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.6),
+      0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    transform: scale(1.05) rotate(1deg);
+    text-shadow:
+      0 0 30px rgba(255, 215, 0, 1),
+      0 0 60px rgba(255, 215, 0, 0.8),
+      0 0 90px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* ====================================
+   LISTE DES GAGNANTS
+   ==================================== */
 
 .gagnants-liste {
   flex: 1;
@@ -112,52 +319,114 @@
   width: 100%;
 }
 
+/* ====================================
+   CARTE GAGNANT INDIVIDUELLE
+   Animation d'apparition explosive
+   ==================================== */
+
 .gagnant-item {
   padding: 1.5rem;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   border-radius: 0.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  border-left: 4px solid var(--mauritanie-vert);
 }
 
 .plein-ecran .gagnant-item {
   padding: 2.5rem;
   background: white;
+  border: 3px solid var(--mauritanie-jaune);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Animation explosive pour nouveau gagnant */
 .gagnant-item.nouveau-gagnant {
-  animation: apparitionGagnant 1s ease-out;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  animation: apparition-explosive 1.5s ease-out;
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  box-shadow:
+    0 0 50px rgba(255, 215, 0, 0.8),
+    0 8px 30px rgba(0, 168, 84, 0.5);
+  border: 4px solid var(--mauritanie-jaune);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet d'etoiles qui eclatent autour du nouveau gagnant */
+.gagnant-item.nouveau-gagnant::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: etoile-eclat 1s ease-out;
+  pointer-events: none;
+}
+
+@keyframes etoile-eclat {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(15);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(30);
+    opacity: 0;
+  }
+}
+
+/* Animation d'apparition avec effet d'explosion */
+@keyframes apparition-explosive {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+    filter: blur(10px);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) rotate(10deg);
+    filter: blur(0px);
+  }
+  60% {
+    transform: scale(0.95) rotate(-5deg);
+  }
+  80% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 .gagnant-item.nouveau-gagnant .gagnant-info h2,
 .gagnant-item.nouveau-gagnant .numero,
 .gagnant-item.nouveau-gagnant .prix {
   color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes apparitionGagnant {
-  0% {
-    opacity: 0;
-    transform: scale(0.5) translateX(50px);
-  }
-  60% {
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+/* ====================================
+   INFORMATIONS DU GAGNANT
+   ==================================== */
 
 .gagnant-info h2 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color: var(--mauritanie-vert);
   font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .plein-ecran .gagnant-info h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
+  color: var(--mauritanie-vert);
+  text-shadow: 2px 2px 6px rgba(255, 215, 0, 0.4);
 }
 
 .numero {
@@ -169,25 +438,36 @@
 }
 
 .plein-ecran .numero {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: 700;
 }
 
 .prix {
   margin: 0.3rem 0 0 0;
-  color: #667eea;
+  color: var(--mauritanie-jaune);
   font-size: 0.95rem;
   font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .plein-ecran .prix {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  color: var(--mauritanie-jaune);
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: scintillement 2s ease-in-out infinite;
 }
 
 .plein-ecran .gagnant-info h2,
-.plein-ecran .numero,
-.plein-ecran .prix {
-  color: #333;
+.plein-ecran .numero {
+  color: var(--mauritanie-vert);
 }
+
+/* ====================================
+   BOUTONS D'ACTION
+   ==================================== */
 
 .actions {
   display: flex;
@@ -207,9 +487,11 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -231,23 +513,64 @@
 }
 
 .btn-retour {
-  background: #667eea;
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
+  border: 2px solid var(--mauritanie-jaune);
+  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
 }
 
 .btn-retour:hover {
-  background: #5568d3;
+  background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+  animation: pulsation-patriotique 1.5s ease-in-out infinite;
 }
 
 .btn-plein-ecran {
-  background: #4caf50;
-  color: white;
+  background: linear-gradient(135deg, var(--mauritanie-jaune) 0%, var(--jaune-pale) 100%);
+  color: var(--vert-fonce);
+  border: 2px solid var(--mauritanie-rouge);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  font-weight: 700;
 }
 
 .btn-plein-ecran:hover {
-  background: #45a049;
+  background: linear-gradient(135deg, var(--jaune-pale) 0%, var(--mauritanie-jaune) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.7);
+  animation: pulsation-patriotique 1.5s ease-in-out infinite;
+}
+
+/* ====================================
+   VAGUES DE COULEUR
+   Effet de transition de couleurs
+   ==================================== */
+
+.plein-ecran .gagnants-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.1) 25%,
+    rgba(210, 16, 52, 0.1) 50%,
+    rgba(0, 168, 84, 0.1) 75%,
+    transparent 100%
+  );
+  animation: vague-couleur 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes vague-couleur {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
 }

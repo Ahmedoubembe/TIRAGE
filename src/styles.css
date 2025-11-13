@@ -1,3 +1,20 @@
+/* ====================================
+   COULEURS DU DRAPEAU MAURITANIEN
+   Vert: #00A854 (fond du drapeau)
+   Jaune dore: #FFD700 (etoile et croissant)
+   Rouge: #D21034 (bandes du drapeau)
+   ==================================== */
+
+:root {
+  --mauritanie-vert: #00A854;
+  --mauritanie-jaune: #FFD700;
+  --mauritanie-rouge: #D21034;
+  --vert-fonce: #008744;
+  --vert-clair: #00C96B;
+  --jaune-pale: #FFE55C;
+  --rouge-fonce: #B30D2A;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,8 +26,37 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Fond patriotique avec les couleurs du drapeau */
+  background: linear-gradient(to bottom,
+    var(--mauritanie-rouge) 0%,
+    var(--mauritanie-rouge) 15%,
+    var(--mauritanie-vert) 15%,
+    var(--mauritanie-vert) 85%,
+    var(--mauritanie-rouge) 85%,
+    var(--mauritanie-rouge) 100%);
+  background-attachment: fixed;
 }
 
 html, body {
   height: 100%;
+}
+
+/* Animation de scintillement pour les elements dores */
+@keyframes scintillement {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+}
+
+/* Animation de pulsation patriotique */
+@keyframes pulsation-patriotique {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+  }
 }

@@ -1,10 +1,43 @@
+/* ====================================
+   COMPOSANT TIRAGE - VERSION MAURITANIENNE
+   Animations spectaculaires pour le tirage au sort
+   Couleurs du drapeau : Vert, Jaune dore, Rouge
+   ==================================== */
+
 .container-tirage {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   overflow: hidden;
+  position: relative;
+}
+
+/* Arriere-plan anime avec vagues de couleurs */
+.container-tirage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(210, 16, 52, 0.1) 0%, transparent 50%);
+  animation: vagues-patriotiques 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes vagues-patriotiques {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
 }
 
 .tirage-card {
@@ -15,23 +48,36 @@
   text-align: center;
   max-width: 700px;
   width: 90%;
+  position: relative;
+  z-index: 1;
+  border-top: 6px solid var(--mauritanie-rouge);
+  border-bottom: 6px solid var(--mauritanie-rouge);
 }
 
 h1 {
   margin: 0 0 2rem 0;
-  color: #333;
+  color: var(--mauritanie-vert);
   font-size: 2.5rem;
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse-titre 2s ease-in-out infinite;
+  text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.4);
 }
 
-@keyframes pulse {
+/* Animation de pulsation pour le titre */
+@keyframes pulse-titre {
   0%, 100% {
     opacity: 1;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.85;
+    transform: scale(1.05);
   }
 }
+
+/* ====================================
+   ANIMATION DES NUMEROS QUI DEFILENT
+   Effet dynamique avec lueur doree
+   ==================================== */
 
 .numeros-container {
   display: flex;
@@ -40,30 +86,74 @@ h1 {
   margin: 2rem 0;
   min-height: 400px;
   justify-content: center;
+  perspective: 1000px;
 }
 
 .numero-item {
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
   font-size: 2rem;
   font-weight: 700;
   border-radius: 0.5rem;
-  animation: slideIn 0.3s ease-out;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  animation: slideIn-avec-lueur 0.5s ease-out;
+  box-shadow:
+    0 4px 15px rgba(0, 168, 84, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.6),
+    inset 0 0 20px rgba(255, 215, 0, 0.2);
   letter-spacing: 2px;
+  border: 2px solid var(--mauritanie-jaune);
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateX(-100px);
-    opacity: 0;
+/* Effet de lueur qui se deplace */
+.numero-item::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 215, 0, 0.3),
+    transparent
+  );
+  animation: balayage-lueur 2s linear infinite;
+}
+
+@keyframes balayage-lueur {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
   }
 }
+
+/* Animation d'entree spectaculaire avec effet 3D */
+@keyframes slideIn-avec-lueur {
+  0% {
+    transform: translateX(-100px) rotateY(-30deg);
+    opacity: 0;
+    box-shadow: 0 0 0 rgba(255, 215, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 215, 0, 1);
+  }
+  100% {
+    transform: translateX(0) rotateY(0);
+    opacity: 1;
+    box-shadow: 0 4px 15px rgba(0, 168, 84, 0.4), 0 0 30px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* ====================================
+   AFFICHAGE DU GAGNANT AVEC EXPLOSION
+   Animations explosives et particules
+   ==================================== */
 
 .gagnant-fixe-container {
   display: flex;
@@ -71,45 +161,161 @@ h1 {
   align-items: center;
   min-height: 400px;
   margin: 2rem 0;
+  position: relative;
 }
 
 .gagnant-fixe {
-  animation: zoomIn 0.8s ease-out;
+  animation: explosion-entree 1.2s ease-out;
   text-align: center;
+  position: relative;
 }
 
-.gagnant-fixe h2 {
-  margin: 0 0 2rem 0;
-  color: #4caf50;
-  font-size: 3rem;
-  animation: celebration 1s ease-in-out infinite;
-}
-
-@keyframes celebration {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-@keyframes zoomIn {
-  from {
-    transform: scale(0);
+/* Animation d'explosion spectaculaire */
+@keyframes explosion-entree {
+  0% {
+    transform: scale(0) rotate(-180deg);
     opacity: 0;
+    filter: blur(20px);
   }
-  to {
-    transform: scale(1);
+  60% {
+    transform: scale(1.3) rotate(10deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  80% {
+    transform: scale(0.9) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
     opacity: 1;
   }
 }
 
+.gagnant-fixe h2 {
+  margin: 0 0 2rem 0;
+  color: var(--mauritanie-jaune);
+  font-size: 3.5rem;
+  animation: celebration-explosive 1.5s ease-in-out infinite;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 215, 0, 0.4),
+    3px 3px 8px rgba(210, 16, 52, 0.5);
+  position: relative;
+}
+
+/* Effet de particules autour du titre GAGNANT */
+.gagnant-fixe h2::before,
+.gagnant-fixe h2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: particules-etoiles 2s ease-in-out infinite;
+}
+
+.gagnant-fixe h2::before {
+  left: -50px;
+  animation-delay: 0.3s;
+}
+
+.gagnant-fixe h2::after {
+  right: -50px;
+  animation-delay: 0.6s;
+}
+
+@keyframes particules-etoiles {
+  0%, 100% {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Animation de celebration avec rotation et pulsation */
+@keyframes celebration-explosive {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.8),
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 30px rgba(255, 215, 0, 0.4);
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+    text-shadow:
+      0 0 15px rgba(255, 215, 0, 1),
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 0 45px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    transform: scale(1.15) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+}
+
+/* ====================================
+   CARTE DU GAGNANT AVEC STYLE PATRIOTIQUE
+   ==================================== */
+
 .gagnant-details {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   padding: 3rem;
   border-radius: 1rem;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  box-shadow:
+    0 8px 25px rgba(0, 168, 84, 0.5),
+    0 0 60px rgba(255, 215, 0, 0.4);
+  border: 3px solid var(--mauritanie-jaune);
+  position: relative;
+  overflow: hidden;
+  animation: pulsation-gagnant 2s ease-in-out infinite;
+}
+
+/* Effet de brillance qui traverse la carte */
+.gagnant-details::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent,
+    rgba(255, 215, 0, 0.2),
+    transparent
+  );
+  animation: brillance-traverse 3s linear infinite;
+}
+
+@keyframes brillance-traverse {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+@keyframes pulsation-gagnant {
+  0%, 100% {
+    box-shadow:
+      0 8px 25px rgba(0, 168, 84, 0.5),
+      0 0 60px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 12px 35px rgba(0, 168, 84, 0.7),
+      0 0 80px rgba(255, 215, 0, 0.6);
+  }
 }
 
 .nom {
@@ -117,22 +323,52 @@ h1 {
   color: white;
   font-size: 2.5rem;
   font-weight: 700;
+  position: relative;
+  z-index: 1;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .numero-gagnant {
   margin: 1rem 0;
-  color: white;
+  color: var(--mauritanie-jaune);
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 3px;
+  position: relative;
+  z-index: 1;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .prix-gagnant {
   margin: 1rem 0 0 0;
-  color: #ffd700;
-  font-size: 1.8rem;
+  color: var(--mauritanie-jaune);
+  font-size: 2rem;
   font-weight: 700;
+  position: relative;
+  z-index: 1;
+  text-shadow:
+    0 0 15px rgba(255, 215, 0, 1),
+    0 0 25px rgba(255, 215, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: scintillement-prix 2s ease-in-out infinite;
 }
+
+@keyframes scintillement-prix {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+}
+
+/* ====================================
+   LOADER PATRIOTIQUE
+   ==================================== */
 
 .loader {
   margin-top: 2rem;
@@ -143,17 +379,25 @@ h1 {
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #667eea;
+  border: 5px solid rgba(255, 215, 0, 0.3);
+  border-top: 5px solid var(--mauritanie-jaune);
+  border-right: 5px solid var(--mauritanie-vert);
+  border-bottom: 5px solid var(--mauritanie-rouge);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin-patriotique 1s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
 
-@keyframes spin {
+@keyframes spin-patriotique {
   0% {
     transform: rotate(0deg);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
   }
   100% {
     transform: rotate(360deg);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
   }
 }

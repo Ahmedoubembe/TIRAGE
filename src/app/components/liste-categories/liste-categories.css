@@ -1,10 +1,26 @@
+/* Conteneur avec fond patriotique mauritanien */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Motif etoile doree en arriere-plan */
+.container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .categories-card {
@@ -14,12 +30,18 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   max-width: 800px;
   width: 100%;
+  position: relative;
+  z-index: 1;
+  border-top: 5px solid var(--mauritanie-rouge);
+  border-bottom: 5px solid var(--mauritanie-rouge);
 }
 
 h1 {
   margin: 0 0 2rem 0;
-  color: #333;
+  color: var(--mauritanie-vert);
   text-align: center;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
 }
 
 .categories-liste {
@@ -43,15 +65,17 @@ h1 {
 }
 
 .categorie-item:hover:not(.tiree) {
-  border-color: #667eea;
-  background: #f8f9ff;
+  border-color: var(--mauritanie-jaune);
+  background: rgba(255, 215, 0, 0.1);
   transform: translateX(5px);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 .categorie-item.selectionnee {
-  border-color: #667eea;
-  background: #f0f4ff;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  border-color: var(--mauritanie-vert);
+  background: linear-gradient(135deg, rgba(0, 168, 84, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+  box-shadow: 0 4px 12px rgba(0, 168, 84, 0.3);
+  border-width: 3px;
 }
 
 .categorie-item.tiree {
@@ -74,35 +98,40 @@ h1 {
 
 .prix {
   font-weight: 600;
-  color: #667eea;
+  color: var(--mauritanie-jaune);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  font-size: 1.1rem;
 }
 
 .statut {
   padding: 0.5rem 1rem;
-  background: #4caf50;
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
   border-radius: 0.25rem;
   font-size: 0.85rem;
   font-weight: 500;
+  border: 1px solid var(--mauritanie-jaune);
 }
 
 .btn-lancer {
   width: 100%;
   padding: 1rem 2rem;
-  background: #667eea;
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
-  border: none;
+  border: 3px solid var(--mauritanie-jaune);
   border-radius: 0.5rem;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
 }
 
 .btn-lancer:hover:not(:disabled) {
-  background: #5568d3;
+  background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+  animation: pulsation-patriotique 1.5s ease-in-out infinite;
 }
 
 .btn-lancer:disabled {
