@@ -26,14 +26,12 @@
   position: relative;
   width: 100%;
   min-height: 90px;
-  background: linear-gradient(135deg,
-    var(--bleu-corporate) 0%,
-    var(--bleu-fonce) 50%,
-    var(--vert-mauritanie) 100%);
-  box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
+  background: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   animation: fadeInDown 0.8s ease-out;
   overflow: hidden;
+  border-bottom: 1px solid #E5E5E5;
 }
 
 /* Animation d'apparition */
@@ -59,7 +57,7 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
+    rgba(0, 168, 84, 0.08) 50%,
     transparent 100%
   );
   animation: brillance-header 3s ease-in-out infinite;
@@ -152,7 +150,7 @@
   left: 0;
   right: 0;
   font-size: 0.65rem;
-  color: white;
+  color: var(--bleu-corporate);
   text-align: center;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -174,38 +172,35 @@
 
 .titre-principal {
   margin: 0 0 0.5rem 0;
-  color: white;
+  background: linear-gradient(135deg, var(--bleu-corporate) 0%, var(--vert-mauritanie) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 1.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow:
-    2px 2px 4px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(255, 215, 0, 0.3);
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.1));
   animation: titre-glow 3s ease-in-out infinite;
 }
 
 @keyframes titre-glow {
   0%, 100% {
-    text-shadow:
-      2px 2px 4px rgba(0, 0, 0, 0.3),
-      0 0 20px rgba(255, 215, 0, 0.3);
+    filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.1));
   }
   50% {
-    text-shadow:
-      2px 2px 4px rgba(0, 0, 0, 0.3),
-      0 0 30px rgba(255, 215, 0, 0.6);
+    filter: drop-shadow(2px 2px 5px rgba(0, 168, 84, 0.3));
   }
 }
 
 .sous-titre {
   margin: 0;
-  color: var(--jaune-mauritanie);
+  color: var(--rouge-mauritanie);
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 3px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   animation: sous-titre-pulse 2s ease-in-out infinite;
 }
 
