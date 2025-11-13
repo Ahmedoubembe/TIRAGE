@@ -1,0 +1,426 @@
+/* ====================================
+   HEADER PROFESSIONNEL BAMIS DIGITAL
+   Design moderne avec bleu corporate et couleurs mauritaniennes
+   ==================================== */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* Couleurs principales */
+:root {
+  --bleu-corporate: #0066CC;
+  --bleu-fonce: #004C99;
+  --bleu-clair: #3399FF;
+  --vert-mauritanie: #00A854;
+  --jaune-mauritanie: #FFD700;
+  --rouge-mauritanie: #D21034;
+}
+
+/* ====================================
+   HEADER PRINCIPAL
+   ==================================== */
+
+.header-principal {
+  position: relative;
+  width: 100%;
+  min-height: 90px;
+  background: linear-gradient(135deg,
+    var(--bleu-corporate) 0%,
+    var(--bleu-fonce) 50%,
+    var(--vert-mauritanie) 100%);
+  box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
+  z-index: 1000;
+  animation: fadeInDown 0.8s ease-out;
+  overflow: hidden;
+}
+
+/* Animation d'apparition */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Effet de brillance subtile qui traverse */
+.header-principal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: brillance-header 3s ease-in-out infinite;
+}
+
+@keyframes brillance-header {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+/* ====================================
+   CONTENU DU HEADER
+   ==================================== */
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ====================================
+   LOGO CONTAINER
+   ==================================== */
+
+.logo-container {
+  flex-shrink: 0;
+}
+
+.logo-placeholder {
+  width: 200px;
+  height: 60px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--jaune-mauritanie);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de lueur doree au survol */
+.logo-placeholder:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+}
+
+.logo-placeholder::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 215, 0, 0.1) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--bleu-corporate) 0%, var(--vert-mauritanie) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+
+/* Instructions pour remplacer par vraie image */
+.logo-placeholder::before {
+  content: 'Logo Placeholder - Voir instructions dans /assets/images/';
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  font-size: 0.65rem;
+  color: white;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.logo-placeholder:hover::before {
+  opacity: 0.8;
+}
+
+/* ====================================
+   TITRES
+   ==================================== */
+
+.titres-container {
+  flex: 1;
+  text-align: center;
+}
+
+.titre-principal {
+  margin: 0 0 0.5rem 0;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.3);
+  animation: titre-glow 3s ease-in-out infinite;
+}
+
+@keyframes titre-glow {
+  0%, 100% {
+    text-shadow:
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    text-shadow:
+      2px 2px 4px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(255, 215, 0, 0.6);
+  }
+}
+
+.sous-titre {
+  margin: 0;
+  color: var(--jaune-mauritanie);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  animation: sous-titre-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sous-titre-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+/* ====================================
+   DECORATIONS PATRIOTIQUES
+   Etoiles dorees inspirees du drapeau mauritanien
+   ==================================== */
+
+.decoration-etoile {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, var(--jaune-mauritanie) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: etoile-scintille 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.decoration-gauche {
+  top: 10px;
+  left: 20px;
+  animation-delay: 0s;
+}
+
+.decoration-droite {
+  top: 10px;
+  right: 20px;
+  animation-delay: 1s;
+}
+
+@keyframes etoile-scintille {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--jaune-mauritanie);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 0 0 40px var(--jaune-mauritanie);
+  }
+}
+
+/* Effet d'etoile avec pointes */
+.decoration-etoile::before,
+.decoration-etoile::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 30px;
+  background: linear-gradient(to bottom,
+    var(--jaune-mauritanie) 0%,
+    transparent 100%);
+  transform: translate(-50%, -50%);
+}
+
+.decoration-etoile::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+/* ====================================
+   RESPONSIVE DESIGN
+   ==================================== */
+
+/* Tablettes */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .logo-placeholder {
+    width: 180px;
+    height: 55px;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+  }
+
+  .titre-principal {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+
+  .sous-titre {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  .decoration-etoile {
+    width: 30px;
+    height: 30px;
+  }
+
+  .decoration-gauche {
+    top: 5px;
+    left: 10px;
+  }
+
+  .decoration-droite {
+    top: 5px;
+    right: 10px;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 480px) {
+  .header-principal {
+    min-height: 120px;
+  }
+
+  .header-content {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .logo-placeholder {
+    width: 150px;
+    height: 45px;
+  }
+
+  .logo-text {
+    font-size: 0.9rem;
+  }
+
+  .titre-principal {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .sous-titre {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .decoration-etoile {
+    width: 20px;
+    height: 20px;
+  }
+
+  .decoration-etoile::before,
+  .decoration-etoile::after {
+    width: 2px;
+    height: 20px;
+  }
+}
+
+/* ====================================
+   BARRE DECORATIVE INFERIEURE
+   Bandes aux couleurs mauritaniennes
+   ==================================== */
+
+.header-principal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--rouge-mauritanie) 0%,
+    var(--jaune-mauritanie) 50%,
+    var(--vert-mauritanie) 100%
+  );
+  animation: barre-couleur 4s linear infinite;
+}
+
+@keyframes barre-couleur {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ====================================
+   MODE IMPRESSION
+   ==================================== */
+
+@media print {
+  .header-principal {
+    background: white;
+    color: black;
+    box-shadow: none;
+  }
+
+  .header-principal::before,
+  .header-principal::after,
+  .decoration-etoile {
+    display: none;
+  }
+
+  .titre-principal,
+  .sous-titre {
+    color: black;
+    text-shadow: none;
+    animation: none;
+  }
+}

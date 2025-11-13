@@ -12,6 +12,7 @@
 // }
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeaderComponent } from './components/header/header';
 import { TeleversementCsvComponent } from './components/televersement-csv/televersement-csv';
 import { ListeCategoriesComponent } from './components/liste-categories/liste-categories';
 import { TirageComponent } from './components/tirage/tirage';
@@ -25,6 +26,7 @@ type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
   standalone: true,
   imports: [
     CommonModule,
+    HeaderComponent,
     TeleversementCsvComponent,
     ListeCategoriesComponent,
     TirageComponent,

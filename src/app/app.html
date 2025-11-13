@@ -1,4 +1,7 @@
-<app-televersement-csv 
+<!-- Header professionnel BAMIS DIGITAL visible partout -->
+<app-header></app-header>
+
+<app-televersement-csv
   *ngIf="etapeActuelle === 'UPLOAD'"
   (fichierCharge)="onFichierCharge()">
 </app-televersement-csv>
