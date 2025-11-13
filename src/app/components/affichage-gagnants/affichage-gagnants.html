@@ -1,17 +1,53 @@
 <div class="overlay-gagnants" [class.plein-ecran]="tirageTermine">
+  <!-- FEUX D'ARTIFICE ET EXPLOSIONS CONTINUES -->
   <div class="confettis" *ngIf="afficherConfettis">
-    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"></div>
+    <!-- Confettis qui tombent en continu (100 particules) -->
+    <div class="confetti" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100]"></div>
+
+    <!-- Explosions d'etoiles dorees (positions variees) -->
+    <div class="explosion-etoile" style="left: 20%; top: 30%;"></div>
+    <div class="explosion-etoile" style="left: 80%; top: 25%;"></div>
+    <div class="explosion-etoile" style="left: 50%; top: 40%;"></div>
+    <div class="explosion-etoile" style="left: 30%; top: 60%;"></div>
+    <div class="explosion-etoile" style="left: 70%; top: 55%;"></div>
+    <div class="explosion-etoile" style="left: 15%; top: 70%;"></div>
+    <div class="explosion-etoile" style="left: 85%; top: 65%;"></div>
+    <div class="explosion-etoile" style="left: 45%; top: 20%;"></div>
+
+    <!-- Gerbes de particules qui jaillissent -->
+    <div class="gerbe-particules gerbe-gauche"></div>
+    <div class="gerbe-particules gerbe-droite"></div>
+    <div class="gerbe-particules gerbe-centre"></div>
+
+    <!-- Fontaines de lumiere doree -->
+    <div class="fontaine-lumiere" style="left: 10%;"></div>
+    <div class="fontaine-lumiere" style="left: 90%;"></div>
+    <div class="fontaine-lumiere" style="left: 50%;"></div>
+
+    <!-- Pluie d'etoiles scintillantes -->
+    <div class="pluie-etoiles">
+      <div class="etoile-tombante" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]"></div>
+    </div>
+
+    <!-- Cercles d'explosion qui se propagent -->
+    <div class="onde-choc" style="left: 25%; top: 35%;"></div>
+    <div class="onde-choc" style="left: 75%; top: 45%;"></div>
+    <div class="onde-choc" style="left: 50%; top: 60%;"></div>
+
+    <!-- Spirales de particules -->
+    <div class="spirale-particules spirale-1"></div>
+    <div class="spirale-particules spirale-2"></div>
   </div>
 
   <div class="gagnants-panel">
-    <h1 class="titre-felicitations">GAGNANTS</h1>
-    
+    <h1 class="titre-felicitations">FELICITATIONS AUX GAGNANTS</h1>
+
     <div class="gagnants-liste">
-      <div 
+      <div
         *ngFor="let gagnant of gagnantsAffiches; let i = index"
         class="gagnant-item"
         [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine">
-        
+
         <div class="gagnant-info">
           <h2>{{ gagnant.prenom }} {{ gagnant.nom }}</h2>
           <p class="numero">{{ gagnant.numero_telephone }}</p>
@@ -22,10 +58,10 @@
 
     <div class="actions" *ngIf="tirageTermine">
       <button class="btn-retour" (click)="retourALaSelection()">
-        Retour à la sélection
+        Retour a la selection
       </button>
       <button class="btn-plein-ecran" (click)="activerPleinEcran()">
-        Mode Plein Écran
+        Mode Plein Ecran
       </button>
     </div>
   </div>
