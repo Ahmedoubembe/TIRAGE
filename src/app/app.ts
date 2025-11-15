@@ -14,7 +14,7 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header';
 import { TeleversementCsvComponent } from './components/televersement-csv/televersement-csv';
-import { ListeCategoriesComponent } from './components/liste-categories/liste-categories';
+import { ListeCategoriesComponent, OptionsConfidentialite } from './components/liste-categories/liste-categories';
 import { TirageComponent } from './components/tirage/tirage';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
 import { Client } from './models/client.model';
@@ -42,13 +42,18 @@ export class AppComponent {
   categorieSelectionnee: string = '';
   gagnantsAffiches: Client[] = [];
   tirageTermine: boolean = false;
+  optionsConfidentialite: OptionsConfidentialite = {
+    masquerNom: false,
+    masquerNumero: false
+  };
 
   onFichierCharge(): void {
     this.etapeActuelle = 'SELECTION';
   }
 
-  onCategorieSelectionnee(nomCategorie: string): void {
-    this.categorieSelectionnee = nomCategorie;
+  onCategorieSelectionnee(data: {categorie: string, options: OptionsConfidentialite}): void {
+    this.categorieSelectionnee = data.categorie;
+    this.optionsConfidentialite = data.options;
     this.gagnantsAffiches = [];
     this.tirageTermine = false;
     this.etapeActuelle = 'TIRAGE';
