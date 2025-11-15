@@ -175,42 +175,115 @@
 
 /* ====================================
    BOUTON PLEIN ECRAN
+   Design ameliore avec effets visuels sophistiques
    ==================================== */
 
 .btn-fullscreen {
   flex-shrink: 0;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--bleu-corporate) 0%, var(--vert-mauritanie) 100%);
-  border: 2px solid var(--jaune-mauritanie);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--vert-mauritanie) 0%, var(--bleu-corporate) 50%, var(--rouge-mauritanie) 100%);
+  border: 3px solid var(--jaune-mauritanie);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow:
+    0 6px 20px rgba(0, 168, 84, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.3),
+    inset 0 2px 8px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Effet de brillance anime en continu */
+.btn-fullscreen::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 70%
+  );
+  animation: rotation-brillance 3s linear infinite;
+}
+
+@keyframes rotation-brillance {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Cercle de pulsation doree */
+.btn-fullscreen::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--jaune-mauritanie);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulsation-cercle 2s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes pulsation-cercle {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
 }
 
 .btn-fullscreen:hover {
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
-  background: linear-gradient(135deg, var(--vert-mauritanie) 0%, var(--bleu-corporate) 100%);
+  transform: scale(1.15) rotate(180deg);
+  box-shadow:
+    0 10px 35px rgba(0, 168, 84, 0.6),
+    0 0 50px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 215, 0, 0.4),
+    inset 0 0 20px rgba(255, 215, 0, 0.3);
+  border-color: white;
+  background: linear-gradient(135deg, var(--rouge-mauritanie) 0%, var(--jaune-mauritanie) 50%, var(--vert-mauritanie) 100%);
 }
 
 .btn-fullscreen:active {
-  transform: scale(0.95);
+  transform: scale(0.9) rotate(180deg);
+  box-shadow:
+    0 4px 15px rgba(0, 168, 84, 0.5),
+    inset 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .fullscreen-icon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   color: white;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  stroke-width: 2.5;
 }
 
 .btn-fullscreen:hover .fullscreen-icon {
-  color: var(--jaune-mauritanie);
+  color: white;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+  transform: scale(1.1);
+  stroke-width: 3;
 }
 
 .titre-principal {
@@ -363,13 +436,13 @@
   }
 
   .btn-fullscreen {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
   }
 
   .fullscreen-icon {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 }
 
@@ -414,13 +487,13 @@
   }
 
   .btn-fullscreen {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   .fullscreen-icon {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
   }
 }
 
