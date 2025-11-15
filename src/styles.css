@@ -26,15 +26,8 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* Fond patriotique avec les couleurs du drapeau */
-  background: linear-gradient(to bottom,
-    var(--mauritanie-rouge) 0%,
-    var(--mauritanie-rouge) 15%,
-    var(--mauritanie-vert) 15%,
-    var(--mauritanie-vert) 85%,
-    var(--mauritanie-rouge) 85%,
-    var(--mauritanie-rouge) 100%);
-  background-attachment: fixed;
+  /* Fond blanc pour toute l'application */
+  background: #FFFFFF;
 }
 
 html, body {

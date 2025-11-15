@@ -27,9 +27,52 @@
   right: auto;
   top: 90px;
   height: calc(100vh - 90px);
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  background: #FFFFFF;
   border-left: none;
   overflow: hidden;
+}
+
+/* Tache verte en haut a gauche (mode plein ecran) */
+.overlay-gagnants.plein-ecran::before {
+  content: '';
+  position: absolute;
+  top: -95px;
+  left: -95px;
+  width: 290px;
+  height: 290px;
+  background: radial-gradient(circle, var(--mauritanie-vert) 0%, rgba(0, 168, 84, 0.6) 40%, transparent 70%);
+  border-radius: 48% 52% 68% 32%;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: morphe-tache-gagnants 11s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Tache jaune en haut a droite (mode plein ecran) */
+.overlay-gagnants.plein-ecran::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, rgba(255, 215, 0, 0.6) 40%, transparent 70%);
+  border-radius: 52% 48% 32% 68%;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: morphe-tache-gagnants 13s ease-in-out infinite reverse;
+  z-index: 1;
+}
+
+@keyframes morphe-tache-gagnants {
+  0%, 100% {
+    border-radius: 48% 52% 68% 32%;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    border-radius: 52% 48% 42% 58%;
+    transform: rotate(20deg) scale(1.12);
+  }
 }
 
 /* ====================================

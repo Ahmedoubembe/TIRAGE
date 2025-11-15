@@ -10,35 +10,82 @@
   align-items: center;
   height: calc(100vh - 90px);
   margin-top: 90px;
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  background: #FFFFFF;
   overflow: hidden;
   position: relative;
 }
 
-/* Arriere-plan anime avec vagues de couleurs */
+/* Tache rouge en haut a gauche */
 .container-tirage::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(210, 16, 52, 0.1) 0%, transparent 50%);
-  animation: vagues-patriotiques 10s ease-in-out infinite;
+  top: -90px;
+  left: -90px;
+  width: 270px;
+  height: 270px;
+  background: radial-gradient(circle, var(--mauritanie-rouge) 0%, rgba(210, 16, 52, 0.5) 40%, transparent 70%);
+  border-radius: 45% 55% 65% 35%;
+  opacity: 0.35;
   pointer-events: none;
+  animation: morphe-tache-tirage 9s ease-in-out infinite;
 }
 
-@keyframes vagues-patriotiques {
+/* Tache verte en haut a droite */
+.container-tirage::after {
+  content: '';
+  position: absolute;
+  top: -75px;
+  right: -75px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, var(--mauritanie-vert) 0%, rgba(0, 168, 84, 0.6) 40%, transparent 70%);
+  border-radius: 55% 45% 35% 65%;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: morphe-tache-tirage 11s ease-in-out infinite reverse;
+}
+
+@keyframes morphe-tache-tirage {
   0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
+    border-radius: 45% 55% 65% 35%;
+    transform: rotate(0deg) scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: scale(1.1);
+    border-radius: 55% 45% 45% 55%;
+    transform: rotate(-15deg) scale(1.15);
   }
+}
+
+/* Tache jaune en bas a gauche */
+.tirage-card::before {
+  content: '';
+  position: absolute;
+  bottom: -85px;
+  left: -85px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, rgba(255, 215, 0, 0.6) 40%, transparent 70%);
+  border-radius: 50% 50% 60% 40%;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: morphe-tache-tirage 10s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Tache rouge en bas a droite */
+.tirage-card::after {
+  content: '';
+  position: absolute;
+  bottom: -70px;
+  right: -70px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, var(--mauritanie-rouge) 0%, rgba(210, 16, 52, 0.5) 40%, transparent 70%);
+  border-radius: 40% 60% 50% 50%;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: morphe-tache-tirage 12s ease-in-out infinite reverse;
+  z-index: 0;
 }
 
 .tirage-card {
