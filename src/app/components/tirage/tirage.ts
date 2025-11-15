@@ -27,6 +27,10 @@ export class TirageComponent implements OnInit {
   gagnantActuelFixe: Client | null = null;
   afficherGagnantFixe = false;
 
+  // Mise en évidence du numéro gagnant
+  numeroGagnantEnEvidence: string | null = null;
+  mettreEnEvidenceNumero = false;
+
   // Versions masquées pour l'affichage
   prenomAffiche: string = '';
   nomAffiche: string = '';
@@ -43,25 +47,28 @@ export class TirageComponent implements OnInit {
   lancerTirageGagnant(): void {
     this.afficherGagnantFixe = false;
     this.gagnantActuelFixe = null;
-    
+    this.mettreEnEvidenceNumero = false;
+    this.numeroGagnantEnEvidence = null;
+
     const debut = Date.now();
     const duree = AnimationConfig.duree_tirage_ms;
-    
+
     const animer = () => {
       const tempsEcoule = Date.now() - debut;
       const progression = Math.min(tempsEcoule / duree, 1);
-      
+
       const vitesseActuelle = this.calculerVitesse(progression);
-      
+
       this.genererNumerosAleatoires();
-      
+
       if (progression < 1) {
         setTimeout(animer, vitesseActuelle);
       } else {
-        this.afficherGagnantFixeEtContinuer();
+        // Phase 1 : Mettre en évidence le numéro gagnant dans la liste
+        this.mettreEnEvidenceLeNumeroGagnant();
       }
     };
-    
+
     animer();
   }
 
@@ -88,6 +95,56 @@ export class TirageComponent implements OnInit {
     }
   }
 
+  mettreEnEvidenceLeNumeroGagnant(): void {
+    const gagnant = this.gagnants[this.indexGagnantActuel];
+
+    // Appliquer le masquage pour obtenir le numéro à mettre en évidence
+    const donneesMasquees = appliquerMasquage(
+      gagnant.prenom,
+      gagnant.nom,
+      gagnant.numero_telephone,
+      this.optionsConfidentialite
+    );
+
+    // Placer le numéro gagnant au centre de la liste
+    this.numeroGagnantEnEvidence = donneesMasquees.numero;
+    this.numerosAffiches = [];
+
+    // Ajouter quelques numéros avant
+    for (let i = 0; i < 2; i++) {
+      const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
+      const masque = appliquerMasquage(
+        clientAleatoire.prenom,
+        clientAleatoire.nom,
+        clientAleatoire.numero_telephone,
+        this.optionsConfidentialite
+      );
+      this.numerosAffiches.push(masque.numero);
+    }
+
+    // Ajouter le numéro gagnant au centre
+    this.numerosAffiches.push(this.numeroGagnantEnEvidence);
+
+    // Ajouter quelques numéros après
+    for (let i = 0; i < 2; i++) {
+      const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
+      const masque = appliquerMasquage(
+        clientAleatoire.prenom,
+        clientAleatoire.nom,
+        clientAleatoire.numero_telephone,
+        this.optionsConfidentialite
+      );
+      this.numerosAffiches.push(masque.numero);
+    }
+
+    this.mettreEnEvidenceNumero = true;
+
+    // Phase 2 : Après 1.5 secondes, afficher la carte complète du gagnant
+    setTimeout(() => {
+      this.afficherGagnantFixeEtContinuer();
+    }, 1500);
+  }
+
   afficherGagnantFixeEtContinuer(): void {
     const gagnant = this.gagnants[this.indexGagnantActuel];
     this.gagnantActuelFixe = gagnant;
@@ -104,6 +161,7 @@ export class TirageComponent implements OnInit {
     this.numeroAffiche = donneesMasquees.numero;
 
     this.afficherGagnantFixe = true;
+    this.mettreEnEvidenceNumero = false;
 
     setTimeout(() => {
       this.gagnantRevele.emit(gagnant);

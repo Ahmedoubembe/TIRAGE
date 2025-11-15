@@ -137,6 +137,37 @@ h1 {
   border: 1px solid rgba(0, 168, 84, 0.2);
   animation: apparition-douce 0.5s ease-out;
   letter-spacing: 1px;
+  transition: all 0.5s ease;
+}
+
+/* Mise en évidence du numéro gagnant */
+.numero-item.numero-gagnant-emphasis {
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1.5rem 2rem;
+  border: 3px solid var(--mauritanie-jaune);
+  box-shadow:
+    0 0 30px rgba(255, 215, 0, 0.6),
+    0 8px 25px rgba(0, 168, 84, 0.4);
+  transform: scale(1.15);
+  animation: pulse-gagnant 1s ease-in-out infinite;
+  z-index: 10;
+  position: relative;
+}
+
+@keyframes pulse-gagnant {
+  0%, 100% {
+    box-shadow:
+      0 0 30px rgba(255, 215, 0, 0.6),
+      0 8px 25px rgba(0, 168, 84, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(255, 215, 0, 0.9),
+      0 12px 35px rgba(0, 168, 84, 0.6);
+  }
 }
 
 @keyframes apparition-douce {
@@ -181,6 +212,31 @@ h1 {
   font-weight: 500;
   letter-spacing: 0.5px;
   opacity: 0.8;
+}
+
+/* Message de sélection */
+.message-selection {
+  text-align: center;
+  margin-top: 2rem;
+  animation: apparition-douce 0.5s ease-out;
+}
+
+.message-selection p {
+  color: var(--mauritanie-jaune);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: scintillement 1s ease-in-out infinite;
+}
+
+@keyframes scintillement {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* ====================================
