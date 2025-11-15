@@ -1,27 +1,87 @@
-/* Conteneur avec fond patriotique mauritanien */
+/* Conteneur avec fond blanc et taches decoratives */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 90px);
   margin-top: 90px;
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  background: #FFFFFF;
   padding: 2rem;
   position: relative;
   overflow: hidden;
 }
 
-/* Motif etoile doree en arriere-plan */
+/* Tache jaune en haut a gauche */
 .container::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  height: 900px;
-  background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, rgba(255, 215, 0, 0.5) 40%, transparent 70%);
+  border-radius: 50% 40% 60% 50%;
+  opacity: 0.35;
   pointer-events: none;
+  animation: morphe-tache-categories 10s ease-in-out infinite;
+}
+
+/* Tache rouge en haut a droite */
+.container::after {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 230px;
+  height: 230px;
+  background: radial-gradient(circle, var(--mauritanie-rouge) 0%, rgba(210, 16, 52, 0.5) 40%, transparent 70%);
+  border-radius: 40% 60% 50% 50%;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: morphe-tache-categories 12s ease-in-out infinite reverse;
+}
+
+@keyframes morphe-tache-categories {
+  0%, 100% {
+    border-radius: 50% 40% 60% 50%;
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    border-radius: 40% 50% 50% 60%;
+    transform: rotate(15deg) scale(1.1);
+  }
+}
+
+/* Tache verte en bas a gauche */
+.categories-card::before {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, var(--mauritanie-vert) 0%, rgba(0, 168, 84, 0.5) 40%, transparent 70%);
+  border-radius: 60% 50% 40% 50%;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: morphe-tache-categories 11s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Tache jaune en bas a droite */
+.categories-card::after {
+  content: '';
+  position: absolute;
+  bottom: -65px;
+  right: -65px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, rgba(255, 215, 0, 0.6) 40%, transparent 70%);
+  border-radius: 50% 60% 50% 40%;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: morphe-tache-categories 13s ease-in-out infinite reverse;
+  z-index: 0;
 }
 
 .categories-card {
