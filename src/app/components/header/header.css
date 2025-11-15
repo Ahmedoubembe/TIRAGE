@@ -23,7 +23,10 @@
    ==================================== */
 
 .header-principal {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   min-height: 90px;
   background: #FFFFFF;
@@ -168,6 +171,46 @@
 .titres-container {
   flex: 1;
   text-align: center;
+}
+
+/* ====================================
+   BOUTON PLEIN ECRAN
+   ==================================== */
+
+.btn-fullscreen {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--bleu-corporate) 0%, var(--vert-mauritanie) 100%);
+  border: 2px solid var(--jaune-mauritanie);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+}
+
+.btn-fullscreen:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, var(--vert-mauritanie) 0%, var(--bleu-corporate) 100%);
+}
+
+.btn-fullscreen:active {
+  transform: scale(0.95);
+}
+
+.fullscreen-icon {
+  width: 28px;
+  height: 28px;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-fullscreen:hover .fullscreen-icon {
+  color: var(--jaune-mauritanie);
 }
 
 .titre-principal {
@@ -318,6 +361,16 @@
     top: 5px;
     right: 10px;
   }
+
+  .btn-fullscreen {
+    width: 45px;
+    height: 45px;
+  }
+
+  .fullscreen-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* Mobiles */
@@ -357,6 +410,16 @@
   .decoration-etoile::before,
   .decoration-etoile::after {
     width: 2px;
+    height: 20px;
+  }
+
+  .btn-fullscreen {
+    width: 40px;
+    height: 40px;
+  }
+
+  .fullscreen-icon {
+    width: 20px;
     height: 20px;
   }
 }
