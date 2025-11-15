@@ -8,7 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: calc(100vh - 90px);
+  margin-top: 90px;
   background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   overflow: hidden;
   position: relative;
