@@ -1,16 +1,43 @@
 <div class="container-tirage">
   <div class="tirage-card">
     <h1>Tirage en cours</h1>
-    
-    <div class="numeros-container" *ngIf="!afficherGagnantFixe">
-      <div 
-        *ngFor="let numero of numerosAffiches; let i = index"
-        class="numero-item"
-        [style.animation-delay]="i * 0.1 + 's'">
-        {{ numero }}
+
+    <!-- Machine à sous style -->
+    <div class="slot-machine" *ngIf="!afficherGagnantFixe">
+      <!-- Lumières décoratives -->
+      <div class="lights-container">
+        <div class="light" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div>
+      </div>
+
+      <!-- Cadre doré -->
+      <div class="slot-frame">
+        <!-- Fenêtre de visualisation -->
+        <div class="slot-window">
+          <!-- Rouleau avec numéros -->
+          <div class="slot-reel">
+            <div
+              *ngFor="let numero of numerosAffiches; let i = index"
+              class="numero-item"
+              [style.animation-delay]="i * 0.05 + 's'">
+              {{ numero }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Rayons de lumière -->
+        <div class="light-rays">
+          <div class="ray" *ngFor="let i of [1,2,3,4,5,6,7,8]"></div>
+        </div>
+      </div>
+
+      <!-- Indicateur de tirage -->
+      <div class="pulling-indicator">
+        <div class="spinner-ring"></div>
+        <p>TIRAGE EN COURS...</p>
       </div>
     </div>
 
+    <!-- Affichage du gagnant -->
     <div class="gagnant-fixe-container" *ngIf="afficherGagnantFixe && gagnantActuelFixe">
       <div class="gagnant-fixe">
         <h2>GAGNANT</h2>
@@ -20,10 +47,6 @@
           <p class="prix-gagnant">{{ gagnantActuelFixe.prix }}</p>
         </div>
       </div>
-    </div>
-    
-    <div class="loader" *ngIf="tirageEnCours && !afficherGagnantFixe">
-      <div class="spinner"></div>
     </div>
   </div>
 </div>
