@@ -9,15 +9,21 @@
         <div
           *ngFor="let numero of numerosAffiches; let i = index"
           class="numero-item"
+          [class.numero-gagnant-emphasis]="mettreEnEvidenceNumero && numero === numeroGagnantEnEvidence"
           [style.animation-delay]="i * 0.1 + 's'">
           {{ numero }}
         </div>
       </div>
 
       <!-- Indicateur de tirage -->
-      <div class="indicateur-tirage">
+      <div class="indicateur-tirage" *ngIf="!mettreEnEvidenceNumero">
         <div class="spinner"></div>
         <p>Tirage en cours...</p>
+      </div>
+
+      <!-- Message quand le numéro est en évidence -->
+      <div class="message-selection" *ngIf="mettreEnEvidenceNumero">
+        <p>✨ Numéro sélectionné !</p>
       </div>
     </div>
 
