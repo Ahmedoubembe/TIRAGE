@@ -130,26 +130,26 @@ h1 {
 .numeros-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin: 2rem 0;
-  min-height: 400px;
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+  min-height: 300px;
   justify-content: center;
   perspective: 1000px;
 }
 
 .numero-item {
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.5rem;
   background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   border-radius: 0.5rem;
-  animation: slideIn-avec-lueur 0.5s ease-out;
+  animation: slideIn-avec-lueur 0.3s ease-out;
   box-shadow:
     0 4px 15px rgba(0, 168, 84, 0.4),
     0 0 30px rgba(255, 215, 0, 0.6),
     inset 0 0 20px rgba(255, 215, 0, 0.2);
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   border: 2px solid var(--mauritanie-jaune);
   position: relative;
   overflow: hidden;
@@ -169,7 +169,7 @@ h1 {
     rgba(255, 215, 0, 0.3),
     transparent
   );
-  animation: balayage-lueur 2s linear infinite;
+  animation: balayage-lueur 1s linear infinite;
 }
 
 @keyframes balayage-lueur {
@@ -207,13 +207,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
-  margin: 2rem 0;
+  min-height: 300px;
+  margin: 1.5rem 0;
   position: relative;
 }
 
 .gagnant-fixe {
-  animation: explosion-entree 1.2s ease-out;
+  animation: explosion-entree 0.8s ease-out;
   text-align: center;
   position: relative;
 }
@@ -240,10 +240,10 @@ h1 {
 }
 
 .gagnant-fixe h2 {
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
   color: var(--mauritanie-jaune);
-  font-size: 3.5rem;
-  animation: celebration-explosive 1.5s ease-in-out infinite;
+  font-size: 2.8rem;
+  animation: celebration-explosive 1s ease-in-out infinite;
   text-shadow:
     0 0 10px rgba(255, 215, 0, 0.8),
     0 0 20px rgba(255, 215, 0, 0.6),
@@ -262,7 +262,7 @@ h1 {
   height: 30px;
   background: radial-gradient(circle, var(--mauritanie-jaune) 0%, transparent 70%);
   border-radius: 50%;
-  animation: particules-etoiles 2s ease-in-out infinite;
+  animation: particules-etoiles 1.2s ease-in-out infinite;
 }
 
 .gagnant-fixe h2::before {
@@ -316,7 +316,7 @@ h1 {
 
 .gagnant-details {
   background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 1rem;
   box-shadow:
     0 8px 25px rgba(0, 168, 84, 0.5),
@@ -324,7 +324,7 @@ h1 {
   border: 3px solid var(--mauritanie-jaune);
   position: relative;
   overflow: hidden;
-  animation: pulsation-gagnant 2s ease-in-out infinite;
+  animation: pulsation-gagnant 1.5s ease-in-out infinite;
 }
 
 /* Effet de brillance qui traverse la carte */
@@ -341,7 +341,7 @@ h1 {
     rgba(255, 215, 0, 0.2),
     transparent
   );
-  animation: brillance-traverse 3s linear infinite;
+  animation: brillance-traverse 2s linear infinite;
 }
 
 @keyframes brillance-traverse {
@@ -367,9 +367,9 @@ h1 {
 }
 
 .nom {
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.8rem 0;
   color: white;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   position: relative;
   z-index: 1;
@@ -377,11 +377,11 @@ h1 {
 }
 
 .numero-gagnant {
-  margin: 1rem 0;
+  margin: 0.8rem 0;
   color: var(--mauritanie-jaune);
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 2.5px;
   position: relative;
   z-index: 1;
   text-shadow:
@@ -390,9 +390,9 @@ h1 {
 }
 
 .prix-gagnant {
-  margin: 1rem 0 0 0;
+  margin: 0.8rem 0 0 0;
   color: var(--mauritanie-jaune);
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-weight: 700;
   position: relative;
   z-index: 1;
@@ -400,7 +400,7 @@ h1 {
     0 0 15px rgba(255, 215, 0, 1),
     0 0 25px rgba(255, 215, 0, 0.8),
     2px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: scintillement-prix 2s ease-in-out infinite;
+  animation: scintillement-prix 1.3s ease-in-out infinite;
 }
 
 @keyframes scintillement-prix {
