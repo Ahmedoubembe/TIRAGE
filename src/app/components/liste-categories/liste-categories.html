@@ -25,11 +25,52 @@
       </div>
     </div>
 
-    <button 
+    <button
       class="btn-lancer"
       [disabled]="!categorieChoisie"
-      (click)="lancerTirage()">
+      (click)="ouvrirModalConfidentialite()">
       Lancer le tirage
     </button>
+  </div>
+
+  <!-- Modal de confidentialité -->
+  <div class="modal-overlay" *ngIf="afficherModal" (click)="fermerModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Options de confidentialité</h2>
+      <p class="modal-description">Choisissez les informations à masquer pendant le tirage :</p>
+
+      <div class="options-container">
+        <label class="option-item">
+          <input
+            type="checkbox"
+            [(ngModel)]="masquerNom"
+            class="checkbox-input">
+          <div class="option-details">
+            <span class="option-titre">Masquer une partie du nom</span>
+            <span class="option-exemple">Exemple : Prénom N***</span>
+          </div>
+        </label>
+
+        <label class="option-item">
+          <input
+            type="checkbox"
+            [(ngModel)]="masquerNumero"
+            class="checkbox-input">
+          <div class="option-details">
+            <span class="option-titre">Masquer le numéro de téléphone</span>
+            <span class="option-exemple">Exemple : 06XX XX XX XX</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-annuler" (click)="fermerModal()">
+          Annuler
+        </button>
+        <button class="btn-confirmer" (click)="confirmerEtLancerTirage()">
+          Confirmer et lancer
+        </button>
+      </div>
+    </div>
   </div>
 </div>

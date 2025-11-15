@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DonneesService } from '../../services/donnees';
 import { Client } from '../../models/client.model';
 import { AnimationConfig } from '../../config/animation.config';
+import { OptionsConfidentialite } from '../liste-categories/liste-categories';
+import { appliquerMasquage } from '../../utilities/masquage';
 
 @Component({
   selector: 'app-tirage',
@@ -13,6 +15,7 @@ import { AnimationConfig } from '../../config/animation.config';
 })
 export class TirageComponent implements OnInit {
   @Input() categorieSelectionnee!: string;
+  @Input() optionsConfidentialite!: OptionsConfidentialite;
   @Output() gagnantRevele = new EventEmitter<Client>();
   @Output() tirageComplet = new EventEmitter<void>();
 
@@ -23,6 +26,11 @@ export class TirageComponent implements OnInit {
   tirageEnCours = true;
   gagnantActuelFixe: Client | null = null;
   afficherGagnantFixe = false;
+
+  // Versions masquées pour l'affichage
+  prenomAffiche: string = '';
+  nomAffiche: string = '';
+  numeroAffiche: string = '';
 
   constructor(private donneesService: DonneesService) {}
 
@@ -70,25 +78,43 @@ export class TirageComponent implements OnInit {
     this.numerosAffiches = [];
     for (let i = 0; i < AnimationConfig.nombre_numeros_visibles; i++) {
       const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
-      this.numerosAffiches.push(clientAleatoire.numero_telephone);
+      const donneesMasquees = appliquerMasquage(
+        clientAleatoire.prenom,
+        clientAleatoire.nom,
+        clientAleatoire.numero_telephone,
+        this.optionsConfidentialite
+      );
+      this.numerosAffiches.push(donneesMasquees.numero);
     }
   }
 
   afficherGagnantFixeEtContinuer(): void {
     const gagnant = this.gagnants[this.indexGagnantActuel];
     this.gagnantActuelFixe = gagnant;
+
+    // Appliquer le masquage pour l'affichage
+    const donneesMasquees = appliquerMasquage(
+      gagnant.prenom,
+      gagnant.nom,
+      gagnant.numero_telephone,
+      this.optionsConfidentialite
+    );
+    this.prenomAffiche = donneesMasquees.prenom;
+    this.nomAffiche = donneesMasquees.nom;
+    this.numeroAffiche = donneesMasquees.numero;
+
     this.afficherGagnantFixe = true;
-    
+
     setTimeout(() => {
       this.gagnantRevele.emit(gagnant);
       this.indexGagnantActuel++;
-      
+
       if (this.indexGagnantActuel < this.gagnants.length) {
         this.lancerTirageGagnant();
       } else {
         this.tirageEnCours = false;
         this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
-        
+
         setTimeout(() => {
           this.tirageComplet.emit();
         }, 1000);
