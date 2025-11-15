@@ -1,627 +1,292 @@
 /* ====================================
-   COMPOSANT TIRAGE - VERSION MAURITANIENNE
-   Animations spectaculaires pour le tirage au sort
-   Couleurs du drapeau : Vert, Jaune dore, Rouge
+   COMPOSANT TIRAGE - VERSION SIMPLE ET ÉLÉGANTE
+   Design épuré avec transparences
+   Couleurs du drapeau : Vert, Jaune doré, Rouge
    ==================================== */
 
 .container-tirage {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 90px);
+  min-height: calc(100vh - 90px);
   margin-top: 90px;
-  background: #FFFFFF;
-  overflow: hidden;
+  padding: 2rem;
+  background: linear-gradient(135deg,
+    rgba(0, 168, 84, 0.03) 0%,
+    rgba(255, 215, 0, 0.02) 50%,
+    rgba(210, 16, 52, 0.03) 100%);
   position: relative;
+  overflow: hidden;
 }
 
-/* Tache rouge en haut a gauche */
+/* Taches décoratives subtiles */
 .container-tirage::before {
   content: '';
   position: absolute;
-  top: -90px;
-  left: -90px;
-  width: 270px;
-  height: 270px;
-  background: radial-gradient(circle, var(--mauritanie-rouge) 0%, rgba(210, 16, 52, 0.5) 40%, transparent 70%);
-  border-radius: 45% 55% 65% 35%;
-  opacity: 0.35;
-  pointer-events: none;
-  animation: morphe-tache-tirage 9s ease-in-out infinite;
+  top: -100px;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 168, 84, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: flotte-douce 15s ease-in-out infinite;
 }
 
-/* Tache verte en haut a droite */
 .container-tirage::after {
   content: '';
   position: absolute;
-  top: -75px;
-  right: -75px;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, var(--mauritanie-vert) 0%, rgba(0, 168, 84, 0.6) 40%, transparent 70%);
-  border-radius: 55% 45% 35% 65%;
-  opacity: 0.3;
-  pointer-events: none;
-  animation: morphe-tache-tirage 11s ease-in-out infinite reverse;
+  bottom: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: flotte-douce 15s ease-in-out infinite reverse;
 }
 
-@keyframes morphe-tache-tirage {
+@keyframes flotte-douce {
   0%, 100% {
-    border-radius: 45% 55% 65% 35%;
-    transform: rotate(0deg) scale(1);
+    transform: translate(0, 0) scale(1);
   }
   50% {
-    border-radius: 55% 45% 45% 55%;
-    transform: rotate(-15deg) scale(1.15);
+    transform: translate(20px, 20px) scale(1.1);
   }
-}
-
-/* Tache jaune en bas a gauche */
-.tirage-card::before {
-  content: '';
-  position: absolute;
-  bottom: -85px;
-  left: -85px;
-  width: 260px;
-  height: 260px;
-  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, rgba(255, 215, 0, 0.6) 40%, transparent 70%);
-  border-radius: 50% 50% 60% 40%;
-  opacity: 0.4;
-  pointer-events: none;
-  animation: morphe-tache-tirage 10s ease-in-out infinite;
-  z-index: 0;
-}
-
-/* Tache rouge en bas a droite */
-.tirage-card::after {
-  content: '';
-  position: absolute;
-  bottom: -70px;
-  right: -70px;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, var(--mauritanie-rouge) 0%, rgba(210, 16, 52, 0.5) 40%, transparent 70%);
-  border-radius: 40% 60% 50% 50%;
-  opacity: 0.35;
-  pointer-events: none;
-  animation: morphe-tache-tirage 12s ease-in-out infinite reverse;
-  z-index: 0;
 }
 
 .tirage-card {
-  background: white;
-  padding: 3rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 700px;
-  width: 90%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 2rem;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 1px rgba(0, 168, 84, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  max-width: 600px;
+  width: 100%;
   position: relative;
   z-index: 1;
-  border-top: 6px solid var(--mauritanie-rouge);
-  border-bottom: 6px solid var(--mauritanie-rouge);
 }
 
 h1 {
-  margin: 0 0 2rem 0;
+  margin: 0 0 2.5rem 0;
   color: var(--mauritanie-vert);
-  font-size: 2.5rem;
-  animation: pulse-titre 2s ease-in-out infinite;
-  text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.4);
-}
-
-/* Animation de pulsation pour le titre */
-@keyframes pulse-titre {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.05);
-  }
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1px;
 }
 
 /* ====================================
-   MACHINE A SOUS - EFFET SPECTACULAIRE
+   ANIMATION DE TIRAGE - VERSION SIMPLE
    ==================================== */
 
-.slot-machine {
-  position: relative;
-  margin: 2rem auto;
-  max-width: 500px;
-  padding: 2rem;
+.tirage-animation {
+  margin: 2rem 0;
 }
 
-/* Lumières clignotantes décoratives */
-.lights-container {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1.5rem;
-  gap: 0.5rem;
-}
-
-.light {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--mauritanie-jaune);
-  box-shadow: 0 0 20px var(--mauritanie-jaune);
-  animation: blink-lights 1s ease-in-out infinite;
-}
-
-.light:nth-child(even) {
-  animation-delay: 0.5s;
-}
-
-@keyframes blink-lights {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 20px var(--mauritanie-jaune);
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.3;
-    box-shadow: 0 0 5px var(--mauritanie-jaune);
-    transform: scale(0.8);
-  }
-}
-
-/* Cadre de la machine à sous */
-.slot-frame {
-  position: relative;
-  background: linear-gradient(145deg, #2c2c2c 0%, #1a1a1a 100%);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.5),
-    inset 0 0 30px rgba(255, 215, 0, 0.2),
-    0 0 0 8px var(--mauritanie-jaune),
-    0 0 0 12px #2c2c2c;
-  border: 4px solid var(--mauritanie-jaune);
-}
-
-/* Fenêtre de visualisation */
-.slot-window {
-  position: relative;
-  height: 350px;
-  overflow: hidden;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 100%);
-  border-radius: 15px;
-  border: 3px solid var(--mauritanie-vert);
-  box-shadow:
-    inset 0 10px 30px rgba(0, 0, 0, 0.8),
-    inset 0 -10px 30px rgba(0, 0, 0, 0.8),
-    0 0 40px rgba(0, 168, 84, 0.5);
-}
-
-/* Effet de verre sur la fenêtre */
-.slot-window::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Rouleau qui défile */
-.slot-reel {
+.numeros-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
   gap: 1rem;
-  padding: 1rem 0;
-  animation: reel-blur 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes reel-blur {
-  0% {
-    filter: blur(0px);
-  }
-  100% {
-    filter: blur(1px);
-  }
-}
-
-/* Numéros sur le rouleau */
-.numero-item {
-  padding: 1.2rem 2rem;
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  color: white;
-  font-size: 1.8rem;
-  font-weight: 900;
-  border-radius: 10px;
-  letter-spacing: 3px;
-  text-align: center;
-  min-width: 280px;
-  border: 3px solid var(--mauritanie-jaune);
-  box-shadow:
-    0 5px 20px rgba(0, 168, 84, 0.6),
-    0 0 40px rgba(255, 215, 0, 0.8),
-    inset 0 0 25px rgba(255, 215, 0, 0.3);
-  animation: roll-in 0.2s ease-out;
-  position: relative;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(0, 168, 84, 0.15);
+  max-height: 400px;
   overflow: hidden;
-  text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.8),
-    2px 2px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
-/* Effet de brillance qui traverse */
-.numero-item::before {
+/* Effet de dégradé en haut et en bas */
+.numeros-container::before,
+.numeros-container::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-  animation: shine-sweep 1.5s linear infinite;
-}
-
-@keyframes shine-sweep {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 200%;
-  }
-}
-
-@keyframes roll-in {
-  0% {
-    transform: translateY(-50px) scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-}
-
-/* Rayons de lumière */
-.light-rays {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
+  left: 0;
+  right: 0;
+  height: 60px;
   pointer-events: none;
-  z-index: 5;
+  z-index: 2;
 }
 
-.ray {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 150px;
-  background: linear-gradient(to bottom, transparent, var(--mauritanie-jaune), transparent);
-  transform-origin: center top;
-  opacity: 0.4;
-  animation: rotate-rays 4s linear infinite;
+.numeros-container::before {
+  top: 0;
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, 0.9) 0%,
+    transparent 100%);
 }
 
-.ray:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
-.ray:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg); }
-.ray:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg); }
-.ray:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg); }
-.ray:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg); }
-.ray:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg); }
-.ray:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg); }
-.ray:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg); }
+.numeros-container::after {
+  bottom: 0;
+  background: linear-gradient(to top,
+    rgba(255, 255, 255, 0.9) 0%,
+    transparent 100%);
+}
 
-@keyframes rotate-rays {
+.numero-item {
+  padding: 1rem 1.5rem;
+  background: rgba(0, 168, 84, 0.08);
+  backdrop-filter: blur(5px);
+  color: var(--mauritanie-vert);
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 1rem;
+  text-align: center;
+  border: 1px solid rgba(0, 168, 84, 0.2);
+  animation: apparition-douce 0.5s ease-out;
+  letter-spacing: 1px;
+}
+
+@keyframes apparition-douce {
   0% {
-    transform: translate(-50%, -50%) rotate(var(--start-angle, 0deg));
+    opacity: 0;
+    transform: translateY(-20px);
   }
   100% {
-    transform: translate(-50%, -50%) rotate(calc(var(--start-angle, 0deg) + 360deg));
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 /* Indicateur de tirage */
-.pulling-indicator {
+.indicateur-tirage {
   text-align: center;
   margin-top: 2rem;
-  position: relative;
-}
-
-.spinner-ring {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 1rem auto;
-  border: 5px solid rgba(255, 215, 0, 0.2);
-  border-top: 5px solid var(--mauritanie-jaune);
-  border-radius: 50%;
-  animation: spin-fast 0.8s linear infinite;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-}
-
-@keyframes spin-fast {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.pulling-indicator p {
-  color: var(--mauritanie-jaune);
-  font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  animation: pulse-text 1s ease-in-out infinite;
-  text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-}
-
-@keyframes pulse-text {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.05);
-  }
-}
-
-/* ====================================
-   AFFICHAGE DU GAGNANT AVEC EXPLOSION
-   Animations explosives et particules
-   ==================================== */
-
-.gagnant-fixe-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-  margin: 1.5rem 0;
-  position: relative;
-}
-
-.gagnant-fixe {
-  animation: explosion-entree 0.8s ease-out;
-  text-align: center;
-  position: relative;
-}
-
-/* Animation d'explosion spectaculaire */
-@keyframes explosion-entree {
-  0% {
-    transform: scale(0) rotate(-180deg);
-    opacity: 0;
-    filter: blur(20px);
-  }
-  60% {
-    transform: scale(1.3) rotate(10deg);
-    opacity: 1;
-    filter: blur(0px);
-  }
-  80% {
-    transform: scale(0.9) rotate(-5deg);
-  }
-  100% {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
-}
-
-.gagnant-fixe h2 {
-  margin: 0 0 1.5rem 0;
-  color: var(--mauritanie-jaune);
-  font-size: 2.8rem;
-  animation: celebration-explosive 1s ease-in-out infinite;
-  text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.8),
-    0 0 20px rgba(255, 215, 0, 0.6),
-    0 0 30px rgba(255, 215, 0, 0.4),
-    3px 3px 8px rgba(210, 16, 52, 0.5);
-  position: relative;
-}
-
-/* Effet de particules autour du titre GAGNANT */
-.gagnant-fixe h2::before,
-.gagnant-fixe h2::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle, var(--mauritanie-jaune) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: particules-etoiles 1.2s ease-in-out infinite;
-}
-
-.gagnant-fixe h2::before {
-  left: -50px;
-  animation-delay: 0.3s;
-}
-
-.gagnant-fixe h2::after {
-  right: -50px;
-  animation-delay: 0.6s;
-}
-
-@keyframes particules-etoiles {
-  0%, 100% {
-    transform: translateY(-50%) scale(0.8);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(-50%) scale(1.2);
-    opacity: 1;
-  }
-}
-
-/* Animation de celebration avec rotation et pulsation */
-@keyframes celebration-explosive {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    text-shadow:
-      0 0 10px rgba(255, 215, 0, 0.8),
-      0 0 20px rgba(255, 215, 0, 0.6),
-      0 0 30px rgba(255, 215, 0, 0.4);
-  }
-  25% {
-    transform: scale(1.1) rotate(2deg);
-    text-shadow:
-      0 0 15px rgba(255, 215, 0, 1),
-      0 0 30px rgba(255, 215, 0, 0.8),
-      0 0 45px rgba(255, 215, 0, 0.6);
-  }
-  50% {
-    transform: scale(1.15) rotate(0deg);
-  }
-  75% {
-    transform: scale(1.1) rotate(-2deg);
-  }
-}
-
-/* ====================================
-   CARTE DU GAGNANT AVEC STYLE PATRIOTIQUE
-   ==================================== */
-
-.gagnant-details {
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow:
-    0 8px 25px rgba(0, 168, 84, 0.5),
-    0 0 60px rgba(255, 215, 0, 0.4);
-  border: 3px solid var(--mauritanie-jaune);
-  position: relative;
-  overflow: hidden;
-  animation: pulsation-gagnant 1.5s ease-in-out infinite;
-}
-
-/* Effet de brillance qui traverse la carte */
-.gagnant-details::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    60deg,
-    transparent,
-    rgba(255, 215, 0, 0.2),
-    transparent
-  );
-  animation: brillance-traverse 2s linear infinite;
-}
-
-@keyframes brillance-traverse {
-  0% {
-    transform: translateX(-100%) translateY(-100%);
-  }
-  100% {
-    transform: translateX(100%) translateY(100%);
-  }
-}
-
-@keyframes pulsation-gagnant {
-  0%, 100% {
-    box-shadow:
-      0 8px 25px rgba(0, 168, 84, 0.5),
-      0 0 60px rgba(255, 215, 0, 0.4);
-  }
-  50% {
-    box-shadow:
-      0 12px 35px rgba(0, 168, 84, 0.7),
-      0 0 80px rgba(255, 215, 0, 0.6);
-  }
-}
-
-.nom {
-  margin: 0 0 0.8rem 0;
-  color: white;
-  font-size: 2rem;
-  font-weight: 700;
-  position: relative;
-  z-index: 1;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.numero-gagnant {
-  margin: 0.8rem 0;
-  color: var(--mauritanie-jaune);
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  position: relative;
-  z-index: 1;
-  text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.8),
-    2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.prix-gagnant {
-  margin: 0.8rem 0 0 0;
-  color: var(--mauritanie-jaune);
-  font-size: 1.7rem;
-  font-weight: 700;
-  position: relative;
-  z-index: 1;
-  text-shadow:
-    0 0 15px rgba(255, 215, 0, 1),
-    0 0 25px rgba(255, 215, 0, 0.8),
-    2px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: scintillement-prix 1.3s ease-in-out infinite;
-}
-
-@keyframes scintillement-prix {
-  0%, 100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-  50% {
-    transform: scale(1.05);
-    filter: brightness(1.2);
-  }
-}
-
-/* ====================================
-   LOADER PATRIOTIQUE
-   ==================================== */
-
-.loader {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
 }
 
 .spinner {
   width: 50px;
   height: 50px;
-  border: 5px solid rgba(255, 215, 0, 0.3);
-  border-top: 5px solid var(--mauritanie-jaune);
-  border-right: 5px solid var(--mauritanie-vert);
-  border-bottom: 5px solid var(--mauritanie-rouge);
+  margin: 0 auto 1rem;
+  border: 3px solid rgba(0, 168, 84, 0.2);
+  border-top-color: var(--mauritanie-vert);
   border-radius: 50%;
-  animation: spin-patriotique 1s linear infinite;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  animation: rotation 1s linear infinite;
 }
 
-@keyframes spin-patriotique {
+@keyframes rotation {
   0% {
     transform: rotate(0deg);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
   }
   100% {
     transform: rotate(360deg);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.indicateur-tirage p {
+  color: var(--mauritanie-vert);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+/* ====================================
+   AFFICHAGE DU GAGNANT - VERSION ÉLÉGANTE
+   ==================================== */
+
+.gagnant-container {
+  margin: 2rem 0;
+  text-align: center;
+  animation: zoom-doux 0.6s ease-out;
+}
+
+@keyframes zoom-doux {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.gagnant-badge {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  border-radius: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
+  border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.gagnant-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem 2rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(0, 168, 84, 0.2);
+  box-shadow:
+    0 8px 32px rgba(0, 168, 84, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.gagnant-card .nom {
+  margin: 0 0 1rem 0;
+  color: var(--mauritanie-vert);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.gagnant-card .numero {
+  margin: 1rem 0;
+  color: var(--vert-fonce);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  opacity: 0.9;
+}
+
+.gagnant-card .prix {
+  margin: 1.5rem 0 0 0;
+  color: var(--mauritanie-jaune);
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tirage-card {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .gagnant-badge {
+    font-size: 1.2rem;
+    padding: 0.6rem 2rem;
+  }
+
+  .gagnant-card .nom {
+    font-size: 1.6rem;
+  }
+
+  .gagnant-card .numero {
+    font-size: 1.2rem;
+  }
+
+  .gagnant-card .prix {
+    font-size: 1.5rem;
+  }
+
+  .numero-item {
+    font-size: 1.3rem;
+    padding: 0.8rem 1.2rem;
   }
 }
