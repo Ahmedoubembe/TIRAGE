@@ -44,6 +44,47 @@ html, body {
   }
 }
 
+/* ====================================
+   SCROLLBARS PERSONNALISEES
+   Style mauritanien avec couleurs du drapeau
+   ==================================== */
+
+/* Scrollbar pour navigateurs Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(to bottom, rgba(0, 168, 84, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 168, 84, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--mauritanie-jaune);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  border-color: var(--jaune-pale);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, var(--rouge-fonce) 100%);
+  border-color: var(--mauritanie-jaune);
+}
+
+/* Scrollbar pour Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--mauritanie-vert) rgba(0, 168, 84, 0.1);
+}
+
 /* Animation de pulsation patriotique */
 @keyframes pulsation-patriotique {
   0%, 100% {

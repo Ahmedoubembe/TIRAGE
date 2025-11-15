@@ -111,7 +111,8 @@ h1 {
   gap: 1rem;
   margin-bottom: 2rem;
   max-height: calc(100vh - 350px);
-  overflow-y: hidden;
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
 
 .categorie-item {
