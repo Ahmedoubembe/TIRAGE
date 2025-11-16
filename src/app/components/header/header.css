@@ -113,6 +113,17 @@
   overflow: hidden;
 }
 
+.logo-image {
+  width: 300px;
+  height: 80px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 25px rgba(255, 215, 0, 0.4));
+}
 /* Effet de lueur doree au survol */
 .logo-placeholder:hover {
   transform: scale(1.05);
