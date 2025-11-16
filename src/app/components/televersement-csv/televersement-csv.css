@@ -154,25 +154,3 @@ input[type="file"]:disabled + .upload-label {
   border: 2px solid var(--mauritanie-rouge);
   font-weight: 600;
 }
-
-.btn-plein-ecran {
-  margin-top: 2rem;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, var(--mauritanie-jaune) 0%, var(--jaune-pale) 100%);
-  color: var(--vert-fonce);
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-}
-
-.btn-plein-ecran:hover {
-  background: linear-gradient(135deg, var(--jaune-pale) 0%, var(--mauritanie-jaune) 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-  animation: pulsation-patriotique 1.5s ease-in-out infinite;
-}

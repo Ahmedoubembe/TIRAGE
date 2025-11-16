@@ -39,11 +39,4 @@ export class TeleversementCsvComponent {
       this.chargementEnCours = false;
     }
   }
-
-  activerPleinEcran(): void {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    }
-  }
 }
