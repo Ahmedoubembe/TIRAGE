@@ -39,8 +39,12 @@ export class TirageComponent implements OnInit {
   constructor(private donneesService: DonneesService) {}
 
   ngOnInit(): void {
-    this.tousLesClients = this.donneesService.getClientsByCategorie(this.categorieSelectionnee);
-    this.gagnants = this.tousLesClients;
+    // Pour le défilement : utiliser TOUS les participants
+    this.tousLesClients = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
+
+    // Pour la révélation : uniquement les gagnants avec leurs prix depuis gagnants.json
+    this.gagnants = this.donneesService.getGagnantsByCategorie(this.categorieSelectionnee);
+
     this.lancerTirageGagnant();
   }
 
