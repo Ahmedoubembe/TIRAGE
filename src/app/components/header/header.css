@@ -565,3 +565,15 @@
     animation: none;
   }
 }
+
+.logo-image {
+  width: 200px;
+  height: 60px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 25px rgba(255, 215, 0, 0.4));
+}

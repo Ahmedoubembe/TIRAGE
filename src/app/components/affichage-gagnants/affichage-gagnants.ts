@@ -36,13 +36,6 @@ export class AffichageGagnantsComponent {
     this.retourSelection.emit();
   }
 
-  activerPleinEcran(): void {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    }
-  }
-
   /**
    * Obtient les données masquées d'un client selon les options de confidentialité
    */
