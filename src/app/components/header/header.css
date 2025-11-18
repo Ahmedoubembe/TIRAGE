@@ -115,7 +115,7 @@
 
 .logo-image {
   width: 300px;
-  height: 80px;
+  height: 100px;
   object-fit: contain;
   transition: all 0.3s ease;
 }
