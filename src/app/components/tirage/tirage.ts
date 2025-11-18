@@ -97,8 +97,9 @@ export class TirageComponent implements OnInit {
   }
 
   genererNumerosAleatoires(): void {
-    // Utiliser un Set pour garantir l'unicité des numéros affichés
-    const numerosUniques = new Set<string>();
+    // CORRECTION CRITIQUE : Vérifier l'unicité des numéros MASQUÉS, pas des originaux
+    // Car le masquage peut produire le même résultat pour des numéros différents
+    const numerosMasquesUniques = new Set<string>();
     const nouveauxNumeros: string[] = [];
 
     // Limiter le nombre de positions au nombre de participants disponibles
@@ -107,20 +108,25 @@ export class TirageComponent implements OnInit {
       this.tousLesClients.length
     );
 
-    // Générer des numéros uniques
-    while (nouveauxNumeros.length < nombrePositions) {
+    // Protection contre les boucles infinies : limite d'itérations
+    let tentatives = 0;
+    const maxTentatives = this.tousLesClients.length * 3;
+
+    // Générer des numéros masqués uniques
+    while (nouveauxNumeros.length < nombrePositions && tentatives < maxTentatives) {
+      tentatives++;
       const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
 
-      // Vérifier si le numéro n'est pas déjà dans la liste
-      if (!numerosUniques.has(clientAleatoire.numero_telephone)) {
-        const donneesMasquees = appliquerMasquage(
-          clientAleatoire.prenom,
-          clientAleatoire.nom,
-          clientAleatoire.numero_telephone,
-          this.optionsConfidentialite
-        );
+      const donneesMasquees = appliquerMasquage(
+        clientAleatoire.prenom,
+        clientAleatoire.nom,
+        clientAleatoire.numero_telephone,
+        this.optionsConfidentialite
+      );
 
-        numerosUniques.add(clientAleatoire.numero_telephone);
+      // Vérifier si le numéro MASQUÉ n'est pas déjà affiché
+      if (!numerosMasquesUniques.has(donneesMasquees.numero)) {
+        numerosMasquesUniques.add(donneesMasquees.numero);
         nouveauxNumeros.push(donneesMasquees.numero);
       }
     }
@@ -139,43 +145,16 @@ export class TirageComponent implements OnInit {
       this.optionsConfidentialite
     );
 
-    // Placer le numéro gagnant au centre de la liste
+    // Passer directement à l'affichage du gagnant sans phase intermédiaire
+    // pour éviter les problèmes de doublons et les boucles infinies
     this.numeroGagnantEnEvidence = donneesMasquees.numero;
-    this.numerosAffiches = [];
-
-    // Ajouter quelques numéros avant
-    for (let i = 0; i < 2; i++) {
-      const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
-      const masque = appliquerMasquage(
-        clientAleatoire.prenom,
-        clientAleatoire.nom,
-        clientAleatoire.numero_telephone,
-        this.optionsConfidentialite
-      );
-      this.numerosAffiches.push(masque.numero);
-    }
-
-    // Ajouter le numéro gagnant au centre
-    this.numerosAffiches.push(this.numeroGagnantEnEvidence);
-
-    // Ajouter quelques numéros après
-    for (let i = 0; i < 2; i++) {
-      const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
-      const masque = appliquerMasquage(
-        clientAleatoire.prenom,
-        clientAleatoire.nom,
-        clientAleatoire.numero_telephone,
-        this.optionsConfidentialite
-      );
-      this.numerosAffiches.push(masque.numero);
-    }
-
+    this.numerosAffiches = [this.numeroGagnantEnEvidence];
     this.mettreEnEvidenceNumero = true;
 
-    // Phase 2 : Après 1.5 secondes, afficher la carte complète du gagnant
+    // Afficher immédiatement la carte complète du gagnant
     setTimeout(() => {
       this.afficherGagnantFixeEtContinuer();
-    }, 1500);
+    }, 800); // Réduit de 1500ms à 800ms pour une transition plus fluide
   }
 
   afficherGagnantFixeEtContinuer(): void {
