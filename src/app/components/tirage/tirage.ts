@@ -40,7 +40,18 @@ export class TirageComponent implements OnInit {
 
   ngOnInit(): void {
     // Pour le défilement : utiliser TOUS les participants
-    this.tousLesClients = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
+    const tousLesParticipants = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
+
+    // DÉDUPLICATION CRITIQUE : Ne garder qu'un seul client par numéro de téléphone unique
+    // pour éviter d'afficher le même numéro plusieurs fois pendant le défilement
+    const numerosVus = new Set<string>();
+    this.tousLesClients = tousLesParticipants.filter(client => {
+      if (numerosVus.has(client.numero_telephone)) {
+        return false; // Déjà vu, ignorer ce client
+      }
+      numerosVus.add(client.numero_telephone);
+      return true; // Premier client avec ce numéro, le garder
+    });
 
     // Pour la révélation : uniquement les gagnants avec leurs prix depuis gagnants.json
     this.gagnants = this.donneesService.getGagnantsByCategorie(this.categorieSelectionnee);
