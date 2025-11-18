@@ -86,17 +86,35 @@ export class TirageComponent implements OnInit {
   }
 
   genererNumerosAleatoires(): void {
-    this.numerosAffiches = [];
-    for (let i = 0; i < AnimationConfig.nombre_numeros_visibles; i++) {
+    // Utiliser un Set pour garantir l'unicité des numéros affichés
+    const numerosUniques = new Set<string>();
+    const nouveauxNumeros: string[] = [];
+
+    // Limiter le nombre de positions au nombre de participants disponibles
+    const nombrePositions = Math.min(
+      AnimationConfig.nombre_numeros_visibles,
+      this.tousLesClients.length
+    );
+
+    // Générer des numéros uniques
+    while (nouveauxNumeros.length < nombrePositions) {
       const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
-      const donneesMasquees = appliquerMasquage(
-        clientAleatoire.prenom,
-        clientAleatoire.nom,
-        clientAleatoire.numero_telephone,
-        this.optionsConfidentialite
-      );
-      this.numerosAffiches.push(donneesMasquees.numero);
+
+      // Vérifier si le numéro n'est pas déjà dans la liste
+      if (!numerosUniques.has(clientAleatoire.numero_telephone)) {
+        const donneesMasquees = appliquerMasquage(
+          clientAleatoire.prenom,
+          clientAleatoire.nom,
+          clientAleatoire.numero_telephone,
+          this.optionsConfidentialite
+        );
+
+        numerosUniques.add(clientAleatoire.numero_telephone);
+        nouveauxNumeros.push(donneesMasquees.numero);
+      }
     }
+
+    this.numerosAffiches = nouveauxNumeros;
   }
 
   mettreEnEvidenceLeNumeroGagnant(): void {
