@@ -141,9 +141,43 @@ h1 {
 }
 
 .categorie-item.tiree {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
-  background: #f5f5f5;
+  background: repeating-linear-gradient(
+    45deg,
+    #f5f5f5,
+    #f5f5f5 10px,
+    #e8e8e8 10px,
+    #e8e8e8 20px
+  );
+  border-color: #ccc;
+  position: relative;
+}
+
+.categorie-item.tiree::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--mauritanie-rouge);
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.categorie-item.tiree .categorie-info h3 {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.categorie-item.tiree .details span {
+  color: #aaa;
+}
+
+.categorie-item.tiree .prix {
+  color: #bbb;
+  text-decoration: line-through;
 }
 
 .categorie-info h3 {
@@ -167,12 +201,15 @@ h1 {
 
 .statut {
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
   color: white;
   border-radius: 0.25rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid var(--mauritanie-jaune);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid var(--mauritanie-jaune);
+  box-shadow: 0 2px 8px rgba(210, 16, 52, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .btn-lancer {
