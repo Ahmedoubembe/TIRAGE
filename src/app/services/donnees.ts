@@ -17,16 +17,22 @@ export class DonneesService {
 
   chargerFichiersCSV(fichierCategories: File, fichierClients: File): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Charger le fichier des catégories
+      // Charger le fichier des catégories (délimiteur: virgule)
       Papa.parse(fichierCategories, {
+        delimiter: ',',
+        skipEmptyLines: true,
         complete: (resultCategories) => {
           try {
+            console.log('[DonneesService] Résultat parsing catégories:', resultCategories.data);
             const categories = this.traiterFichierCategories(resultCategories.data as string[][]);
 
-            // Charger le fichier des clients
+            // Charger le fichier des clients (délimiteur: point-virgule)
             Papa.parse(fichierClients, {
+              delimiter: ';',
+              skipEmptyLines: true,
               complete: (resultClients) => {
                 try {
+                  console.log('[DonneesService] Résultat parsing clients:', resultClients.data);
                   const clients = this.traiterFichierClients(resultClients.data as string[][]);
 
                   // Assigner les catégories aux clients
@@ -68,15 +74,19 @@ export class DonneesService {
       }
 
       // Parser la ligne de catégorie (séparateur: virgule)
-      categories.push({
+      const categorie = {
         categorie: ligne[0].trim(),
         interval: ligne[1].trim().replace(/[\[\]]/g, ''), // Retirer les crochets [3500 - 5000] -> 3500 - 5000
         nombre_gagnants: parseInt(ligne[2]),
         prix: ligne[3].trim(),
         tiree: false
-      });
+      };
+
+      console.log('[DonneesService] Catégorie parsée:', categorie);
+      categories.push(categorie);
     }
 
+    console.log('[DonneesService] Total catégories parsées:', categories.length);
     return categories;
   }
 
@@ -91,40 +101,51 @@ export class DonneesService {
         continue;
       }
 
-      // La ligne complète est dans ligne[0], on doit la split par ";"
-      const ligneComplete = ligne.join(','); // Rejoindre au cas où Papa a déjà splité
-      const parties = ligneComplete.split(';');
-
-      if (parties.length >= 3) {
+      // PapaCSV a déjà séparé les champs avec le délimiteur ';'
+      // ligne = [tel, name, score]
+      if (ligne.length >= 3) {
         // Convertir le score: remplacer virgule par point
-        const scoreStr = parties[2].replace(',', '.');
+        const scoreStr = ligne[2].replace(',', '.');
         const score = parseFloat(scoreStr);
 
-        clients.push({
-          numero_telephone: parties[0].trim(),
-          nom: parties[1].trim(),
+        const client = {
+          numero_telephone: ligne[0].trim(),
+          nom: ligne[1].trim(),
           score: score,
           id_categorie: '' // Sera déterminé par le score et les intervalles
-        });
+        };
+
+        console.log('[DonneesService] Client parsé:', client);
+        clients.push(client);
       }
     }
 
+    console.log('[DonneesService] Total clients parsés:', clients.length);
     return clients;
   }
 
   private assignerCategories(clients: Client[], categories: Categorie[]): void {
+    console.log('[DonneesService] Assignation des catégories');
+    console.log('[DonneesService] Nombre de clients:', clients.length);
+    console.log('[DonneesService] Nombre de catégories:', categories.length);
+    console.log('[DonneesService] Catégories:', categories);
+
     for (const client of clients) {
       for (const categorie of categories) {
         if (this.scoreCorrespondAInterval(client.score, categorie.interval)) {
           client.id_categorie = categorie.categorie;
+          console.log(`[DonneesService] Client ${client.nom} (score: ${client.score}) assigné à ${categorie.categorie} (${categorie.interval})`);
           break;
         }
+      }
+      if (!client.id_categorie) {
+        console.warn(`[DonneesService] ATTENTION: Client ${client.nom} (score: ${client.score}) n'a pas été assigné à une catégorie`);
       }
     }
   }
 
   private scoreCorrespondAInterval(score: number, interval: string): boolean {
-    // Formats possibles: ">3000", "2000-3000", "<2000"
+    // Formats possibles: ">3000", "2000-3000", "<2000", "3500 - 5000"
     if (interval.startsWith('>')) {
       const seuil = parseFloat(interval.substring(1));
       return score > seuil;
@@ -133,6 +154,7 @@ export class DonneesService {
       return score < seuil;
     } else if (interval.includes('-')) {
       const [min, max] = interval.split('-').map(s => parseFloat(s.trim()));
+      console.log(`[DonneesService] Vérification: ${score} dans [${min}, ${max}] ? ${score >= min && score <= max}`);
       return score >= min && score <= max;
     }
     return false;

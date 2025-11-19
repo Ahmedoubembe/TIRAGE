@@ -32,6 +32,17 @@ export class TirageComponent implements OnInit {
     // Pour le défilement : utiliser tous les participants
     this.tousLesClients = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
 
+    console.log('[TirageComponent] Catégorie sélectionnée:', this.categorieSelectionnee);
+    console.log('[TirageComponent] Nombre de clients pour cette catégorie:', this.tousLesClients.length);
+    console.log('[TirageComponent] Clients:', this.tousLesClients);
+
+    if (this.tousLesClients.length === 0) {
+      console.error('[TirageComponent] ERREUR: Aucun client trouvé pour la catégorie', this.categorieSelectionnee);
+      console.log('[TirageComponent] Tous les clients du service:', this.donneesService.getClients());
+      console.log('[TirageComponent] Toutes les catégories:', this.donneesService.getCategories());
+      return;
+    }
+
     // Lancer le tirage pour révéler le premier gagnant
     this.lancerTirageGagnant();
   }
