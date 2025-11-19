@@ -751,6 +751,7 @@
 
 .gagnant-item.nouveau-gagnant .gagnant-info h2,
 .gagnant-item.nouveau-gagnant .numero,
+.gagnant-item.nouveau-gagnant .score,
 .gagnant-item.nouveau-gagnant .prix {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -785,6 +786,21 @@
   font-size: 1.8rem;
   color: #333;
   font-weight: 700;
+}
+
+.score {
+  margin: 0.3rem 0;
+  color: var(--mauritanie-rouge);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.plein-ecran .score {
+  font-size: 2rem;
+  color: var(--mauritanie-rouge);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(210, 16, 52, 0.3);
 }
 
 .prix {
@@ -839,6 +855,7 @@
   }
 }
 
+.btn-gagnant-suivant,
 .btn-retour {
   padding: 0.8rem 1.5rem;
   border: none;
@@ -853,11 +870,13 @@
   box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
 }
 
+.plein-ecran .btn-gagnant-suivant,
 .plein-ecran .btn-retour {
   padding: 1.2rem 2.5rem;
   font-size: 1.2rem;
 }
 
+.btn-gagnant-suivant:hover,
 .btn-retour:hover {
   background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
   transform: translateY(-2px);
