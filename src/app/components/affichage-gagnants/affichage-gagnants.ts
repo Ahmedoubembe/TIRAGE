@@ -63,9 +63,15 @@ export class AffichageGagnantsComponent implements OnChanges {
     const resteClients = this.donneesService.resteDesClients(this.categorieSelectionnee);
     console.log('[AffichageGagnants] peutAfficherGagnantSuivant()');
     console.log('  - tirageTermine:', this.tirageTermine);
+    console.log('  - tirageEnCours:', this.tirageEnCours);
     console.log('  - categorieSelectionnee:', this.categorieSelectionnee);
     console.log('  - resteDesClients:', resteClients);
-    console.log('  - résultat:', !this.tirageTermine && resteClients);
-    return !this.tirageTermine && resteClients;
+    console.log('  - résultat:', !this.tirageTermine && !this.tirageEnCours && resteClients);
+
+    // Le bouton "Gagnant suivant" s'affiche si:
+    // - Le tirage n'est pas terminé
+    // - Aucun tirage n'est en cours (pas d'animation)
+    // - Il reste des clients dans la catégorie
+    return !this.tirageTermine && !this.tirageEnCours && resteClients;
   }
 }
