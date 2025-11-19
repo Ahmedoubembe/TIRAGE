@@ -49,6 +49,11 @@
         [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine"
         [class.gagnant-historique]="i !== gagnantsAffiches.length - 1">
 
+        <!-- Badge NOUVEAU en haut à droite pour le dernier gagnant -->
+        <div class="badge-nouveau" *ngIf="i === gagnantsAffiches.length - 1 && !tirageTermine">
+          NOUVEAU
+        </div>
+
         <div class="gagnant-info">
           <p class="numero">{{ gagnant.numero_telephone }}</p>
           <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
