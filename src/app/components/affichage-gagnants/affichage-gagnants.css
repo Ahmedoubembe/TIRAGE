@@ -29,7 +29,7 @@
   height: calc(100vh - 90px);
   background: #FFFFFF;
   border-left: none;
-  overflow: hidden;
+  overflow: visible;
   z-index: 1001;
 }
 
@@ -592,7 +592,7 @@
    ==================================== */
 
 .gagnants-panel {
-  padding: 2rem;
+  padding: 4rem 2rem 2rem 2rem;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -601,8 +601,22 @@
   z-index: 2;
 }
 
+/* Wrapper pour le titre avec animations */
+.titre-wrapper {
+  text-align: center;
+  position: relative;
+  z-index: 1002;
+  margin-bottom: 2rem;
+  min-height: 80px;
+}
+
+.plein-ecran .titre-wrapper {
+  min-height: 120px;
+  z-index: 1002;
+}
+
 .titre-felicitations {
-  margin: 0 0 2rem 0;
+  margin: 0;
   color: var(--mauritanie-vert);
   text-align: center;
   font-size: 1.8rem;
