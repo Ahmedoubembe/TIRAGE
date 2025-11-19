@@ -16,6 +16,12 @@ export class ListeCategoriesComponent implements OnInit {
   categories: Categorie[] = [];
   categorieChoisie: string | null = null;
 
+  // Traductions pour le bouton
+  texteBouton = {
+    ar: 'تشغيل برنامج WEVAI',
+    fr: 'Lancer le programme WEVAI'
+  };
+
   constructor(private donneesService: DonneesService) {}
 
   ngOnInit(): void {

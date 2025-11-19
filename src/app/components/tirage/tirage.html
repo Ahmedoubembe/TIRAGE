@@ -1,6 +1,9 @@
 <div class="container-tirage">
   <div class="tirage-card">
-    <h1>Selection en cours</h1>
+    <h1 class="titre-bilingue">
+      <span class="texte-ar">{{ traductions.titre.ar }}</span>
+      <span class="texte-fr">{{ traductions.titre.fr }}</span>
+    </h1>
 
     <!-- Animation de tirage simplifiée -->
     <div class="tirage-animation" *ngIf="!afficherGagnantFixe">
@@ -29,7 +32,10 @@
 
     <!-- Affichage du gagnant -->
     <div class="gagnant-container" *ngIf="afficherGagnantFixe && gagnantActuelFixe">
-      <div class="gagnant-badge">GAGNANT</div>
+      <div class="gagnant-badge">
+        <span class="texte-ar">{{ traductions.gagnant.ar }}</span>
+        <span class="texte-fr">{{ traductions.gagnant.fr }}</span>
+      </div>
       <div class="gagnant-card">
         <p class="numero">{{ gagnantActuelFixe.numero_telephone }}</p>
         <p class="score">Score: {{ gagnantActuelFixe.score.toFixed(2) }}</p>

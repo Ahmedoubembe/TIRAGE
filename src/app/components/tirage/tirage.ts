@@ -26,6 +26,18 @@ export class TirageComponent implements OnInit {
   scoreGagnantEnEvidence: string | null = null;
   mettreEnEvidenceScore = false;
 
+  // Traductions
+  traductions = {
+    titre: {
+      ar: 'جارٍ الاختيار',
+      fr: 'Sélection en cours'
+    },
+    gagnant: {
+      ar: 'الفائز',
+      fr: 'GAGNANT'
+    }
+  };
+
   constructor(private donneesService: DonneesService) {}
 
   ngOnInit(): void {

@@ -29,7 +29,8 @@
       class="btn-lancer"
       [disabled]="!categorieChoisie"
       (click)="lancerTirage()">
-      Lancer le programme WEVAI
+      <span class="texte-ar">{{ texteBouton.ar }}</span>
+      <span class="texte-fr">{{ texteBouton.fr }}</span>
     </button>
   </div>
 </div>

@@ -77,6 +77,29 @@ h1 {
   letter-spacing: 1px;
 }
 
+/* Titre bilingue arabe/français */
+h1.titre-bilingue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+h1.titre-bilingue .texte-ar {
+  font-size: 2.5rem;
+  font-weight: 700;
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  color: var(--mauritanie-vert);
+}
+
+h1.titre-bilingue .texte-fr {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--mauritanie-vert);
+  opacity: 0.85;
+}
+
 /* ====================================
    ANIMATION DE TIRAGE - VERSION SIMPLE
    ==================================== */
@@ -261,7 +284,10 @@ h1 {
 }
 
 .gagnant-badge {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
   padding: 0.8rem 2.5rem;
   background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
   color: white;
@@ -272,6 +298,22 @@ h1 {
   margin-bottom: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
   border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+/* Badge bilingue arabe/français */
+.gagnant-badge .texte-ar {
+  font-size: 1.6rem;
+  font-weight: 800;
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  letter-spacing: 0;
+}
+
+.gagnant-badge .texte-fr {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  opacity: 0.9;
 }
 
 .gagnant-card {
