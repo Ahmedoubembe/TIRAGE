@@ -10,10 +10,10 @@
         </div>
     </div>
 
-    <!-- Titres -->
-    <div class="titres-container">
-      <h1 class="titre-principal">PROGRAMME DE FIDELITE BAMIS DIGITAL</h1>
-      <p class="sous-titre">Tirage au Sort Special Independance</p>
+    <!-- Titres avec alternance français/arabe -->
+    <div class="titres-container" [class.langue-ar]="langueActive === 'ar'">
+      <h1 class="titre-principal">{{ titre }}</h1>
+      <p class="sous-titre">{{ sousTitre }}</p>
     </div>
 
     <!-- Icone Plein Ecran Amelioree -->
