@@ -46,7 +46,8 @@
       <div
         *ngFor="let gagnant of gagnantsAffiches; let i = index"
         class="gagnant-item"
-        [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine">
+        [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine"
+        [class.gagnant-historique]="i !== gagnantsAffiches.length - 1">
 
         <div class="gagnant-info">
           <p class="numero">{{ gagnant.numero_telephone }}</p>

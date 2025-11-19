@@ -679,7 +679,7 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Animation explosive pour nouveau gagnant */
+/* Animation explosive pour nouveau gagnant (le dernier révélé) */
 .gagnant-item.nouveau-gagnant {
   animation: apparition-explosive 1.5s ease-out;
   background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
@@ -689,6 +689,52 @@
   border: 4px solid var(--mauritanie-jaune);
   position: relative;
   overflow: hidden;
+}
+
+/* Gagnants historiques (tous sauf le dernier) - GRISÉS/DÉSATURÉS */
+.gagnant-item.gagnant-historique {
+  opacity: 0.6;
+  background: #f8f8f8;
+  border-left-color: #bbb;
+  filter: grayscale(60%);
+  transition: all 0.3s ease;
+}
+
+.plein-ecran .gagnant-item.gagnant-historique {
+  border-color: #ccc;
+  background: #fafafa;
+  filter: grayscale(60%);
+}
+
+/* Texte désaturé pour gagnants historiques */
+.gagnant-item.gagnant-historique .numero {
+  color: #888;
+  font-weight: 700;
+}
+
+.plein-ecran .gagnant-item.gagnant-historique .numero {
+  color: #888;
+  text-shadow: none;
+}
+
+.gagnant-item.gagnant-historique .score {
+  color: #999;
+}
+
+.plein-ecran .gagnant-item.gagnant-historique .score {
+  color: #999;
+  text-shadow: none;
+}
+
+.gagnant-item.gagnant-historique .prix {
+  color: #aaa;
+  font-weight: 700;
+}
+
+.plein-ecran .gagnant-item.gagnant-historique .prix {
+  color: #aaa;
+  text-shadow: none;
+  animation: none;
 }
 
 /* Multi-explosions autour du nouveau gagnant */
