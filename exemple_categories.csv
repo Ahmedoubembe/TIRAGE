@@ -1,0 +1,5 @@
+categorie,interval,nombre_gagnants,prix
+S1,[3500 - 5000],2,10000 MRU
+S2,[2500 - 3499],3,5000 MRU
+S3,[1500 - 2499],5,2000 MRU
+S4,[500 - 1499],10,1000 MRU

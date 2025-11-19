@@ -1,21 +1,49 @@
 <div class="container">
   <div class="upload-card">
     <h1>Tirage au Sort</h1>
-    <p>Importez votre fichier CSV pour commencer</p>
-    
+    <p>Importez vos fichiers CSV pour commencer</p>
+
+    <!-- Zone pour le fichier des catégories -->
     <div class="upload-zone">
-      <input 
-        type="file" 
-        accept=".csv" 
-        (change)="onFileSelected($event)"
-        id="fileInput"
+      <h3>1. Fichier des catégories</h3>
+      <input
+        type="file"
+        accept=".csv"
+        (change)="onCategoriesFileSelected($event)"
+        id="categoriesFileInput"
         [disabled]="chargementEnCours">
-      
-      <label for="fileInput" class="upload-label">
-        <span *ngIf="!chargementEnCours">Choisir un fichier CSV</span>
+
+      <label for="categoriesFileInput" class="upload-label">
+        <span *ngIf="!fichierCategoriesCharge">Choisir le fichier des catégories</span>
+        <span *ngIf="fichierCategoriesCharge && !chargementEnCours">✓ {{ nomFichierCategories }}</span>
         <span *ngIf="chargementEnCours">Chargement en cours...</span>
       </label>
     </div>
+
+    <!-- Zone pour le fichier des clients -->
+    <div class="upload-zone">
+      <h3>2. Fichier des clients</h3>
+      <input
+        type="file"
+        accept=".csv"
+        (change)="onClientsFileSelected($event)"
+        id="clientsFileInput"
+        [disabled]="chargementEnCours">
+
+      <label for="clientsFileInput" class="upload-label">
+        <span *ngIf="!fichierClientsCharge">Choisir le fichier des clients</span>
+        <span *ngIf="fichierClientsCharge && !chargementEnCours">✓ {{ nomFichierClients }}</span>
+        <span *ngIf="chargementEnCours">Chargement en cours...</span>
+      </label>
+    </div>
+
+    <!-- Bouton pour valider -->
+    <button
+      class="btn-valider"
+      *ngIf="fichierCategoriesCharge && fichierClientsCharge && !chargementEnCours"
+      (click)="chargerLesFichiers()">
+      Charger les données
+    </button>
 
     <div *ngIf="erreur" class="erreur">
       {{ erreur }}

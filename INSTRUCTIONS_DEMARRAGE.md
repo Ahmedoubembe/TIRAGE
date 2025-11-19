@@ -25,46 +25,51 @@ npm start
 
 L'application sera accessible à l'adresse : **http://localhost:4200**
 
-## 📁 Format du fichier CSV attendu
+## 📁 Format des fichiers CSV attendus
 
-Le fichier CSV doit avoir ce format exact :
+L'application nécessite **DEUX fichiers CSV séparés** :
+
+### 1. Fichier des catégories (`categories.csv`)
 
 ```csv
-[CATEGORIES]
 categorie,interval,nombre_gagnants,prix
-S1,>3000,2,25000.00 MRU
-S2,2000-3000,3,15000.00 MRU
-S3,1000-2000,2,10000.00 MRU
-S4,<1000,1,5000.00 MRU
+S1,[3500 - 5000],2,10000 MRU
+S2,[2500 - 3499],3,5000 MRU
+S3,[1500 - 2499],5,2000 MRU
+S4,[500 - 1499],10,1000 MRU
+```
 
-[CLIENTS]
+**Points importants :**
+- Séparateur : **virgule** (,)
+- Colonnes : `categorie,interval,nombre_gagnants,prix`
+- `interval` peut être : `[3500 - 5000]`, `[2500 - 3499]`, etc.
+- Les crochets sont automatiquement retirés lors du traitement
+
+### 2. Fichier des clients (`clients.csv`)
+
+```csv
 tel;name;score
 30770077;BASSIROU GOUMBALA;3975,19
 46487629;Ahmed Adoud;3600,61
-32445566;Mohamed Ould;2850,45
-28991234;Fatima Mint;1750,30
-27889900;Ali Ba;950,20
+46480003;Mohamed Taya;3266,82
+44038989;Sidi Mohamed Ebah;2770,38
+22068350;Seniya El Atigh;2646,69
 ```
 
-### Points importants :
-
-1. **Section [CATEGORIES]** :
-   - Séparateur : **virgule** (,)
-   - Colonnes : `categorie,interval,nombre_gagnants,prix`
-   - `interval` peut être : `>3000`, `2000-3000`, `<1000`
-
-2. **Section [CLIENTS]** :
-   - Séparateur : **point-virgule** (;)
-   - Colonnes : `tel;name;score`
-   - Le **score** utilise la **virgule** comme séparateur décimal : `3975,19`
-   - Les clients sont automatiquement assignés à leur catégorie selon leur score
+**Points importants :**
+- Séparateur : **point-virgule** (;)
+- Colonnes : `tel;name;score`
+- Le **score** utilise la **virgule** comme séparateur décimal : `3975,19`
+- Les clients sont automatiquement assignés à leur catégorie selon leur score
 
 ## 🎯 Étapes d'utilisation
 
 ### 1. Page d'accueil (Upload CSV)
-- Vous verrez un bouton **"Choisir un fichier CSV"**
-- Cliquez dessus et sélectionnez votre fichier CSV
-- Le fichier sera chargé automatiquement
+- Vous verrez **deux zones de téléversement** :
+  - **1. Fichier des catégories** : Sélectionnez votre fichier `categories.csv`
+  - **2. Fichier des clients** : Sélectionnez votre fichier `clients.csv`
+- Une fois les deux fichiers sélectionnés, cliquez sur le bouton **"Charger les données"**
+- Les fichiers seront chargés automatiquement
 
 ### 2. Sélection de la catégorie
 - Une liste des catégories apparaît
@@ -104,14 +109,14 @@ tel;name;score
 
 ### Erreur lors du chargement du CSV
 
-1. Vérifiez le format du fichier :
-   - Section [CATEGORIES] avec virgules
-   - Section [CLIENTS] avec point-virgules
+1. Vérifiez le format des fichiers :
+   - **Fichier catégories** : séparateur virgule (,)
+   - **Fichier clients** : séparateur point-virgule (;)
    - Scores avec virgule décimale (3975,19)
 
-2. Assurez-vous que le fichier est en **UTF-8** (pas UTF-8 avec BOM)
+2. Assurez-vous que les fichiers sont en **UTF-8** (pas UTF-8 avec BOM)
 
-3. Vérifiez qu'il n'y a pas de lignes vides entre les sections
+3. Vérifiez que vous avez sélectionné **les deux fichiers** avant de cliquer sur "Charger les données"
 
 ### L'application ne démarre pas
 
@@ -132,37 +137,50 @@ tel;name;score
    # Doit être >= 16.x
    ```
 
-## 📝 Exemple de fichier CSV complet
+## 📝 Exemples de fichiers CSV
 
-Créez un fichier `test.csv` avec ce contenu :
+Deux fichiers d'exemple sont fournis dans le projet :
+
+### `exemple_categories.csv` :
 
 ```csv
-[CATEGORIES]
 categorie,interval,nombre_gagnants,prix
-S1,>3000,2,25000.00 MRU
-S2,2000-3000,3,15000.00 MRU
-S3,1000-2000,2,10000.00 MRU
-S4,<1000,1,5000.00 MRU
+S1,[3500 - 5000],2,10000 MRU
+S2,[2500 - 3499],3,5000 MRU
+S3,[1500 - 2499],5,2000 MRU
+S4,[500 - 1499],10,1000 MRU
+```
 
-[CLIENTS]
+### `exemple_clients.csv` :
+
+```csv
 tel;name;score
 30770077;BASSIROU GOUMBALA;3975,19
 46487629;Ahmed Adoud;3600,61
-45123456;Khadija Ould;3200,50
-32445566;Mohamed Ould;2850,45
-31987654;Aminata Ba;2450,30
-29876543;Cheikh Sidi;2100,75
-28991234;Fatima Mint;1750,30
-28445566;Ousmane Diallo;1450,60
-27889900;Ali Ba;950,20
-26778899;Mariam Sy;750,85
-25667788;Abdallah Kane;500,40
+46480003;Mohamed Taya;3266,82
+44038989;Sidi Mohamed Ebah;2770,38
+22068350;Seniya El Atigh;2646,69
+31234567;Fatou Ba;2580,45
+32345678;Mamadou Diallo;2420,12
+33456789;Aminata Sow;1850,67
+34567890;Ousmane Kane;1720,34
+35678901;Aissata Diop;1590,89
+36789012;Ibrahima Fall;1450,23
+37890123;Mariam Toure;1380,56
+38901234;Abdoulaye Sy;1220,78
+39012345;Khadija Ndiaye;1150,90
+40123456;Moussa Cisse;980,45
+41234567;Awa Sarr;890,23
+42345678;Cheikh Diouf;750,67
+43456789;Binta Wade;680,34
+44567890;Seydou Gueye;590,12
+45678901;Fatoumata Mbaye;520,89
 ```
 
-Ce fichier contient :
+Ces fichiers contiennent :
 - 4 catégories (S1, S2, S3, S4)
-- 11 clients avec des scores variés
-- Les clients seront automatiquement assignés aux bonnes catégories
+- 20 clients avec des scores variés
+- Les clients seront automatiquement assignés aux bonnes catégories selon leurs scores
 
 ## ✅ Vérification rapide
 
@@ -173,8 +191,10 @@ Pour vérifier que tout fonctionne :
 3. Vous devez voir :
    - Un header "BAMIS DIGITAL" en haut
    - Un titre "Tirage au Sort"
-   - Un texte "Importez votre fichier CSV pour commencer"
-   - Un bouton vert "Choisir un fichier CSV"
+   - Un texte "Importez vos fichiers CSV pour commencer"
+   - Deux zones de téléversement :
+     - "1. Fichier des catégories"
+     - "2. Fichier des clients"
 
 Si vous ne voyez pas cette page, vérifiez la console du navigateur (F12) pour les erreurs.
 

@@ -15,13 +15,36 @@ export class DonneesService {
   categories$ = this.categoriesSubject.asObservable();
   clients$ = this.clientsSubject.asObservable();
 
-  chargerFichierCSV(fichier: File): Promise<void> {
+  chargerFichiersCSV(fichierCategories: File, fichierClients: File): Promise<void> {
     return new Promise((resolve, reject) => {
-      Papa.parse(fichier, {
-        complete: (result) => {
+      // Charger le fichier des catégories
+      Papa.parse(fichierCategories, {
+        complete: (resultCategories) => {
           try {
-            this.traiterDonneesCSV(result.data as string[][]);
-            resolve();
+            const categories = this.traiterFichierCategories(resultCategories.data as string[][]);
+
+            // Charger le fichier des clients
+            Papa.parse(fichierClients, {
+              complete: (resultClients) => {
+                try {
+                  const clients = this.traiterFichierClients(resultClients.data as string[][]);
+
+                  // Assigner les catégories aux clients
+                  this.assignerCategories(clients, categories);
+
+                  // Publier les données
+                  this.categoriesSubject.next(categories);
+                  this.clientsSubject.next(clients);
+
+                  resolve();
+                } catch (error) {
+                  reject(error);
+                }
+              },
+              error: (error) => {
+                reject(error);
+              }
+            });
           } catch (error) {
             reject(error);
           }
@@ -33,66 +56,60 @@ export class DonneesService {
     });
   }
 
-  private traiterDonneesCSV(data: string[][]): void {
+  private traiterFichierCategories(data: string[][]): Categorie[] {
     const categories: Categorie[] = [];
-    const clients: Client[] = [];
-
-    let section = '';
 
     for (let i = 0; i < data.length; i++) {
       const ligne = data[i];
 
-      if (ligne[0] === '[CATEGORIES]') {
-        section = 'categories';
+      // Ignorer les lignes vides et l'en-tête
+      if (!ligne[0] || ligne[0] === '' || ligne[0] === 'categorie') {
         continue;
       }
 
-      if (ligne[0] === '[CLIENTS]') {
-        section = 'clients';
+      // Parser la ligne de catégorie (séparateur: virgule)
+      categories.push({
+        categorie: ligne[0].trim(),
+        interval: ligne[1].trim().replace(/[\[\]]/g, ''), // Retirer les crochets [3500 - 5000] -> 3500 - 5000
+        nombre_gagnants: parseInt(ligne[2]),
+        prix: ligne[3].trim(),
+        tiree: false
+      });
+    }
+
+    return categories;
+  }
+
+  private traiterFichierClients(data: string[][]): Client[] {
+    const clients: Client[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      const ligne = data[i];
+
+      // Ignorer les lignes vides et l'en-tête
+      if (!ligne[0] || ligne[0] === '' || ligne[0] === 'tel') {
         continue;
       }
 
-      if (ligne[0] === '' || ligne.every(cell => cell === '')) {
-        continue;
-      }
+      // La ligne complète est dans ligne[0], on doit la split par ";"
+      const ligneComplete = ligne.join(','); // Rejoindre au cas où Papa a déjà splité
+      const parties = ligneComplete.split(';');
 
-      // Parser les catégories (séparateur: virgule)
-      if (section === 'categories' && ligne[0] !== 'categorie') {
-        categories.push({
-          categorie: ligne[0],
-          interval: ligne[1],
-          nombre_gagnants: parseInt(ligne[2]),
-          prix: ligne[3],
-          tiree: false
+      if (parties.length >= 3) {
+        // Convertir le score: remplacer virgule par point
+        const scoreStr = parties[2].replace(',', '.');
+        const score = parseFloat(scoreStr);
+
+        clients.push({
+          numero_telephone: parties[0].trim(),
+          nom: parties[1].trim(),
+          score: score,
+          id_categorie: '' // Sera déterminé par le score et les intervalles
         });
-      }
-
-      // Parser les clients (séparateur: point-virgule)
-      if (section === 'clients' && ligne[0] !== 'tel') {
-        // La ligne complète est dans ligne[0], on doit la split par ";"
-        const ligneComplete = ligne.join(','); // Rejoindre au cas où Papa a déjà splité
-        const parties = ligneComplete.split(';');
-
-        if (parties.length >= 3) {
-          // Convertir le score: remplacer virgule par point
-          const scoreStr = parties[2].replace(',', '.');
-          const score = parseFloat(scoreStr);
-
-          clients.push({
-            numero_telephone: parties[0].trim(),
-            nom: parties[1].trim(),
-            score: score,
-            id_categorie: '' // Sera déterminé par le score et les intervalles
-          });
-        }
       }
     }
 
-    // Assigner les catégories aux clients basé sur leur score
-    this.assignerCategories(clients, categories);
-
-    this.categoriesSubject.next(categories);
-    this.clientsSubject.next(clients);
+    return clients;
   }
 
   private assignerCategories(clients: Client[], categories: Categorie[]): void {
