@@ -43,6 +43,7 @@ export class AppComponent {
   categorieSelectionnee: string = '';
   gagnantsAffiches: Client[] = [];
   tirageTermine: boolean = false;
+  tirageEnCours: boolean = false;
 
   onFichierCharge(): void {
     this.etapeActuelle = 'SELECTION';
@@ -52,10 +53,12 @@ export class AppComponent {
     this.categorieSelectionnee = categorie;
     this.gagnantsAffiches = [];
     this.tirageTermine = false;
+    this.tirageEnCours = true;
     this.etapeActuelle = 'TIRAGE';
   }
 
   onGagnantRevele(gagnant: Client): void {
+    this.tirageEnCours = false;
     this.gagnantsAffiches.push(gagnant);
     if (this.affichageGagnants) {
       this.affichageGagnants.lancerConfettis();
@@ -64,6 +67,9 @@ export class AppComponent {
 
   onGagnantSuivant(): void {
     // Méthode appelée quand l'utilisateur clique sur "Gagnant suivant"
+    // Marquer le tirage comme en cours pour cacher le panneau des gagnants
+    this.tirageEnCours = true;
+
     // Appeler la méthode du composant TirageComponent pour lancer un nouveau tirage
     if (this.tirageComponent) {
       this.tirageComponent.lancerTirageSuivant();

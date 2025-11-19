@@ -14,6 +14,7 @@ import { DonneesService } from '../../services/donnees';
 export class AffichageGagnantsComponent {
   @Input() gagnantsAffiches: Client[] = [];
   @Input() tirageTermine: boolean = false;
+  @Input() tirageEnCours: boolean = false;
   @Input() categorieSelectionnee: string = '';
   @Output() retourSelection = new EventEmitter<void>();
   @Output() gagnantSuivant = new EventEmitter<void>();
