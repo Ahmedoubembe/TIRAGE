@@ -4,26 +4,26 @@
 
     <!-- Animation de tirage simplifiée -->
     <div class="tirage-animation" *ngIf="!afficherGagnantFixe">
-      <!-- Zone de numéros qui défilent -->
+      <!-- Zone de scores qui défilent -->
       <div class="numeros-container">
         <div
-          *ngFor="let numero of numerosAffiches; let i = index"
+          *ngFor="let score of scoresAffiches; let i = index"
           class="numero-item"
-          [class.numero-gagnant-emphasis]="mettreEnEvidenceNumero && numero === numeroGagnantEnEvidence"
+          [class.numero-gagnant-emphasis]="mettreEnEvidenceScore && score === scoreGagnantEnEvidence"
           [style.animation-delay]="i * 0.1 + 's'">
-          {{ numero }}
+          {{ score }}
         </div>
       </div>
 
       <!-- Indicateur de tirage -->
-      <div class="indicateur-tirage" *ngIf="!mettreEnEvidenceNumero">
+      <div class="indicateur-tirage" *ngIf="!mettreEnEvidenceScore">
         <div class="spinner"></div>
         <p>Tirage en cours...</p>
       </div>
 
-      <!-- Message quand le numéro est en évidence -->
-      <div class="message-selection" *ngIf="mettreEnEvidenceNumero">
-        <p>✨ Numéro sélectionné !</p>
+      <!-- Message quand le score est en évidence -->
+      <div class="message-selection" *ngIf="mettreEnEvidenceScore">
+        <p>✨ Score sélectionné !</p>
       </div>
     </div>
 
@@ -31,10 +31,18 @@
     <div class="gagnant-container" *ngIf="afficherGagnantFixe && gagnantActuelFixe">
       <div class="gagnant-badge">GAGNANT</div>
       <div class="gagnant-card">
-        <p class="nom">{{ prenomAffiche }} {{ nomAffiche }}</p>
-        <p class="numero">{{ numeroAffiche }}</p>
+        <p class="numero">{{ gagnantActuelFixe.numero_telephone }}</p>
+        <p class="score">Score: {{ gagnantActuelFixe.score.toFixed(2) }}</p>
         <p class="prix">{{ gagnantActuelFixe.prix }}</p>
       </div>
+
+      <!-- Bouton Gagnant suivant -->
+      <button
+        class="btn-gagnant-suivant"
+        *ngIf="peutAfficherGagnantSuivant()"
+        (click)="onGagnantSuivant()">
+        Gagnant suivant
+      </button>
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header';
 import { TeleversementCsvComponent } from './components/televersement-csv/televersement-csv';
-import { ListeCategoriesComponent, OptionsConfidentialite } from './components/liste-categories/liste-categories';
+import { ListeCategoriesComponent } from './components/liste-categories/liste-categories';
 import { TirageComponent } from './components/tirage/tirage';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
 import { Client } from './models/client.model';
@@ -42,18 +42,13 @@ export class AppComponent {
   categorieSelectionnee: string = '';
   gagnantsAffiches: Client[] = [];
   tirageTermine: boolean = false;
-  optionsConfidentialite: OptionsConfidentialite = {
-    masquerNom: false,
-    masquerNumero: false
-  };
 
   onFichierCharge(): void {
     this.etapeActuelle = 'SELECTION';
   }
 
-  onCategorieSelectionnee(data: {categorie: string, options: OptionsConfidentialite}): void {
-    this.categorieSelectionnee = data.categorie;
-    this.optionsConfidentialite = data.options;
+  onCategorieSelectionnee(categorie: string): void {
+    this.categorieSelectionnee = categorie;
     this.gagnantsAffiches = [];
     this.tirageTermine = false;
     this.etapeActuelle = 'TIRAGE';
@@ -64,6 +59,11 @@ export class AppComponent {
     if (this.affichageGagnants) {
       this.affichageGagnants.lancerConfettis();
     }
+  }
+
+  onGagnantSuivant(): void {
+    // Méthode appelée quand l'utilisateur clique sur "Gagnant suivant"
+    // Le composant TirageComponent gère déjà la logique de tirage
   }
 
   onTirageComplet(): void {

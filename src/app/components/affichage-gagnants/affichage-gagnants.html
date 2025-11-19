@@ -49,8 +49,8 @@
         [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine">
 
         <div class="gagnant-info">
-          <h2>{{ obtenirDonneesMasquees(gagnant).prenom }} {{ obtenirDonneesMasquees(gagnant).nom }}</h2>
-          <p class="numero">{{ obtenirDonneesMasquees(gagnant).numero }}</p>
+          <p class="numero">{{ gagnant.numero_telephone }}</p>
+          <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
           <p class="prix">{{ gagnant.prix }}</p>
         </div>
       </div>

@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DonneesService } from '../../services/donnees';
 import { Client } from '../../models/client.model';
 import { AnimationConfig } from '../../config/animation.config';
-import { OptionsConfidentialite } from '../liste-categories/liste-categories';
-import { appliquerMasquage } from '../../utilities/masquage';
 
 @Component({
   selector: 'app-tirage',
@@ -15,55 +13,35 @@ import { appliquerMasquage } from '../../utilities/masquage';
 })
 export class TirageComponent implements OnInit {
   @Input() categorieSelectionnee!: string;
-  @Input() optionsConfidentialite!: OptionsConfidentialite;
   @Output() gagnantRevele = new EventEmitter<Client>();
+  @Output() gagnantSuivant = new EventEmitter<void>();
   @Output() tirageComplet = new EventEmitter<void>();
 
-  numerosAffiches: string[] = [];
+  scoresAffiches: string[] = [];
   tousLesClients: Client[] = [];
-  gagnants: Client[] = [];
-  indexGagnantActuel = 0;
   tirageEnCours = true;
   gagnantActuelFixe: Client | null = null;
   afficherGagnantFixe = false;
 
-  // Mise en évidence du numéro gagnant
-  numeroGagnantEnEvidence: string | null = null;
-  mettreEnEvidenceNumero = false;
-
-  // Versions masquées pour l'affichage
-  prenomAffiche: string = '';
-  nomAffiche: string = '';
-  numeroAffiche: string = '';
+  // Mise en évidence du score gagnant
+  scoreGagnantEnEvidence: string | null = null;
+  mettreEnEvidenceScore = false;
 
   constructor(private donneesService: DonneesService) {}
 
   ngOnInit(): void {
-    // Pour le défilement : utiliser TOUS les participants
-    const tousLesParticipants = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
+    // Pour le défilement : utiliser tous les participants
+    this.tousLesClients = this.donneesService.getTousLesParticipantsByCategorie(this.categorieSelectionnee);
 
-    // DÉDUPLICATION CRITIQUE : Ne garder qu'un seul client par numéro de téléphone unique
-    // pour éviter d'afficher le même numéro plusieurs fois pendant le défilement
-    const numerosVus = new Set<string>();
-    this.tousLesClients = tousLesParticipants.filter(client => {
-      if (numerosVus.has(client.numero_telephone)) {
-        return false; // Déjà vu, ignorer ce client
-      }
-      numerosVus.add(client.numero_telephone);
-      return true; // Premier client avec ce numéro, le garder
-    });
-
-    // Pour la révélation : uniquement les gagnants avec leurs prix depuis gagnants.json
-    this.gagnants = this.donneesService.getGagnantsByCategorie(this.categorieSelectionnee);
-
+    // Lancer le tirage pour révéler le premier gagnant
     this.lancerTirageGagnant();
   }
 
   lancerTirageGagnant(): void {
     this.afficherGagnantFixe = false;
     this.gagnantActuelFixe = null;
-    this.mettreEnEvidenceNumero = false;
-    this.numeroGagnantEnEvidence = null;
+    this.mettreEnEvidenceScore = false;
+    this.scoreGagnantEnEvidence = null;
 
     const debut = Date.now();
     const duree = AnimationConfig.duree_tirage_ms;
@@ -74,13 +52,13 @@ export class TirageComponent implements OnInit {
 
       const vitesseActuelle = this.calculerVitesse(progression);
 
-      this.genererNumerosAleatoires();
+      this.genererScoresAleatoires();
 
       if (progression < 1) {
         setTimeout(animer, vitesseActuelle);
       } else {
-        // Phase 1 : Mettre en évidence le numéro gagnant dans la liste
-        this.mettreEnEvidenceLeNumeroGagnant();
+        // Phase 1 : Mettre en évidence le score gagnant dans la liste
+        this.mettreEnEvidenceLeScoreGagnant();
       }
     };
 
@@ -96,11 +74,9 @@ export class TirageComponent implements OnInit {
     return vitesseInitiale + (vitesseFinale - vitesseInitiale) * facteurRalentissement;
   }
 
-  genererNumerosAleatoires(): void {
-    // CORRECTION CRITIQUE : Vérifier l'unicité des numéros MASQUÉS, pas des originaux
-    // Car le masquage peut produire le même résultat pour des numéros différents
-    const numerosMasquesUniques = new Set<string>();
-    const nouveauxNumeros: string[] = [];
+  genererScoresAleatoires(): void {
+    const scoresUniques = new Set<string>();
+    const nouveauxScores: string[] = [];
 
     // Limiter le nombre de positions au nombre de participants disponibles
     const nombrePositions = Math.min(
@@ -112,83 +88,83 @@ export class TirageComponent implements OnInit {
     let tentatives = 0;
     const maxTentatives = this.tousLesClients.length * 3;
 
-    // Générer des numéros masqués uniques
-    while (nouveauxNumeros.length < nombrePositions && tentatives < maxTentatives) {
+    // Générer des scores uniques
+    while (nouveauxScores.length < nombrePositions && tentatives < maxTentatives) {
       tentatives++;
       const clientAleatoire = this.tousLesClients[Math.floor(Math.random() * this.tousLesClients.length)];
+      const scoreStr = clientAleatoire.score.toFixed(2);
 
-      const donneesMasquees = appliquerMasquage(
-        clientAleatoire.prenom,
-        clientAleatoire.nom,
-        clientAleatoire.numero_telephone,
-        this.optionsConfidentialite
-      );
-
-      // Vérifier si le numéro MASQUÉ n'est pas déjà affiché
-      if (!numerosMasquesUniques.has(donneesMasquees.numero)) {
-        numerosMasquesUniques.add(donneesMasquees.numero);
-        nouveauxNumeros.push(donneesMasquees.numero);
+      // Vérifier si le score n'est pas déjà affiché
+      if (!scoresUniques.has(scoreStr)) {
+        scoresUniques.add(scoreStr);
+        nouveauxScores.push(scoreStr);
       }
     }
 
-    this.numerosAffiches = nouveauxNumeros;
+    this.scoresAffiches = nouveauxScores;
   }
 
-  mettreEnEvidenceLeNumeroGagnant(): void {
-    const gagnant = this.gagnants[this.indexGagnantActuel];
+  mettreEnEvidenceLeScoreGagnant(): void {
+    // Récupérer le prochain client avec le meilleur score
+    const gagnant = this.donneesService.getProchainClient(this.categorieSelectionnee);
 
-    // Appliquer le masquage pour obtenir le numéro à mettre en évidence
-    const donneesMasquees = appliquerMasquage(
-      gagnant.prenom,
-      gagnant.nom,
-      gagnant.numero_telephone,
-      this.optionsConfidentialite
-    );
+    if (!gagnant) {
+      // Plus de clients disponibles, terminer le tirage
+      this.tirageEnCours = false;
+      this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
+      setTimeout(() => {
+        this.tirageComplet.emit();
+      }, 1000);
+      return;
+    }
 
-    // Passer directement à l'affichage du gagnant sans phase intermédiaire
-    // pour éviter les problèmes de doublons et les boucles infinies
-    this.numeroGagnantEnEvidence = donneesMasquees.numero;
-    this.numerosAffiches = [this.numeroGagnantEnEvidence];
-    this.mettreEnEvidenceNumero = true;
+    // Mettre en évidence le score du gagnant
+    this.scoreGagnantEnEvidence = gagnant.score.toFixed(2);
+    this.scoresAffiches = [this.scoreGagnantEnEvidence];
+    this.mettreEnEvidenceScore = true;
 
     // Afficher immédiatement la carte complète du gagnant
     setTimeout(() => {
-      this.afficherGagnantFixeEtContinuer();
-    }, 800); // Réduit de 1500ms à 800ms pour une transition plus fluide
+      this.afficherGagnantFixeEtContinuer(gagnant);
+    }, 800);
   }
 
-  afficherGagnantFixeEtContinuer(): void {
-    const gagnant = this.gagnants[this.indexGagnantActuel];
-    this.gagnantActuelFixe = gagnant;
-
-    // Appliquer le masquage pour l'affichage
-    const donneesMasquees = appliquerMasquage(
-      gagnant.prenom,
-      gagnant.nom,
-      gagnant.numero_telephone,
-      this.optionsConfidentialite
+  afficherGagnantFixeEtContinuer(gagnant: Client): void {
+    // Récupérer la catégorie pour obtenir le prix
+    const categorie = this.donneesService.getCategories().find(
+      cat => cat.categorie === this.categorieSelectionnee
     );
-    this.prenomAffiche = donneesMasquees.prenom;
-    this.nomAffiche = donneesMasquees.nom;
-    this.numeroAffiche = donneesMasquees.numero;
 
+    // Assigner le prix au gagnant
+    if (categorie) {
+      gagnant.prix = categorie.prix;
+      gagnant.est_gagnant = true;
+    }
+
+    this.gagnantActuelFixe = gagnant;
     this.afficherGagnantFixe = true;
-    this.mettreEnEvidenceNumero = false;
+    this.mettreEnEvidenceScore = false;
 
-    setTimeout(() => {
-      this.gagnantRevele.emit(gagnant);
-      this.indexGagnantActuel++;
+    // Émettre l'événement de révélation
+    this.gagnantRevele.emit(gagnant);
+  }
 
-      if (this.indexGagnantActuel < this.gagnants.length) {
-        this.lancerTirageGagnant();
-      } else {
-        this.tirageEnCours = false;
-        this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
+  onGagnantSuivant(): void {
+    // Vérifier s'il reste des clients
+    if (this.donneesService.resteDesClients(this.categorieSelectionnee)) {
+      this.gagnantSuivant.emit();
+      this.lancerTirageGagnant();
+    } else {
+      // Plus de clients, terminer le tirage
+      this.tirageEnCours = false;
+      this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
+      setTimeout(() => {
+        this.tirageComplet.emit();
+      }, 1000);
+    }
+  }
 
-        setTimeout(() => {
-          this.tirageComplet.emit();
-        }, 1000);
-      }
-    }, AnimationConfig.duree_affichage_gagnant_fixe_ms);
+  peutAfficherGagnantSuivant(): boolean {
+    return this.afficherGagnantFixe && this.donneesService.resteDesClients(this.categorieSelectionnee);
   }
 }
