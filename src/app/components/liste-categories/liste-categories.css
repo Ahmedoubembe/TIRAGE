@@ -143,41 +143,15 @@ h1 {
 .categorie-item.tiree {
   opacity: 0.6;
   cursor: not-allowed;
-  background: repeating-linear-gradient(
-    45deg,
-    #f5f5f5,
-    #f5f5f5 10px,
-    #e8e8e8 10px,
-    #e8e8e8 20px
-  );
-  border-color: #ccc;
-  position: relative;
+  background: #f5f5f5;
+  border-color: #ddd;
+  pointer-events: none;
 }
 
-.categorie-item.tiree::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--mauritanie-rouge);
-  transform: translateY(-50%);
-  opacity: 0.7;
-}
-
-.categorie-item.tiree .categorie-info h3 {
-  color: #999;
-  text-decoration: line-through;
-}
-
-.categorie-item.tiree .details span {
-  color: #aaa;
-}
-
+.categorie-item.tiree .categorie-info h3,
+.categorie-item.tiree .details span,
 .categorie-item.tiree .prix {
-  color: #bbb;
-  text-decoration: line-through;
+  color: #999;
 }
 
 .categorie-info h3 {
