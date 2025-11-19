@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Client } from '../../models/client.model';
 import { AnimationConfig } from '../../config/animation.config';
@@ -11,7 +11,7 @@ import { DonneesService } from '../../services/donnees';
   templateUrl: './affichage-gagnants.html',
   styleUrl: './affichage-gagnants.css'
 })
-export class AffichageGagnantsComponent implements OnChanges {
+export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy {
   @Input() gagnantsAffiches: Client[] = [];
   @Input() tirageTermine: boolean = false;
   @Input() tirageEnCours: boolean = false;
@@ -21,7 +21,38 @@ export class AffichageGagnantsComponent implements OnChanges {
 
   afficherConfettis = false;
 
+  // Traductions français/arabe pour "Félicitations aux gagnants"
+  traductionsFelicitations = {
+    fr: 'FÉLICITATIONS AUX GAGNANTS',
+    ar: 'تهانينا للفائزين'
+  };
+
+  // Langue courante
+  langueFelicitations: 'fr' | 'ar' = 'fr';
+
+  // Timer pour alternance
+  private intervalFelicitationsId?: number;
+
   constructor(private donneesService: DonneesService) {}
+
+  ngOnInit(): void {
+    // Démarrer l'alternance toutes les 5 secondes
+    this.intervalFelicitationsId = window.setInterval(() => {
+      this.langueFelicitations = this.langueFelicitations === 'fr' ? 'ar' : 'fr';
+    }, 5000);
+  }
+
+  ngOnDestroy(): void {
+    // Nettoyer le timer quand le composant est détruit
+    if (this.intervalFelicitationsId) {
+      clearInterval(this.intervalFelicitationsId);
+    }
+  }
+
+  // Getter pour le texte affiché
+  get titreFelicitations(): string {
+    return this.traductionsFelicitations[this.langueFelicitations];
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('[AffichageGagnants] ngOnChanges:', changes);

@@ -607,6 +607,10 @@
   font-size: 1.8rem;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
+  position: relative;
+  display: inline-block;
+  padding: 0 3rem;
+  transition: all 0.5s ease;
 }
 
 .plein-ecran .titre-felicitations {
@@ -634,6 +638,155 @@
       0 0 30px rgba(255, 215, 0, 1),
       0 0 60px rgba(255, 215, 0, 0.8),
       0 0 90px rgba(255, 215, 0, 0.6);
+  }
+}
+
+/* Support pour l'arabe - Félicitations */
+.titre-felicitations.langue-ar {
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  letter-spacing: 0;
+}
+
+/* Étoiles scintillantes autour du titre */
+.etoile-gauche,
+.etoile-droite {
+  position: absolute;
+  font-size: 2rem;
+  animation: scintillement-etoile 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+}
+
+.etoile-gauche {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 0s;
+}
+
+.etoile-droite {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  animation-delay: 0.75s;
+}
+
+@keyframes scintillement-etoile {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateY(-50%) scale(0.8) rotate(0deg);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.3) rotate(180deg);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1))
+            drop-shadow(0 0 40px rgba(255, 215, 0, 0.8));
+  }
+}
+
+.plein-ecran .etoile-gauche,
+.plein-ecran .etoile-droite {
+  font-size: 4rem;
+}
+
+/* Effet de défilement/pulsation continu sur le titre */
+.titre-felicitations::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.1) 25%,
+    rgba(255, 215, 0, 0.3) 50%,
+    rgba(255, 215, 0, 0.1) 75%,
+    transparent 100%
+  );
+  animation: defilement-lumiere 3s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+  border-radius: 1rem;
+}
+
+@keyframes defilement-lumiere {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Particules d'étincelles autour du titre */
+.titre-felicitations::after {
+  content: '✨ ⭐ 💫 ✨ ⭐ 💫 ✨ ⭐ 💫';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  white-space: nowrap;
+  animation: etincelles-flottantes 4s ease-in-out infinite;
+  opacity: 0.7;
+  letter-spacing: 1rem;
+}
+
+@keyframes etincelles-flottantes {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0px);
+    opacity: 0.5;
+  }
+  25% {
+    transform: translateX(-45%) translateY(-10px);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-5px);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translateX(-55%) translateY(-12px);
+    opacity: 1;
+  }
+}
+
+.plein-ecran .titre-felicitations::after {
+  font-size: 3rem;
+  top: -60px;
+  letter-spacing: 2rem;
+}
+
+/* Halo lumineux pulsant autour du titre en plein écran */
+.plein-ecran .titre-felicitations {
+  position: relative;
+}
+
+.plein-ecran .titre-felicitations::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 215, 0, 0.4) 0%,
+    rgba(255, 215, 0, 0.2) 50%,
+    transparent 100%
+  );
+  animation: halo-pulsant 2s ease-in-out infinite;
+  top: -30px;
+  left: -30px;
+  right: -30px;
+  bottom: -30px;
+}
+
+@keyframes halo-pulsant {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
   }
 }
 

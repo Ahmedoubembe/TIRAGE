@@ -40,7 +40,12 @@
   </div>
 
   <div class="gagnants-panel">
-    <h1 class="titre-felicitations">FELICITATIONS AUX GAGNANTS</h1>
+    <h1 class="titre-felicitations" [class.langue-ar]="langueFelicitations === 'ar'">
+      <!-- Étoiles scintillantes autour du titre -->
+      <span class="etoile-gauche">✨</span>
+      {{ titreFelicitations }}
+      <span class="etoile-droite">✨</span>
+    </h1>
 
     <div class="gagnants-liste">
       <div
