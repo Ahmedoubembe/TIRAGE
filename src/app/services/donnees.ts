@@ -3,8 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 import * as Papa from 'papaparse';
 import { Categorie } from '../models/categorie.model';
 import { Client } from '../models/client.model';
-import { GagnantsParCategorie } from '../models/gagnant.model';
-import gagnantsData from '../data/gagnants.json';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ import gagnantsData from '../data/gagnants.json';
 export class DonneesService {
   private categoriesSubject = new BehaviorSubject<Categorie[]>([]);
   private clientsSubject = new BehaviorSubject<Client[]>([]);
-  private gagnantsData: GagnantsParCategorie = gagnantsData as GagnantsParCategorie;
+  private clientsParCategorieMap = new Map<string, Client[]>();
 
   categories$ = this.categoriesSubject.asObservable();
   clients$ = this.clientsSubject.asObservable();
@@ -38,49 +36,89 @@ export class DonneesService {
   private traiterDonneesCSV(data: string[][]): void {
     const categories: Categorie[] = [];
     const clients: Client[] = [];
-    
+
     let section = '';
-    
+
     for (let i = 0; i < data.length; i++) {
       const ligne = data[i];
-      
+
       if (ligne[0] === '[CATEGORIES]') {
         section = 'categories';
         continue;
       }
-      
+
       if (ligne[0] === '[CLIENTS]') {
         section = 'clients';
         continue;
       }
-      
+
       if (ligne[0] === '' || ligne.every(cell => cell === '')) {
         continue;
       }
-      
+
+      // Parser les catégories (séparateur: virgule)
       if (section === 'categories' && ligne[0] !== 'categorie') {
         categories.push({
           categorie: ligne[0],
           interval: ligne[1],
-          score: parseFloat(ligne[2]),
-          nombre_gagnants: parseInt(ligne[3]),
-          prix: ligne[4],
+          nombre_gagnants: parseInt(ligne[2]),
+          prix: ligne[3],
           tiree: false
         });
       }
-      
-      if (section === 'clients' && ligne[0] !== 'nom') {
-        clients.push({
-          nom: ligne[0],
-          prenom: ligne[1],
-          numero_telephone: ligne[2],
-          id_categorie: ligne[3]
-        });
+
+      // Parser les clients (séparateur: point-virgule)
+      if (section === 'clients' && ligne[0] !== 'tel') {
+        // La ligne complète est dans ligne[0], on doit la split par ";"
+        const ligneComplete = ligne.join(','); // Rejoindre au cas où Papa a déjà splité
+        const parties = ligneComplete.split(';');
+
+        if (parties.length >= 3) {
+          // Convertir le score: remplacer virgule par point
+          const scoreStr = parties[2].replace(',', '.');
+          const score = parseFloat(scoreStr);
+
+          clients.push({
+            numero_telephone: parties[0].trim(),
+            nom: parties[1].trim(),
+            score: score,
+            id_categorie: '' // Sera déterminé par le score et les intervalles
+          });
+        }
       }
     }
-    
+
+    // Assigner les catégories aux clients basé sur leur score
+    this.assignerCategories(clients, categories);
+
     this.categoriesSubject.next(categories);
     this.clientsSubject.next(clients);
+  }
+
+  private assignerCategories(clients: Client[], categories: Categorie[]): void {
+    for (const client of clients) {
+      for (const categorie of categories) {
+        if (this.scoreCorrespondAInterval(client.score, categorie.interval)) {
+          client.id_categorie = categorie.categorie;
+          break;
+        }
+      }
+    }
+  }
+
+  private scoreCorrespondAInterval(score: number, interval: string): boolean {
+    // Formats possibles: ">3000", "2000-3000", "<2000"
+    if (interval.startsWith('>')) {
+      const seuil = parseFloat(interval.substring(1));
+      return score > seuil;
+    } else if (interval.startsWith('<')) {
+      const seuil = parseFloat(interval.substring(1));
+      return score < seuil;
+    } else if (interval.includes('-')) {
+      const [min, max] = interval.split('-').map(s => parseFloat(s.trim()));
+      return score >= min && score <= max;
+    }
+    return false;
   }
 
   getCategories(): Categorie[] {
@@ -98,7 +136,7 @@ export class DonneesService {
   }
 
   marquerCategorieTiree(nomCategorie: string): void {
-    const categories = this.categoriesSubject.value.map(cat => 
+    const categories = this.categoriesSubject.value.map(cat =>
       cat.categorie === nomCategorie ? { ...cat, tiree: true } : cat
     );
     this.categoriesSubject.next(categories);
@@ -107,6 +145,52 @@ export class DonneesService {
   reinitialiser(): void {
     this.categoriesSubject.next([]);
     this.clientsSubject.next([]);
+    this.clientsParCategorieMap.clear();
+  }
+
+  /**
+   * Récupère les clients triés par score décroissant pour une catégorie
+   */
+  getClientsTries(nomCategorie: string): Client[] {
+    // Vérifier si déjà dans le cache
+    if (!this.clientsParCategorieMap.has(nomCategorie)) {
+      // Récupérer les clients de la catégorie
+      const clients = this.clientsSubject.value.filter(
+        client => client.id_categorie === nomCategorie
+      );
+
+      // Trier par score décroissant
+      const clientsTries = [...clients].sort((a, b) => b.score - a.score);
+
+      // Stocker dans la Map
+      this.clientsParCategorieMap.set(nomCategorie, clientsTries);
+    }
+
+    return this.clientsParCategorieMap.get(nomCategorie) || [];
+  }
+
+  /**
+   * Retourne et retire le prochain client (meilleur score) de la catégorie
+   */
+  getProchainClient(nomCategorie: string): Client | null {
+    const clients = this.getClientsTries(nomCategorie);
+
+    if (clients.length === 0) {
+      return null;
+    }
+
+    // Retirer le premier client (meilleur score)
+    const prochainClient = clients.shift();
+
+    return prochainClient || null;
+  }
+
+  /**
+   * Vérifie s'il reste des clients dans une catégorie
+   */
+  resteDesClients(nomCategorie: string): boolean {
+    const clients = this.getClientsTries(nomCategorie);
+    return clients.length > 0;
   }
 
   /**
@@ -123,52 +207,5 @@ export class DonneesService {
     return this.clientsSubject.value.filter(
       client => client.id_categorie === nomCategorie
     );
-  }
-
-  /**
-   * Récupère uniquement les gagnants d'une catégorie (pour la révélation)
-   * avec leurs prix depuis gagnants.json
-   */
-  getGagnantsByCategorie(nomCategorie: string): Client[] {
-    const gagnantsCategorie = this.gagnantsData[nomCategorie] || [];
-    const tousLesClients = this.clientsSubject.value;
-
-    return gagnantsCategorie.map(gagnantData => {
-      // Trouver le client correspondant dans la liste des participants
-      const client = tousLesClients.find(
-        c => c.numero_telephone === gagnantData.numero_telephone &&
-             c.id_categorie === nomCategorie
-      );
-
-      if (client) {
-        // Retourner le client avec le prix du JSON
-        return {
-          ...client,
-          prix: gagnantData.prix,
-          est_gagnant: true
-        };
-      }
-
-      // Si le client n'est pas trouvé dans les participants (ne devrait pas arriver)
-      console.warn(`Gagnant ${gagnantData.numero_telephone} non trouvé dans les participants`);
-      return null;
-    }).filter(c => c !== null) as Client[];
-  }
-
-  /**
-   * Vérifie si un numéro de téléphone est un gagnant dans une catégorie
-   */
-  estGagnant(numeroTelephone: string, nomCategorie: string): boolean {
-    const gagnantsCategorie = this.gagnantsData[nomCategorie] || [];
-    return gagnantsCategorie.some(g => g.numero_telephone === numeroTelephone);
-  }
-
-  /**
-   * Récupère le prix d'un gagnant
-   */
-  getPrixGagnant(numeroTelephone: string, nomCategorie: string): string | null {
-    const gagnantsCategorie = this.gagnantsData[nomCategorie] || [];
-    const gagnant = gagnantsCategorie.find(g => g.numero_telephone === numeroTelephone);
-    return gagnant ? gagnant.prix : null;
   }
 }
