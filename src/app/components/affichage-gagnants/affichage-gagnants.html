@@ -56,8 +56,18 @@
       </div>
     </div>
 
-    <div class="actions" *ngIf="tirageTermine">
-      <button class="btn-retour" (click)="retourALaSelection()">
+    <div class="actions">
+      <button
+        class="btn-gagnant-suivant"
+        *ngIf="peutAfficherGagnantSuivant()"
+        (click)="onGagnantSuivant()">
+        Gagnant suivant
+      </button>
+
+      <button
+        class="btn-retour"
+        *ngIf="tirageTermine"
+        (click)="retourALaSelection()">
         Retour a la selection
       </button>
     </div>

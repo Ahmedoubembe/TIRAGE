@@ -37,6 +37,7 @@ type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
 })
 export class AppComponent {
   @ViewChild(AffichageGagnantsComponent) affichageGagnants!: AffichageGagnantsComponent;
+  @ViewChild(TirageComponent) tirageComponent!: TirageComponent;
 
   etapeActuelle: EtapeApplication = 'UPLOAD';
   categorieSelectionnee: string = '';
@@ -63,7 +64,10 @@ export class AppComponent {
 
   onGagnantSuivant(): void {
     // Méthode appelée quand l'utilisateur clique sur "Gagnant suivant"
-    // Le composant TirageComponent gère déjà la logique de tirage
+    // Appeler la méthode du composant TirageComponent pour lancer un nouveau tirage
+    if (this.tirageComponent) {
+      this.tirageComponent.lancerTirageSuivant();
+    }
   }
 
   onTirageComplet(): void {

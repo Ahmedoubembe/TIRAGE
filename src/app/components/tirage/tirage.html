@@ -35,14 +35,6 @@
         <p class="score">Score: {{ gagnantActuelFixe.score.toFixed(2) }}</p>
         <p class="prix">{{ gagnantActuelFixe.prix }}</p>
       </div>
-
-      <!-- Bouton Gagnant suivant -->
-      <button
-        class="btn-gagnant-suivant"
-        *ngIf="peutAfficherGagnantSuivant()"
-        (click)="onGagnantSuivant()">
-        Gagnant suivant
-      </button>
     </div>
   </div>
 </div>

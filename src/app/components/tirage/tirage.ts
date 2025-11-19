@@ -14,7 +14,6 @@ import { AnimationConfig } from '../../config/animation.config';
 export class TirageComponent implements OnInit {
   @Input() categorieSelectionnee!: string;
   @Output() gagnantRevele = new EventEmitter<Client>();
-  @Output() gagnantSuivant = new EventEmitter<void>();
   @Output() tirageComplet = new EventEmitter<void>();
 
   scoresAffiches: string[] = [];
@@ -149,22 +148,8 @@ export class TirageComponent implements OnInit {
     this.gagnantRevele.emit(gagnant);
   }
 
-  onGagnantSuivant(): void {
-    // Vérifier s'il reste des clients
-    if (this.donneesService.resteDesClients(this.categorieSelectionnee)) {
-      this.gagnantSuivant.emit();
-      this.lancerTirageGagnant();
-    } else {
-      // Plus de clients, terminer le tirage
-      this.tirageEnCours = false;
-      this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
-      setTimeout(() => {
-        this.tirageComplet.emit();
-      }, 1000);
-    }
-  }
-
-  peutAfficherGagnantSuivant(): boolean {
-    return this.afficherGagnantFixe && this.donneesService.resteDesClients(this.categorieSelectionnee);
+  lancerTirageSuivant(): void {
+    // Méthode publique pour lancer un nouveau tirage (appelée par le parent)
+    this.lancerTirageGagnant();
   }
 }

@@ -16,13 +16,14 @@
     *ngIf="!tirageTermine"
     [categorieSelectionnee]="categorieSelectionnee"
     (gagnantRevele)="onGagnantRevele($event)"
-    (gagnantSuivant)="onGagnantSuivant()"
     (tirageComplet)="onTirageComplet()">
   </app-tirage>
 
   <app-affichage-gagnants
     [gagnantsAffiches]="gagnantsAffiches"
     [tirageTermine]="tirageTermine"
+    [categorieSelectionnee]="categorieSelectionnee"
+    (gagnantSuivant)="onGagnantSuivant()"
     (retourSelection)="onRetourSelection()">
   </app-affichage-gagnants>
 </div>
