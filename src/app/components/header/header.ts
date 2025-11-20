@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       sousTitre: 'Tirage au Sort Spécial Indépendance'
     },
     ar: {
-      titre: 'برنامج الولاء باميس ديجيتال',
+      titre: 'برنامج الوفـاء باميس ديجيتال',
       sousTitre: 'سحب خاص بمناسبة الاستقلال'
     }
   };

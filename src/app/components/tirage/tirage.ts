@@ -29,7 +29,7 @@ export class TirageComponent implements OnInit {
   // Traductions
   traductions = {
     titre: {
-      ar: 'جارٍ الاختيار',
+      ar: ' جاري تحديد الفائز',
       fr: 'Sélection en cours'
     },
     gagnant: {
