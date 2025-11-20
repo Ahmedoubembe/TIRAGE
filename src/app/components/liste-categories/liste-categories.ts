@@ -24,7 +24,7 @@ export class ListeCategoriesComponent implements OnInit {
 
   // Traductions pour le bouton
   texteBouton = {
-    ar: 'تشغيل برنامج WEVAI',
+    ar: 'بدء برنامج وفائي',
     fr: 'Lancer le programme WEVAI'
   };
 

@@ -165,8 +165,7 @@ h3 {
 .btn-valider {
   margin-top: 2rem;
   padding: 1rem 3rem;
-  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
-  color: white;
+  background: linear-gradient(135deg, #1a5d09 0%, #7db010 100%);  color: white;
   border: 2px solid var(--mauritanie-jaune);
   border-radius: 0.5rem;
   cursor: pointer;
@@ -176,7 +175,8 @@ h3 {
 }
 
 .btn-valider:hover {
-  background: linear-gradient(135deg, #f01844 0%, var(--mauritanie-rouge) 100%);
+  /* background: linear-gradient(135deg, #f0be1836 0%, var(--mauritanie-rouge) 100%); */
+  background: #2d4101;
   transform: translateY(-2px);
   box-shadow: 0 5px 20px rgba(210, 16, 52, 0.5);
 }
