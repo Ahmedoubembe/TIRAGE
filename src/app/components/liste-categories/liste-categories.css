@@ -112,7 +112,7 @@ h1 {
   margin-bottom: 2rem;
   max-height: calc(100vh - 350px);
   overflow-y: auto;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
 }
 
 .categorie-item {

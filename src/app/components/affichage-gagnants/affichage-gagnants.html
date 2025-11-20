@@ -72,14 +72,16 @@
         class="btn-gagnant-suivant"
         *ngIf="peutAfficherGagnantSuivant()"
         (click)="onGagnantSuivant()">
-        Gagnant suivant
+        <span class="texte-ar">{{ traductionsBoutons.gagnantSuivant.ar }}</span>
+        <span class="texte-fr">{{ traductionsBoutons.gagnantSuivant.fr }}</span>
       </button>
 
       <button
         class="btn-retour"
         *ngIf="gagnantsAffiches.length > 0 && !tirageEnCours"
         (click)="retourALaSelection()">
-        Retour a la selection
+        <span class="texte-ar">{{ traductionsBoutons.retour.ar }}</span>
+        <span class="texte-fr">{{ traductionsBoutons.retour.fr }}</span>
       </button>
     </div>
   </div>

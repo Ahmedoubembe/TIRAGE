@@ -820,14 +820,15 @@
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 2rem;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
 }
 
 .plein-ecran .gagnants-liste {
   max-width: 1200px;
   margin: 0 auto 2rem auto;
-  width: 100%;
+  width: calc(100% - 2rem);
   gap: 1rem;
+  padding: 1rem;
 }
 
 /* ====================================
@@ -1103,6 +1104,7 @@
   flex-direction: column;
   gap: 1rem;
   animation: fadeIn 1s ease-out;
+  padding: 0 0.5rem;
 }
 
 .plein-ecran .actions {
@@ -1110,7 +1112,8 @@
   justify-content: center;
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
+  width: calc(100% - 2rem);
+  padding: 0 1rem;
 }
 
 @keyframes fadeIn {
@@ -1133,24 +1136,58 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: var(--mauritanie-vert);
   border: 2px solid var(--mauritanie-jaune);
-  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+/* Texte arabe en haut */
+.btn-gagnant-suivant .texte-ar,
+.btn-retour .texte-ar {
+  font-size: 1.1rem;
+  font-weight: 700;
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  color: var(--mauritanie-vert);
+}
+
+/* Texte français en dessous */
+.btn-gagnant-suivant .texte-fr,
+.btn-retour .texte-fr {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.85;
+  color: var(--mauritanie-vert);
 }
 
 .plein-ecran .btn-gagnant-suivant,
 .plein-ecran .btn-retour {
   padding: 1.2rem 2.5rem;
-  font-size: 1.2rem;
+}
+
+.plein-ecran .btn-gagnant-suivant .texte-ar,
+.plein-ecran .btn-retour .texte-ar {
+  font-size: 1.4rem;
+}
+
+.plein-ecran .btn-gagnant-suivant .texte-fr,
+.plein-ecran .btn-retour .texte-fr {
+  font-size: 1.1rem;
 }
 
 .btn-gagnant-suivant:hover,
 .btn-retour:hover {
-  background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(15px);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-  animation: pulsation-patriotique 1.5s ease-in-out infinite;
+  border-color: var(--mauritanie-vert);
 }
 
 /* ====================================

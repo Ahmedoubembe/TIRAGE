@@ -27,6 +27,18 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     ar: 'تهانينا للفائزين'
   };
 
+  // Traductions pour les boutons
+  traductionsBoutons = {
+    gagnantSuivant: {
+      ar: 'الفائز التالي',
+      fr: 'Gagnant suivant'
+    },
+    retour: {
+      ar: 'العودة إلى الاختيار',
+      fr: 'Retour à la sélection'
+    }
+  };
+
   // Langue courante
   langueFelicitations: 'fr' | 'ar' = 'fr';
 
