@@ -16,6 +16,12 @@ export class ListeCategoriesComponent implements OnInit {
   categories: Categorie[] = [];
   categorieChoisie: string | null = null;
 
+  // Traductions pour le titre
+  titrePage = {
+    ar: 'اختر فئة',
+    fr: 'Sélectionnez une catégorie'
+  };
+
   // Traductions pour le bouton
   texteBouton = {
     ar: 'تشغيل برنامج WEVAI',
