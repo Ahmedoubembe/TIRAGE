@@ -43,9 +43,20 @@
     <div class="titre-wrapper">
       <h1 class="titre-felicitations" [class.langue-ar]="langueFelicitations === 'ar'">
         <!-- Étoiles scintillantes autour du titre -->
-        <span class="etoile-gauche">✨</span>
+        <!-- <span class="etoile-gauche">✨</span>
         {{ titreFelicitations }}
-        <span class="etoile-droite">✨</span>
+        <span class="etoile-droite">✨</span> -->
+        <span class="arc-etoiles-gauche">
+          <span class="etoile etoile-1">&#9733;</span>
+          <span class="etoile etoile-2">&#9733;</span>
+          <span class="etoile etoile-3">&#9733;</span>
+        </span>
+        {{ titreFelicitations }}
+        <span class="arc-etoiles-droite">
+          <span class="etoile etoile-1">&#9733;</span>
+          <span class="etoile etoile-2">&#9733;</span>
+          <span class="etoile etoile-3">&#9733;</span>
+        </span>
       </h1>
     </div>
 

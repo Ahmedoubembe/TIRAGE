@@ -29,15 +29,15 @@
   height: calc(100vh - 90px);
   background: #FFFFFF;
   border-left: none;
-  overflow: visible;
-  z-index: 1001;
+  overflow: hidden;
+  z-index: 50;
+  padding-top: 1rem;
 }
-
 /* Tache verte en haut a gauche (mode plein ecran) */
 .overlay-gagnants.plein-ecran::before {
   content: '';
   position: absolute;
-  top: -95px;
+  top: 20px;
   left: -95px;
   width: 290px;
   height: 290px;
@@ -53,7 +53,7 @@
 .overlay-gagnants.plein-ecran::after {
   content: '';
   position: absolute;
-  top: -80px;
+  top: 30px;
   right: -80px;
   width: 250px;
   height: 250px;
@@ -82,12 +82,12 @@
 
 .confettis {
   position: fixed;
-  top: 0;
+  top: 90px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 90px);
   pointer-events: none;
-  z-index: 1000;
+  z-index: 51;
   overflow: hidden;
 }
 
@@ -592,29 +592,30 @@
    ==================================== */
 
 .gagnants-panel {
-  padding: 4rem 2rem 2rem 2rem;
+  padding: 2rem 2rem 2rem 2rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  z-index: 2;
+  z-index: 52;
 }
 
 /* Wrapper pour le titre avec animations */
 .titre-wrapper {
   text-align: center;
   position: relative;
-  z-index: 1002;
   margin-bottom: 2rem;
+  margin-top: 0.5rem;
   min-height: 80px;
+  padding-top:  0.5rem;
 }
 
 .plein-ecran .titre-wrapper {
   min-height: 120px;
-  z-index: 1002;
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
-
 .titre-felicitations {
   margin: 0;
   color: var(--mauritanie-vert);
@@ -626,7 +627,6 @@
   display: inline-block;
   padding: 0 3rem;
   transition: all 0.5s ease;
-  z-index: 10;
 }
 
 .plein-ecran .titre-felicitations {
@@ -665,46 +665,208 @@
 }
 
 /* Étoiles scintillantes autour du titre */
-.etoile-gauche,
-.etoile-droite {
-  position: absolute;
-  font-size: 2rem;
-  animation: scintillement-etoile 1.5s ease-in-out infinite;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-  z-index: 12;
-}
 
-.etoile-gauche {
-  left: 0;
+/* ====================================
+   ARC D'ETOILES - 3 ETOILES EN DIAGONALE DE CHAQUE COTE
+   ==================================== */
+
+.arc-etoiles-gauche,
+.arc-etoiles-droite {
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.arc-etoiles-gauche {
+  left: -5rem;
+}
+
+.arc-etoiles-droite {
+  right: -5rem;
+}
+
+.arc-etoiles-gauche .etoile,
+.arc-etoiles-droite .etoile {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--mauritanie-jaune);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+  animation: scintillement-etoile 1.5s ease-in-out infinite;
+}
+
+/* Arc côté GAUCHE - disposition en diagonale descendante */
+.arc-etoiles-gauche .etoile-1 {
+  top: -35px;
+  left: 0px;
   animation-delay: 0s;
 }
 
-.etoile-droite {
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  animation-delay: 0.75s;
+.arc-etoiles-gauche .etoile-2 {
+  top: 0px;
+  left: 15px;
+  animation-delay: 0.3s;
+  font-size: 1.7rem;
 }
 
+.arc-etoiles-gauche .etoile-3 {
+  top: 30px;
+  left: 25px;
+  animation-delay: 0.6s;
+  font-size: 1.5rem;
+}
+
+/* Arc côté DROIT - disposition en diagonale descendante (miroir) */
+.arc-etoiles-droite .etoile-1 {
+  top: -35px;
+  right: 0px;
+  animation-delay: 0.2s;
+}
+
+.arc-etoiles-droite .etoile-2 {
+  top: 0px;
+  right: 15px;
+  animation-delay: 0.5s;
+  font-size: 1.7rem;
+}
+
+.arc-etoiles-droite .etoile-3 {
+  top: 30px;
+  right: 25px;
+  animation-delay: 0.8s;
+  font-size: 1.5rem;
+}
+
+
+/* Animation de scintillement */
 @keyframes scintillement-etoile {
   0%, 100% {
-    opacity: 0.4;
-    transform: translateY(-50%) scale(0.8) rotate(0deg);
-    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4));
+    opacity: 0.5;
+    transform: scale(0.85) rotate(0deg);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
   }
   50% {
     opacity: 1;
-    transform: translateY(-50%) scale(1.3) rotate(180deg);
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1))
-            drop-shadow(0 0 40px rgba(255, 215, 0, 0.8));
+    transform: scale(1.15) rotate(180deg);
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 1))
+            drop-shadow(0 0 25px rgba(255, 215, 0, 0.7));
   }
 }
 
-.plein-ecran .etoile-gauche,
-.plein-ecran .etoile-droite {
-  font-size: 4rem;
+/* VERSION PLEIN ÉCRAN - étoiles plus grandes */
+/* VERSION PLEIN ÉCRAN - étoiles plus grandes */
+.plein-ecran .arc-etoiles-gauche {
+  left: -9rem;
+}
+
+.plein-ecran .arc-etoiles-droite {
+  right: -9rem;
+}
+
+.plein-ecran .arc-etoiles-gauche .etoile,
+.plein-ecran .arc-etoiles-droite .etoile {
+  font-size: 3.5rem;
+}
+
+/* Arc plein écran - GAUCHE */
+.plein-ecran .arc-etoiles-gauche .etoile-1 {
+  top: -60px;
+  left: 0px;
+}
+
+.plein-ecran .arc-etoiles-gauche .etoile-2 {
+  top: 0px;
+  left: 30px;
+  font-size: 3rem;
+}
+
+.plein-ecran .arc-etoiles-gauche .etoile-3 {
+  top: 55px;
+  left: 50px;
+  font-size: 2.7rem;
+}
+
+/* Arc plein écran - DROIT */
+.plein-ecran .arc-etoiles-droite .etoile-1 {
+  top: -60px;
+  right: 0px;
+}
+
+.plein-ecran .arc-etoiles-droite .etoile-2 {
+  top: 0px;
+  right: 30px;
+  font-size: 3rem;
+}
+
+.plein-ecran .arc-etoiles-droite .etoile-3 {
+  top: 55px;
+  right: 50px;
+  font-size: 2.7rem;
+}
+/* RESPONSIVE - Ajustement pour petits écrans */
+@media (max-width: 1200px) {
+  .arc-etoiles-gauche {
+    left: -4rem;
+  }
+  
+  .arc-etoiles-droite {
+    right: -4rem;
+  }
+  
+  .arc-etoiles-gauche .etoile,
+  .arc-etoiles-droite .etoile {
+    font-size: 1.2rem;
+  }
+  
+  .arc-etoiles-gauche .etoile-2,
+  .arc-etoiles-droite .etoile-2 {
+    font-size: 1rem;
+  }
+  
+  .arc-etoiles-gauche .etoile-3,
+  .arc-etoiles-droite .etoile-3 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .arc-etoiles-gauche {
+    left: -3rem;
+  }
+  
+  .arc-etoiles-droite {
+    right: -3rem;
+  }
+  
+  .arc-etoiles-gauche .etoile,
+  .arc-etoiles-droite .etoile {
+    font-size: 1rem;
+  }
+  
+  .arc-etoiles-gauche .etoile-1,
+  .arc-etoiles-droite .etoile-1 {
+    top: -25px;
+  }
+  
+  .arc-etoiles-gauche .etoile-2,
+  .arc-etoiles-droite .etoile-2 {
+    font-size: 0.85rem;
+    left: 10px;
+  }
+  
+  .arc-etoiles-droite .etoile-2 {
+    right: 10px;
+  }
+  
+  .arc-etoiles-gauche .etoile-3,
+  .arc-etoiles-droite .etoile-3 {
+    font-size: 0.75rem;
+    top: 20px;
+    left: 18px;
+  }
+  
+  .arc-etoiles-droite .etoile-3 {
+    right: 18px;
+  }
 }
 
 /* Effet de défilement/pulsation continu sur le titre */
@@ -739,7 +901,7 @@
 }
 
 /* Particules d'étincelles autour du titre */
-.titre-felicitations::after {
+/* .titre-felicitations::after {
   content: '✨ ⭐ 💫 ✨ ⭐ 💫 ✨ ⭐ 💫';
   position: absolute;
   top: -40px;
@@ -751,6 +913,20 @@
   opacity: 0.7;
   letter-spacing: 1rem;
   z-index: 11;
+} */
+
+.titre-felicitations::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 30px;
+  background: radial-gradient(circle, var(--mauritanie-jaune) 2px, transparent 3px);
+  background-size: 40px 40px;
+  animation: etincelles-flottantes 4s ease-in-out infinite;
+  opacity: 0.7;
 }
 
 @keyframes etincelles-flottantes {
@@ -773,9 +949,9 @@
 }
 
 .plein-ecran .titre-felicitations::after {
-  font-size: 3rem;
+  height: 50px;
   top: -60px;
-  letter-spacing: 2rem;
+  background-size: 60px 60px;
 }
 
 /* Halo lumineux pulsant autour du titre en plein écran */
