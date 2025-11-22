@@ -35,5 +35,13 @@
       <span class="texte-ar">{{ texteBouton.ar }}</span>
       <span class="texte-fr">{{ texteBouton.fr }}</span>
     </button>
+
+    <button
+      class="btn-voir-rapport"
+      *ngIf="aDesGagnants"
+      (click)="allerAuRapport()">
+      <span class="texte-ar">عرض التقرير</span>
+      <span class="texte-fr">Voir le rapport</span>
+    </button>
   </div>
 </div>
