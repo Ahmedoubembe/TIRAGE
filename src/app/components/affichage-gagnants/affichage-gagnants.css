@@ -1019,27 +1019,6 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   border-left: 4px solid var(--mauritanie-vert);
-  position: relative;
-}
-
-/* Carte cliquable */
-.gagnant-item.cliquable {
-  cursor: pointer;
-}
-
-.gagnant-item.cliquable:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
-}
-
-/* Carte marquée comme joint */
-.gagnant-item.joint {
-  border: 3px solid var(--mauritanie-vert);
-  background: linear-gradient(135deg, rgba(0, 168, 84, 0.08) 0%, rgba(255, 215, 0, 0.08) 100%);
-}
-
-.plein-ecran .gagnant-item.joint {
-  background: linear-gradient(135deg, rgba(0, 168, 84, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%);
 }
 
 .plein-ecran .gagnant-item {
@@ -1099,70 +1078,6 @@
       0 0 30px rgba(0, 168, 84, 0.9),
       0 6px 16px rgba(0, 0, 0, 0.4);
   }
-}
-
-/* ====================================
-   BADGE STATUT CONTACT
-   ==================================== */
-
-.badge-contact {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  z-index: 10;
-}
-
-.plein-ecran .badge-contact {
-  top: 10px;
-  left: 10px;
-}
-
-.joint-oui {
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  color: white;
-  border: 2px solid var(--mauritanie-jaune);
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.25rem;
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 168, 84, 0.3);
-}
-
-.plein-ecran .joint-oui {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-}
-
-.joint-non {
-  background: #f5f5f5;
-  color: #999;
-  border: 2px solid #ddd;
-  padding: 0.3rem 0.6rem;
-  border-radius: 0.25rem;
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.plein-ecran .joint-non {
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-}
-
-/* Message d'aide pour cliquer */
-.aide-clic {
-  text-align: center;
-  margin-top: 0.5rem;
-  font-style: italic;
-  color: #999;
-  font-size: 0.7rem;
-  opacity: 0.7;
-}
-
-.plein-ecran .aide-clic {
-  font-size: 0.9rem;
-  margin-top: 1rem;
 }
 
 /* Gagnants historiques (tous sauf le dernier) - GRISÉS/DÉSATURÉS */

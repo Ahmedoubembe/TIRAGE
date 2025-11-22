@@ -5,5 +5,4 @@ export interface Client {
   id_categorie: string;
   prix?: string;
   est_gagnant?: boolean;
-  joint?: boolean; // Indique si le client a répondu à l'appel téléphonique
 }

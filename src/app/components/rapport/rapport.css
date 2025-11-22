@@ -239,36 +239,6 @@
   font-style: italic;
 }
 
-/* Colonne statut contact */
-.statut-contact {
-  text-align: center;
-}
-
-.badge-joint-oui {
-  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.25rem;
-  border: 2px solid var(--mauritanie-jaune);
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-block;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(0, 168, 84, 0.3);
-}
-
-.badge-joint-non {
-  background: #f5f5f5;
-  color: #999;
-  padding: 0.4rem 0.8rem;
-  border-radius: 0.25rem;
-  border: 2px solid #ddd;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: inline-block;
-  white-space: nowrap;
-}
-
 /* Actions */
 .actions-rapport {
   display: flex;
