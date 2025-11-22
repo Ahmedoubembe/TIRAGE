@@ -21,6 +21,10 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
 
   afficherConfettis = false;
 
+  // Gestion de la modale de statut contact
+  afficherModaleContact = false;
+  gagnantSelectionne: Client | null = null;
+
   // Traductions français/arabe pour "Félicitations aux gagnants"
   traductionsFelicitations = {
     fr: 'FÉLICITATIONS AUX GAGNANTS',
@@ -116,5 +120,41 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     // - Aucun tirage n'est en cours (pas d'animation)
     // - Il reste des clients dans la catégorie
     return !this.tirageTermine && !this.tirageEnCours && resteClients;
+  }
+
+  // ====================================
+  // GESTION MODALE STATUT CONTACT
+  // ====================================
+
+  ouvrirModaleContact(gagnant: Client): void {
+    // Ne pas ouvrir la modale pendant un tirage en cours
+    if (this.tirageEnCours) {
+      return;
+    }
+
+    this.gagnantSelectionne = gagnant;
+    this.afficherModaleContact = true;
+    console.log('[AffichageGagnants] Ouverture modale pour', gagnant.numero_telephone);
+  }
+
+  marquerJoint(): void {
+    if (this.gagnantSelectionne) {
+      this.gagnantSelectionne.joint = true;
+      console.log(`[AffichageGagnants] Client ${this.gagnantSelectionne.numero_telephone} marqué comme JOINT`);
+      this.fermerModale();
+    }
+  }
+
+  marquerNonJoint(): void {
+    if (this.gagnantSelectionne) {
+      this.gagnantSelectionne.joint = false;
+      console.log(`[AffichageGagnants] Client ${this.gagnantSelectionne.numero_telephone} marqué comme NON JOINT`);
+      this.fermerModale();
+    }
+  }
+
+  fermerModale(): void {
+    this.afficherModaleContact = false;
+    this.gagnantSelectionne = null;
   }
 }

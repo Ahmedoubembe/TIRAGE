@@ -35,6 +35,14 @@
 
     <div class="stat-card">
       <div class="stat-label">
+        <span class="ar">تم الاتصال</span>
+        <span class="fr">Clients joints</span>
+      </div>
+      <div class="stat-value">{{ clientsJoints }} / {{ totalGagnants }}</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
         <span class="ar">التاريخ</span>
         <span class="fr">Date</span>
       </div>
@@ -72,6 +80,7 @@
               <th>Téléphone</th>
               <th>Nom</th>
               <th>Score</th>
+              <th>Statut contact</th>
             </tr>
           </thead>
           <tbody>
@@ -80,6 +89,10 @@
               <td>{{ gagnant.numero_telephone }}</td>
               <td>{{ gagnant.nom }}</td>
               <td class="score">{{ gagnant.score.toFixed(2) }}</td>
+              <td class="statut-contact">
+                <span *ngIf="gagnant.joint" class="badge-joint-oui">✓ Joint</span>
+                <span *ngIf="!gagnant.joint" class="badge-joint-non">⏳ Non joint</span>
+              </td>
             </tr>
           </tbody>
         </table>

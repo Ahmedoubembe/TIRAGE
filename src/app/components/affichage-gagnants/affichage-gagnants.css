@@ -1399,3 +1399,279 @@
     transform: translateX(50%);
   }
 }
+
+/* ====================================
+   CARTES CLIQUABLES ET INDICATEUR JOINT
+   ==================================== */
+
+/* Carte cliquable */
+.gagnant-item.cliquable {
+  cursor: pointer;
+}
+
+.gagnant-item.cliquable:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+}
+
+.plein-ecran .gagnant-item.cliquable:hover {
+  transform: scale(1.01);
+}
+
+/* Indicateur discret pour client joint */
+.indicateur-joint {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: var(--mauritanie-vert);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 2px solid var(--mauritanie-jaune);
+  box-shadow: 0 2px 8px rgba(0, 168, 84, 0.4);
+  z-index: 5;
+}
+
+.plein-ecran .indicateur-joint {
+  width: 30px;
+  height: 30px;
+  font-size: 1.2rem;
+  top: 10px;
+  right: 10px;
+}
+
+/* Bordure subtile pour clients joints */
+.gagnant-item.joint {
+  border-left-color: var(--mauritanie-vert);
+  border-left-width: 5px;
+}
+
+/* ====================================
+   MODALE STATUT CONTACT
+   ==================================== */
+
+.modal-overlay-contact {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content-contact {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: 4px solid var(--mauritanie-jaune);
+  position: relative;
+}
+
+.modal-header-contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid var(--mauritanie-jaune);
+  padding-bottom: 1rem;
+}
+
+.modal-titre {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-titre .texte-ar {
+  font-size: 1.8rem;
+  font-weight: 700;
+  direction: rtl;
+  color: var(--mauritanie-vert);
+  font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+.modal-titre .texte-fr {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--mauritanie-vert);
+  opacity: 0.85;
+}
+
+.btn-fermer-modal {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.btn-fermer-modal:hover {
+  background: #f5f5f5;
+  color: var(--mauritanie-rouge);
+  transform: rotate(90deg);
+}
+
+.modal-body-contact {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.modal-question {
+  font-size: 1.8rem;
+  margin: 0 0 1rem 0;
+  color: var(--mauritanie-vert);
+  font-weight: 700;
+}
+
+.modal-sous-titre {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.modal-sous-titre .texte-ar {
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-weight: 600;
+}
+
+.modal-actions-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-modal {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.btn-modal .texte-ar {
+  font-size: 1.2rem;
+  font-weight: 700;
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+.btn-modal .texte-fr {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.btn-joint {
+  background: linear-gradient(135deg, var(--mauritanie-vert) 0%, var(--vert-fonce) 100%);
+  color: white;
+  border-color: var(--mauritanie-jaune);
+  box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
+}
+
+.btn-joint:hover {
+  background: linear-gradient(135deg, var(--vert-clair) 0%, var(--mauritanie-vert) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+}
+
+.btn-non-joint {
+  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
+  color: white;
+  border-color: var(--mauritanie-jaune);
+  box-shadow: 0 4px 15px rgba(210, 16, 52, 0.3);
+}
+
+.btn-non-joint:hover {
+  background: linear-gradient(135deg, #e01040 0%, var(--mauritanie-rouge) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+}
+
+.btn-annuler {
+  background: #e0e0e0;
+  color: #666;
+  border-color: #ccc;
+}
+
+.btn-annuler:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive modale */
+@media (max-width: 768px) {
+  .modal-content-contact {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .modal-titre .texte-ar {
+    font-size: 1.5rem;
+  }
+
+  .modal-titre .texte-fr {
+    font-size: 1.1rem;
+  }
+
+  .modal-question {
+    font-size: 1.4rem;
+  }
+
+  .btn-modal {
+    padding: 0.875rem 1.5rem;
+  }
+}
