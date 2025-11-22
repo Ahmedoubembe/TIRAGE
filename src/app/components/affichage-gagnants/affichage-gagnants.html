@@ -65,7 +65,16 @@
         *ngFor="let gagnant of gagnantsAffiches; let i = index"
         class="gagnant-item"
         [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine"
-        [class.gagnant-historique]="i !== gagnantsAffiches.length - 1">
+        [class.gagnant-historique]="i !== gagnantsAffiches.length - 1"
+        [class.joint]="gagnant.joint"
+        [class.cliquable]="!tirageEnCours"
+        (click)="toggleContactStatus(gagnant)">
+
+        <!-- Badge "Joint" ou "Non joint" -->
+        <div class="badge-contact" *ngIf="!tirageEnCours">
+          <span *ngIf="gagnant.joint" class="joint-oui">✓ Joint</span>
+          <span *ngIf="!gagnant.joint" class="joint-non">⏳ En attente d'appel</span>
+        </div>
 
         <!-- Point vert en haut à droite pour le dernier gagnant -->
         <div class="badge-nouveau" *ngIf="i === gagnantsAffiches.length - 1 && !tirageTermine"></div>
@@ -74,6 +83,11 @@
           <p class="numero">{{ gagnant.numero_telephone }}</p>
           <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
           <p class="prix">{{ gagnant.prix }}</p>
+        </div>
+
+        <!-- Message d'aide pour cliquer -->
+        <div class="aide-clic" *ngIf="!gagnant.joint && !tirageEnCours">
+          <small>👆 Cliquer pour marquer comme joint</small>
         </div>
       </div>
     </div>

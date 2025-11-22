@@ -117,4 +117,16 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     // - Il reste des clients dans la catégorie
     return !this.tirageTermine && !this.tirageEnCours && resteClients;
   }
+
+  toggleContactStatus(gagnant: Client): void {
+    // Ne pas permettre de changer pendant un tirage en cours
+    if (this.tirageEnCours) {
+      return;
+    }
+
+    // Toggle le statut joint
+    gagnant.joint = !gagnant.joint;
+
+    console.log(`[AffichageGagnants] Client ${gagnant.numero_telephone} marqué comme ${gagnant.joint ? 'JOINT' : 'NON JOINT'}`);
+  }
 }

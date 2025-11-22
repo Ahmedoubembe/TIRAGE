@@ -17,6 +17,7 @@ export class RapportComponent implements OnInit {
   totalGagnants: number = 0;
   totalCategories: number = 0;
   categoriesTirees: number = 0;
+  clientsJoints: number = 0;
 
   constructor(private donneesService: DonneesService) {}
 
@@ -27,6 +28,12 @@ export class RapportComponent implements OnInit {
     this.totalGagnants = recap.totalGagnants;
     this.totalCategories = recap.totalCategories;
     this.categoriesTirees = recap.categoriesTirees;
+
+    // Calculer le nombre de clients joints
+    this.clientsJoints = recap.categories
+      .flatMap(cat => cat.gagnants)
+      .filter(g => g.joint === true)
+      .length;
 
     // Formater la date en français
     const date = new Date();
