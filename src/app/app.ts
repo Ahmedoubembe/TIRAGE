@@ -18,6 +18,7 @@ import { ListeCategoriesComponent } from './components/liste-categories/liste-ca
 import { TirageComponent } from './components/tirage/tirage';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
 import { Client } from './models/client.model';
+import { DonneesService } from './services/donnees';
 
 type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
 
@@ -44,6 +45,8 @@ export class AppComponent {
   gagnantsAffiches: Client[] = [];
   tirageTermine: boolean = false;
   tirageEnCours: boolean = false;
+
+  constructor(private donneesService: DonneesService) {}
 
   onFichierCharge(): void {
     this.etapeActuelle = 'SELECTION';
@@ -81,6 +84,11 @@ export class AppComponent {
   }
 
   onRetourSelection(): void {
+    // Marquer la catégorie comme tirée avant de retourner à la sélection
+    if (this.categorieSelectionnee) {
+      this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
+    }
+
     this.etapeActuelle = 'SELECTION';
     this.categorieSelectionnee = '';
     this.gagnantsAffiches = [];
