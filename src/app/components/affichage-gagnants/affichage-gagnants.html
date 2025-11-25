@@ -80,7 +80,7 @@
         </div>
 
         <div class="gagnant-info">
-          <p class="numero">{{ gagnant.numero_telephone }}</p>
+          <p class="numero">{{ gagnant.numero_telephone | masquerNumero }}</p>
           <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
           <p class="prix">{{ gagnant.prix }}</p>
         </div>
@@ -131,7 +131,7 @@
 
       <div class="modal-body-contact" *ngIf="gagnantSelectionne">
         <p class="modal-question">
-          <strong>{{ gagnantSelectionne.numero_telephone }}</strong>
+          <strong>{{ gagnantSelectionne.numero_telephone | masquerNumero }}</strong>
         </p>
         <p class="modal-sous-titre">
           <span class="texte-ar">هل تم الاتصال بالعميل؟</span>

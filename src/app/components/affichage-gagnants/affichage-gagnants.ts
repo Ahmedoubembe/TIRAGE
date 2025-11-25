@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Client } from '../../models/client.model';
 import { AnimationConfig } from '../../config/animation.config';
 import { DonneesService } from '../../services/donnees';
+import { MasquerNumeroPipe } from '../../pipes/masquer-numero.pipe';
 
 @Component({
   selector: 'app-affichage-gagnants',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MasquerNumeroPipe],
   templateUrl: './affichage-gagnants.html',
   styleUrl: './affichage-gagnants.css'
 })

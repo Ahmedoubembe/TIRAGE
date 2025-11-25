@@ -37,7 +37,7 @@
         <span class="texte-fr">{{ traductions.gagnant.fr }}</span>
       </div>
       <div class="gagnant-card">
-        <p class="numero">{{ gagnantActuelFixe.numero_telephone }}</p>
+        <p class="numero">{{ gagnantActuelFixe.numero_telephone | masquerNumero }}</p>
         <p class="score">Score: {{ gagnantActuelFixe.score.toFixed(2) }}</p>
         <p class="prix">{{ gagnantActuelFixe.prix }}</p>
       </div>

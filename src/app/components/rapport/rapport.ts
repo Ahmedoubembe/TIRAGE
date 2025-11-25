@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DonneesService } from '../../services/donnees';
+import { MasquerNumeroPipe } from '../../pipes/masquer-numero.pipe';
 
 @Component({
   selector: 'app-rapport',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MasquerNumeroPipe],
   templateUrl: './rapport.html',
   styleUrl: './rapport.css'
 })
