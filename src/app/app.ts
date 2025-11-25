@@ -18,6 +18,7 @@ import { ListeCategoriesComponent } from './components/liste-categories/liste-ca
 import { TirageComponent } from './components/tirage/tirage';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
 import { Client } from './models/client.model';
+import { DonneesService } from './services/donnees';
 
 type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
 
@@ -44,6 +45,8 @@ export class AppComponent {
   gagnantsAffiches: Client[] = [];
   tirageTermine: boolean = false;
   tirageEnCours: boolean = false;
+
+  constructor(private donneesService: DonneesService) {}
 
   onFichierCharge(): void {
     this.etapeActuelle = 'SELECTION';
@@ -73,6 +76,30 @@ export class AppComponent {
     // Appeler la méthode du composant TirageComponent pour lancer un nouveau tirage
     if (this.tirageComponent) {
       this.tirageComponent.lancerTirageSuivant();
+    }
+  }
+
+  onPousser(): void {
+    // Méthode appelée quand l'utilisateur clique sur "Pousser"
+    console.log('[AppComponent] onPousser() - Tentative de pousser un client');
+
+    // Appeler le service pour pousser un client depuis la catégorie suivante
+    const clientPousse = this.donneesService.pushFromNextCategory(this.categorieSelectionnee);
+
+    if (clientPousse) {
+      console.log('[AppComponent] Client poussé avec succès:', clientPousse);
+
+      // Marquer le tirage comme en cours
+      this.tirageEnCours = true;
+
+      // Lancer le tirage avec le client poussé
+      if (this.tirageComponent) {
+        this.tirageComponent.lancerTirageSuivant();
+      }
+    } else {
+      // Aucun client disponible dans les catégories suivantes
+      console.warn('[AppComponent] Aucun client disponible pour pousser');
+      alert('Aucun client disponible dans les catégories suivantes.');
     }
   }
 

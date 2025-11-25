@@ -70,6 +70,12 @@
         <!-- Point vert en haut à droite pour le dernier gagnant -->
         <div class="badge-nouveau" *ngIf="i === gagnantsAffiches.length - 1 && !tirageTermine"></div>
 
+        <!-- Badge "Poussé" si le client a été poussé -->
+        <div class="badge-pousse" *ngIf="gagnant.pushed">
+          <span class="texte-ar">{{ traductionBadgePousse.ar }}</span>
+          <span class="texte-fr">{{ traductionBadgePousse.fr }}</span>
+        </div>
+
         <div class="gagnant-info">
           <p class="numero">{{ gagnant.numero_telephone }}</p>
           <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
@@ -87,9 +93,18 @@
         <span class="texte-fr">{{ traductionsBoutons.gagnantSuivant.fr }}</span>
       </button>
 
+      <!-- Bouton Pousser : affiché quand la catégorie est vide et ce n'est pas la dernière -->
+      <button
+        class="btn-pousser"
+        *ngIf="peutAfficherBoutonPousser()"
+        (click)="onPousser()">
+        <span class="texte-ar">{{ traductionsBoutons.pousser.ar }}</span>
+        <span class="texte-fr">{{ traductionsBoutons.pousser.fr }}</span>
+      </button>
+
       <button
         class="btn-retour"
-        *ngIf="gagnantsAffiches.length > 0 && !tirageEnCours"
+        *ngIf="(gagnantsAffiches.length > 0 && !tirageEnCours) || peutAfficherBoutonsPousser()"
         (click)="retourALaSelection()">
         <span class="texte-ar">{{ traductionsBoutons.retour.ar }}</span>
         <span class="texte-fr">{{ traductionsBoutons.retour.fr }}</span>

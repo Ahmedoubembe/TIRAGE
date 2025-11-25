@@ -87,7 +87,11 @@ export class DonneesService {
     }
 
     console.log('[DonneesService] Total catégories parsées:', categories.length);
-    return categories;
+
+    // Trier les catégories par borne supérieure décroissante (S1 -> S2 -> S3...)
+    const categoriesTries = this.trierCategoriesParBorneSuperieure(categories);
+
+    return categoriesTries;
   }
 
   private traiterFichierClients(data: string[][]): Client[] {
@@ -246,5 +250,104 @@ export class DonneesService {
     return this.clientsSubject.value.filter(
       client => client.id_categorie === nomCategorie
     );
+  }
+
+  /**
+   * Trie les catégories par borne supérieure décroissante
+   * S1 (>3000) -> S2 (2000-3000) -> S3 (<2000)
+   */
+  private trierCategoriesParBorneSuperieure(categories: Categorie[]): Categorie[] {
+    return categories.sort((a, b) => {
+      const borneA = this.extraireBorneSuperieure(a.interval);
+      const borneB = this.extraireBorneSuperieure(b.interval);
+
+      // Tri décroissant (plus grande borne en premier)
+      return borneB - borneA;
+    });
+  }
+
+  /**
+   * Extrait la borne supérieure d'un intervalle
+   * Exemples:
+   * - ">3000" -> Infinity (aucune limite supérieure)
+   * - "2000-3000" -> 3000
+   * - "<2000" -> 2000
+   */
+  private extraireBorneSuperieure(interval: string): number {
+    if (interval.startsWith('>')) {
+      // Pas de limite supérieure
+      return Infinity;
+    } else if (interval.startsWith('<')) {
+      const seuil = parseFloat(interval.substring(1));
+      return seuil;
+    } else if (interval.includes('-')) {
+      const [min, max] = interval.split('-').map(s => parseFloat(s.trim()));
+      return max;
+    }
+    return 0;
+  }
+
+  /**
+   * Pousse un client depuis la catégorie suivante vers la catégorie actuelle
+   * @param currentCategoryId ID de la catégorie actuelle
+   * @returns Le client poussé ou null si aucun client disponible
+   */
+  pushFromNextCategory(currentCategoryId: string): Client | null {
+    const categories = this.categoriesSubject.value;
+
+    // Trouver l'index de la catégorie actuelle
+    const currentIndex = categories.findIndex(cat => cat.categorie === currentCategoryId);
+
+    if (currentIndex === -1) {
+      console.error('[DonneesService] Catégorie actuelle non trouvée:', currentCategoryId);
+      return null;
+    }
+
+    // Si c'est la dernière catégorie, impossible de pousser
+    if (currentIndex === categories.length - 1) {
+      console.log('[DonneesService] Dernière catégorie atteinte, impossible de pousser');
+      return null;
+    }
+
+    const categorieActuelle = categories[currentIndex];
+
+    // Chercher dans les catégories suivantes
+    for (let i = currentIndex + 1; i < categories.length; i++) {
+      const categorieSuivante = categories[i];
+      const clientsDisponibles = this.getClientsTries(categorieSuivante.categorie);
+
+      if (clientsDisponibles.length > 0) {
+        // Récupérer le client avec le meilleur score
+        const clientAPousser = clientsDisponibles.shift()!;
+
+        // Marquer le client comme poussé
+        clientAPousser.pushed = true;
+        clientAPousser.id_categorie = categorieActuelle.categorie;
+        clientAPousser.prix = categorieActuelle.prix;
+
+        // Mettre à jour le cache de la catégorie actuelle
+        const clientsCategorieActuelle = this.clientsParCategorieMap.get(categorieActuelle.categorie) || [];
+        clientsCategorieActuelle.unshift(clientAPousser);
+        this.clientsParCategorieMap.set(categorieActuelle.categorie, clientsCategorieActuelle);
+
+        console.log('[DonneesService] Client poussé:', clientAPousser);
+        console.log('[DonneesService] Depuis:', categorieSuivante.categorie, '-> Vers:', categorieActuelle.categorie);
+
+        return clientAPousser;
+      }
+    }
+
+    // Aucun client disponible dans les catégories suivantes
+    console.log('[DonneesService] Aucun client disponible dans les catégories suivantes');
+    return null;
+  }
+
+  /**
+   * Vérifie si la catégorie actuelle est la dernière
+   */
+  isLastCategory(categoryId: string): boolean {
+    const categories = this.categoriesSubject.value;
+    const currentIndex = categories.findIndex(cat => cat.categorie === categoryId);
+    return currentIndex === categories.length - 1;
   }
 }

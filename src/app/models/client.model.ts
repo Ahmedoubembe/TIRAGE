@@ -5,4 +5,5 @@ export interface Client {
   id_categorie: string;
   prix?: string;
   est_gagnant?: boolean;
+  pushed?: boolean;
 }
