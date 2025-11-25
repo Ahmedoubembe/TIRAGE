@@ -33,13 +33,7 @@
       <div class="stat-value">{{ totalGagnants }}</div>
     </div>
 
-    <div class="stat-card">
-      <div class="stat-label">
-        <span class="ar">تم الاتصال</span>
-        <span class="fr">Clients joints</span>
-      </div>
-      <div class="stat-value">{{ clientsJoints }} / {{ totalGagnants }}</div>
-    </div>
+ 
 
     <div class="stat-card">
       <div class="stat-label">
@@ -61,7 +55,7 @@
       <div class="categorie-header">
         <h2>{{ cat.nom }}</h2>
         <span class="badge-statut" [class.tiree]="cat.tiree">
-          {{ cat.tiree ? '✓ Tirée' : '⏳ En attente' }}
+          {{ cat.tiree ? '✓ Tirée' : 'Non-joint' }}
         </span>
       </div>
 
