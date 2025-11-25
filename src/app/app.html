@@ -6,9 +6,10 @@
   (fichierCharge)="onFichierCharge()">
 </app-televersement-csv>
 
-<app-liste-categories 
+<app-liste-categories
   *ngIf="etapeActuelle === 'SELECTION'"
-  (categorieSelectionnee)="onCategorieSelectionnee($event)">
+  (categorieSelectionnee)="onCategorieSelectionnee($event)"
+  (voirRapport)="onVoirRapport()">
 </app-liste-categories>
 
 <div *ngIf="etapeActuelle === 'TIRAGE'" class="tirage-container">
@@ -29,3 +30,8 @@
     (retourSelection)="onRetourSelection()">
   </app-affichage-gagnants>
 </div>
+
+<app-rapport
+  *ngIf="etapeActuelle === 'RAPPORT'"
+  (retourSelection)="onRetourDepuisRapport()">
+</app-rapport>

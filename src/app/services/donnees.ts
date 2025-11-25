@@ -350,4 +350,70 @@ export class DonneesService {
     const currentIndex = categories.findIndex(cat => cat.categorie === categoryId);
     return currentIndex === categories.length - 1;
   }
+
+  /**
+   * Récupère tous les gagnants (clients avec est_gagnant = true)
+   */
+  getGagnants(): Client[] {
+    return this.clientsSubject.value.filter(
+      client => client.est_gagnant === true
+    );
+  }
+
+  /**
+   * Récupère les gagnants d'une catégorie spécifique
+   */
+  getGagnantsParCategorie(nomCategorie: string): Client[] {
+    return this.clientsSubject.value.filter(
+      client => client.id_categorie === nomCategorie && client.est_gagnant === true
+    );
+  }
+
+  /**
+   * Compte le nombre de catégories tirées
+   */
+  getNombreCategoriesTirees(): number {
+    return this.categoriesSubject.value.filter(cat => cat.tiree === true).length;
+  }
+
+  /**
+   * Récupère le récapitulatif complet pour le rapport
+   */
+  getRecapitulatif(): {
+    totalCategories: number,
+    categoriesTirees: number,
+    totalGagnants: number,
+    categories: Array<{
+      nom: string,
+      interval: string,
+      prix: string,
+      gagnantsPrevu: number,
+      gagnantsTires: number,
+      tiree: boolean,
+      gagnants: Client[]
+    }>
+  } {
+    const categories = this.categoriesSubject.value;
+    const totalGagnants = this.getGagnants().length;
+
+    const categoriesAvecGagnants = categories.map(cat => {
+      const gagnants = this.getGagnantsParCategorie(cat.categorie);
+      return {
+        nom: cat.categorie,
+        interval: cat.interval,
+        prix: cat.prix,
+        gagnantsPrevu: cat.nombre_gagnants,
+        gagnantsTires: gagnants.length,
+        tiree: cat.tiree || false,
+        gagnants: gagnants
+      };
+    });
+
+    return {
+      totalCategories: categories.length,
+      categoriesTirees: this.getNombreCategoriesTirees(),
+      totalGagnants: totalGagnants,
+      categories: categoriesAvecGagnants
+    };
+  }
 }

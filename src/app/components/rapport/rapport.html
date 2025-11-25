@@ -1,0 +1,114 @@
+<div class="container-rapport">
+  <!-- En-tête bilingue -->
+  <div class="header-rapport">
+    <h1 class="titre-bilingue">
+      <span class="texte-ar">تقرير السحب</span>
+      <span class="texte-fr">Rapport des tirages</span>
+    </h1>
+  </div>
+
+  <!-- Vue d'ensemble (statistiques globales) -->
+  <div class="vue-ensemble">
+    <div class="stat-card">
+      <div class="stat-label">
+        <span class="ar">إجمالي الفئات</span>
+        <span class="fr">Total catégories</span>
+      </div>
+      <div class="stat-value">{{ totalCategories }}</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span class="ar">الفئات المسحوبة</span>
+        <span class="fr">Catégories tirées</span>
+      </div>
+      <div class="stat-value">{{ categoriesTirees }}</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span class="ar">إجمالي الفائزين</span>
+        <span class="fr">Total gagnants</span>
+      </div>
+      <div class="stat-value">{{ totalGagnants }}</div>
+    </div>
+
+ 
+
+    <div class="stat-card">
+      <div class="stat-label">
+        <span class="ar">التاريخ</span>
+        <span class="fr">Date</span>
+      </div>
+      <div class="stat-value">{{ dateRapport }}</div>
+    </div>
+  </div>
+
+  <!-- Détails par catégorie -->
+  <div class="categories-rapport">
+    <div
+      *ngFor="let cat of categoriesAvecGagnants"
+      class="categorie-section"
+      [class.non-tiree]="!cat.tiree">
+
+      <!-- En-tête de catégorie -->
+      <div class="categorie-header">
+        <h2>{{ cat.nom }}</h2>
+        <span class="badge-statut" [class.tiree]="cat.tiree">
+          {{ cat.tiree ? '✓ Tirée' : 'Non-joint' }}
+        </span>
+      </div>
+
+      <div class="categorie-info">
+        <p><strong>Intervalle :</strong> {{ cat.interval }}</p>
+        <p><strong>Prix :</strong> {{ cat.prix }}</p>
+        <p><strong>Gagnants :</strong> {{ cat.gagnantsTires }} / {{ cat.gagnantsPrevu }}</p>
+      </div>
+
+      <!-- Tableau des gagnants (seulement si catégorie tirée) -->
+      <div *ngIf="cat.tiree && cat.gagnants.length > 0" class="table-container">
+        <table class="table-gagnants">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Téléphone</th>
+              <th>Nom</th>
+              <th>Score</th>
+              <th>Statut contact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let gagnant of cat.gagnants; let i = index">
+              <td class="position">{{ i + 1 }}</td>
+              <td>{{ gagnant.numero_telephone }}</td>
+              <td>{{ gagnant.nom }}</td>
+              <td class="score">{{ gagnant.score.toFixed(2) }}</td>
+              <td class="statut-contact">
+                <span *ngIf="gagnant.joint" class="badge-joint-oui">✓ Joint</span>
+                <span *ngIf="!gagnant.joint" class="badge-joint-non">X Non joint</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Message si pas encore tirée -->
+      <div *ngIf="!cat.tiree" class="message-attente">
+        <p>Cette catégorie n'a pas encore été tirée</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-rapport">
+    <button class="btn-retour" (click)="retourALaSelection()">
+      <span class="texte-ar">العودة إلى الاختيار</span>
+      <span class="texte-fr">Retour à la sélection</span>
+    </button>
+
+    <!-- <button class="btn-imprimer" (click)="imprimer()">
+      <span class="texte-ar">طباعة</span>
+      <span class="texte-fr">Imprimer</span>
+    </button> -->
+  </div>
+</div>

@@ -17,10 +17,11 @@ import { TeleversementCsvComponent } from './components/televersement-csv/televe
 import { ListeCategoriesComponent } from './components/liste-categories/liste-categories';
 import { TirageComponent } from './components/tirage/tirage';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
+import { RapportComponent } from './components/rapport/rapport';
 import { Client } from './models/client.model';
 import { DonneesService } from './services/donnees';
 
-type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
+type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE' | 'RAPPORT';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,8 @@ type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE';
     TeleversementCsvComponent,
     ListeCategoriesComponent,
     TirageComponent,
-    AffichageGagnantsComponent
+    AffichageGagnantsComponent,
+    RapportComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -108,9 +110,22 @@ export class AppComponent {
   }
 
   onRetourSelection(): void {
+    // Marquer la catégorie comme tirée avant de retourner à la sélection
+    if (this.categorieSelectionnee) {
+      this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
+    }
+
     this.etapeActuelle = 'SELECTION';
     this.categorieSelectionnee = '';
     this.gagnantsAffiches = [];
     this.tirageTermine = false;
+  }
+
+  onVoirRapport(): void {
+    this.etapeActuelle = 'RAPPORT';
+  }
+
+  onRetourDepuisRapport(): void {
+    this.etapeActuelle = 'SELECTION';
   }
 }

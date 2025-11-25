@@ -12,6 +12,7 @@ import { Categorie } from '../../models/categorie.model';
 })
 export class ListeCategoriesComponent implements OnInit {
   @Output() categorieSelectionnee = new EventEmitter<string>();
+  @Output() voirRapport = new EventEmitter<void>();
 
   categories: Categorie[] = [];
   categorieChoisie: string | null = null;
@@ -45,4 +46,14 @@ export class ListeCategoriesComponent implements OnInit {
       this.categorieSelectionnee.emit(this.categorieChoisie);
     }
   }
+
+  allerAuRapport(): void {
+    this.voirRapport.emit();
+  }
+
+  get aDesGagnants(): boolean {
+    // Vérifier s'il y a au moins un gagnant tiré
+    return this.donneesService.getGagnants().length > 0;
+  }
 }
+

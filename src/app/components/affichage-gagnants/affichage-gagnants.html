@@ -65,7 +65,10 @@
         *ngFor="let gagnant of gagnantsAffiches; let i = index"
         class="gagnant-item"
         [class.nouveau-gagnant]="i === gagnantsAffiches.length - 1 && !tirageTermine"
-        [class.gagnant-historique]="i !== gagnantsAffiches.length - 1">
+        [class.gagnant-historique]="i !== gagnantsAffiches.length - 1"
+        [class.cliquable]="!tirageEnCours"
+        [class.joint]="gagnant.joint"
+        (click)="ouvrirModaleContact(gagnant)">
 
         <!-- Point vert en haut à droite pour le dernier gagnant -->
         <div class="badge-nouveau" *ngIf="i === gagnantsAffiches.length - 1 && !tirageTermine"></div>
@@ -81,6 +84,9 @@
           <p class="score">Score: {{ gagnant.score.toFixed(2) }}</p>
           <p class="prix">{{ gagnant.prix }}</p>
         </div>
+
+        <!-- Indicateur discret si déjà marqué comme joint -->
+        <div class="indicateur-joint" *ngIf="gagnant.joint && !tirageEnCours">✓</div>
       </div>
     </div>
 
@@ -111,4 +117,52 @@
       </button>
     </div>
   </div>
+
+  <!-- MODALE STATUT CONTACT -->
+  <div class="modal-overlay-contact" *ngIf="afficherModaleContact" (click)="fermerModale()">
+    <div class="modal-content-contact" (click)="$event.stopPropagation()">
+      <div class="modal-header-contact">
+        <h2 class="modal-titre">
+          <span class="texte-ar">حالة الاتصال</span>
+          <span class="texte-fr">Statut du contact</span>
+        </h2>
+        <button class="btn-fermer-modal" (click)="fermerModale()">×</button>
+      </div>
+
+      <div class="modal-body-contact" *ngIf="gagnantSelectionne">
+        <p class="modal-question">
+          <strong>{{ gagnantSelectionne.numero_telephone }}</strong>
+        </p>
+        <p class="modal-sous-titre">
+          <span class="texte-ar">هل تم الاتصال بالعميل؟</span>
+          <span class="texte-fr">Le client a-t-il répondu à l'appel ?</span>
+        </p>
+      </div>
+
+      <div class="modal-actions-contact">
+        <button class="btn-modal btn-joint" (click)="marquerJoint()">
+          <span class="texte-ar">نعم - تم الاتصال</span>
+          <span class="texte-fr">✓ Joint</span>
+        </button>
+
+        <button class="btn-modal btn-non-joint" (click)="marquerNonJoint()">
+          <span class="texte-ar">لا - لم يرد</span>
+          <span class="texte-fr">✗ Non joint</span>
+        </button>
+
+        <button class="btn-modal btn-annuler" (click)="fermerModale()">
+          <span class="texte-ar">إلغاء</span>
+          <span class="texte-fr">Annuler</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="logo-gauche">
+  <img src="assets/logo2.jpg" alt="Logo 2">
+</div>
+<!-- 
+<div class="logo-droit">
+  <img src="assets/logo2.jpg" alt="Logo 2">
+</div> -->

@@ -1,8 +1,3 @@
-/* ====================================
-   COMPOSANT LISTE CATEGORIES - OPTIMISE ET PROFESSIONNEL
-   Design moderne avec couleurs mauritaniennes
-   Vert #00A854, Jaune #FFD700, Rouge #D21034
-   ==================================== */
 
 /* Conteneur principal avec fond blanc et taches decoratives */
 .container {
@@ -98,10 +93,10 @@
 
 .categories-card {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;  /* Changé de 2rem à 1.5rem */
   border-radius: 1rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  max-width: 900px;
+  max-width: 650px;  /* Changé de 900px à 650px */
   width: 100%;
   position: relative;
   z-index: 1;
@@ -266,7 +261,7 @@ h1.titre-bilingue .texte-fr {
 
 .statut {
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
+  background:rgb(5, 58, 5);
   color: white;
   border-radius: 0.25rem;
   font-size: 0.9rem;
@@ -338,6 +333,58 @@ h1.titre-bilingue .texte-fr {
   border-color: #999;
   box-shadow: none;
   opacity: 0.6;
+}
+
+/* ====================================
+   BOUTON VOIR LE RAPPORT
+   ==================================== */
+
+.btn-voir-rapport {
+  width: 100%;
+  padding: 1rem 2rem;
+  margin-top: 1rem;
+  background: green;
+  color: white;
+  border: 3px solid var(--mauritanie-jaune);
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(240, 208, 29, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.btn-voir-rapport .texte-ar {
+  font-size: 1.3rem;
+  font-weight: 700;
+  direction: rtl;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+.btn-voir-rapport .texte-fr {
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.btn-voir-rapport:hover {
+  background: rgb(1, 65, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+  animation: pulsation-rapport 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsation-rapport {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+  }
+  50% {
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.9);
+  }
 }
 
 /* ====================================
@@ -622,4 +669,40 @@ h1.titre-bilingue .texte-fr {
     transform: none;
     box-shadow: none;
   }
+}
+
+.logo-gauche {
+  position: absolute;
+  left: 0%;
+  top: 5%;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.logo-gauche img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-droit {
+  position: absolute;
+  right: 0%;
+  top: 10%;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.logo-droit img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
