@@ -56,3 +56,4 @@ export class ListeCategoriesComponent implements OnInit {
     return this.donneesService.getGagnants().length > 0;
   }
 }
+
