@@ -328,8 +328,10 @@ export class DonneesService {
         clientAPousser.prix = categorieActuelle.prix;
 
         // Mettre à jour le cache de la catégorie actuelle
+        // Utiliser push() au lieu de unshift() car le client poussé a un score plus bas
+        // et doit sortir EN DERNIER au tirage (dernier entré, dernier sorti)
         const clientsCategorieActuelle = this.clientsParCategorieMap.get(categorieActuelle.categorie) || [];
-        clientsCategorieActuelle.unshift(clientAPousser);
+        clientsCategorieActuelle.push(clientAPousser);
         this.clientsParCategorieMap.set(categorieActuelle.categorie, clientsCategorieActuelle);
 
         console.log('[DonneesService] Client poussé:', clientAPousser);
