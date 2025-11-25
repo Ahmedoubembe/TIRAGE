@@ -266,7 +266,7 @@ h1.titre-bilingue .texte-fr {
 
 .statut {
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
+  background:rgb(5, 58, 5);
   color: white;
   border-radius: 0.25rem;
   font-size: 0.9rem;
@@ -348,7 +348,7 @@ h1.titre-bilingue .texte-fr {
   width: 100%;
   padding: 1rem 2rem;
   margin-top: 1rem;
-  background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
+  background: green;
   color: white;
   border: 3px solid var(--mauritanie-jaune);
   border-radius: 0.5rem;
@@ -356,7 +356,7 @@ h1.titre-bilingue .texte-fr {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(210, 16, 52, 0.3);
+  box-shadow: 0 4px 15px rgba(240, 208, 29, 0.3);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -377,7 +377,7 @@ h1.titre-bilingue .texte-fr {
 }
 
 .btn-voir-rapport:hover {
-  background: linear-gradient(135deg, #e01040 0%, var(--mauritanie-rouge) 100%);
+  background: rgb(1, 65, 1);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
   animation: pulsation-rapport 1.5s ease-in-out infinite;

@@ -85,7 +85,7 @@
               <td class="score">{{ gagnant.score.toFixed(2) }}</td>
               <td class="statut-contact">
                 <span *ngIf="gagnant.joint" class="badge-joint-oui">✓ Joint</span>
-                <span *ngIf="!gagnant.joint" class="badge-joint-non">⏳ Non joint</span>
+                <span *ngIf="!gagnant.joint" class="badge-joint-non">X Non joint</span>
               </td>
             </tr>
           </tbody>
@@ -106,9 +106,9 @@
       <span class="texte-fr">Retour à la sélection</span>
     </button>
 
-    <button class="btn-imprimer" (click)="imprimer()">
+    <!-- <button class="btn-imprimer" (click)="imprimer()">
       <span class="texte-ar">طباعة</span>
       <span class="texte-fr">Imprimer</span>
-    </button>
+    </button> -->
   </div>
 </div>
