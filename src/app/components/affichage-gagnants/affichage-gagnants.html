@@ -73,10 +73,10 @@
         <!-- Point vert en haut à droite pour le dernier gagnant -->
         <div class="badge-nouveau" *ngIf="i === gagnantsAffiches.length - 1 && !tirageTermine"></div>
 
-        <!-- Badge "Poussé" si le client a été poussé -->
+        <!-- Badge "Poussé de [catégorie]" si le client a été poussé -->
         <div class="badge-pousse" *ngIf="gagnant.pushed">
-          <span class="texte-ar">{{ traductionBadgePousse.ar }}</span>
-          <span class="texte-fr">{{ traductionBadgePousse.fr }}</span>
+          <span class="texte-ar">{{ getTexteBadgePousseAr(gagnant) }}</span>
+          <span class="texte-fr">{{ getTexteBadgePousseFr(gagnant) }}</span>
         </div>
 
         <div class="gagnant-info">

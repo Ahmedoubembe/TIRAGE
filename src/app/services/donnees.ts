@@ -289,6 +289,7 @@ export class DonneesService {
 
   /**
    * Pousse un client depuis la catégorie suivante vers la catégorie actuelle
+   * avec effet cascade : chaque catégorie qui perd un client reçoit un client de la suivante
    * @param currentCategoryId ID de la catégorie actuelle
    * @returns Le client poussé ou null si aucun client disponible
    */
@@ -320,8 +321,9 @@ export class DonneesService {
         // Récupérer le client avec le meilleur score
         const clientAPousser = clientsDisponibles.shift()!;
 
-        // Marquer le client comme poussé
+        // Marquer le client comme poussé et enregistrer sa catégorie d'origine
         clientAPousser.pushed = true;
+        clientAPousser.pushedFrom = categorieSuivante.categorie;
         clientAPousser.id_categorie = categorieActuelle.categorie;
         clientAPousser.prix = categorieActuelle.prix;
 
@@ -332,6 +334,13 @@ export class DonneesService {
 
         console.log('[DonneesService] Client poussé:', clientAPousser);
         console.log('[DonneesService] Depuis:', categorieSuivante.categorie, '-> Vers:', categorieActuelle.categorie);
+
+        // EFFET CASCADE : remplir automatiquement la catégorie qui vient de perdre un client
+        // (sauf si c'est la dernière catégorie)
+        if (i < categories.length - 1) {
+          console.log(`[DonneesService] 🔄 CASCADE: Remplissage de ${categorieSuivante.categorie}...`);
+          this.pushFromNextCategory(categorieSuivante.categorie);
+        }
 
         return clientAPousser;
       }

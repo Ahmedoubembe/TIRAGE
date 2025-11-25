@@ -55,6 +55,12 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     fr: 'Poussé'
   };
 
+  // Traduction pour "de" (pour "Poussé de X")
+  traductionDe = {
+    ar: 'من',
+    fr: 'de'
+  };
+
   // Langue courante
   langueFelicitations: 'fr' | 'ar' = 'fr';
 
@@ -196,5 +202,29 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
   fermerModale(): void {
     this.afficherModaleContact = false;
     this.gagnantSelectionne = null;
+  }
+
+  // ====================================
+  // BADGE POUSSÉ AVEC CATÉGORIE
+  // ====================================
+
+  /**
+   * Génère le texte du badge "Poussé de [catégorie]" en français
+   */
+  getTexteBadgePousseFr(gagnant: Client): string {
+    if (gagnant.pushedFrom) {
+      return `${this.traductionBadgePousse.fr} ${this.traductionDe.fr} ${gagnant.pushedFrom}`;
+    }
+    return this.traductionBadgePousse.fr;
+  }
+
+  /**
+   * Génère le texte du badge "Poussé de [catégorie]" en arabe
+   */
+  getTexteBadgePousseAr(gagnant: Client): string {
+    if (gagnant.pushedFrom) {
+      return `${this.traductionBadgePousse.ar} ${this.traductionDe.ar} ${gagnant.pushedFrom}`;
+    }
+    return this.traductionBadgePousse.ar;
   }
 }
