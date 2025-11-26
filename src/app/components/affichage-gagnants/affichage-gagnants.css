@@ -1097,31 +1097,31 @@
 
 /* Texte désaturé pour gagnants historiques */
 .gagnant-item.gagnant-historique .numero {
-  color: #888;
+  color: #f1efef00;
   font-weight: 700;
 }
 
 .plein-ecran .gagnant-item.gagnant-historique .numero {
-  color: #888;
+  color: #f3eeee;
   text-shadow: none;
 }
 
 .gagnant-item.gagnant-historique .score {
-  color: #999;
+  color: #e0dada8e;
 }
 
 .plein-ecran .gagnant-item.gagnant-historique .score {
-  color: #999;
+  color: #e0dada8e;
   text-shadow: none;
 }
 
 .gagnant-item.gagnant-historique .prix {
-  color: #aaa;
+  color: #e0dada8e;
   font-weight: 700;
 }
 
 .plein-ecran .gagnant-item.gagnant-historique .prix {
-  color: #aaa;
+  color: #e0dada8e;
   text-shadow: none;
   animation: none;
 }
@@ -1800,16 +1800,18 @@
   }
 }
 
+
 .logo-gauche {
   position: absolute;
   left: 0%;
-  top: 5%;
+  top: 4%;
   width: 400px;
   height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 53;
+   display: block;
 }
 
 .logo-gauche img {
@@ -1820,19 +1822,395 @@
 
 .logo-droit {
   position: absolute;
-  right: 8%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 200px;
-  height: 200px;
+  right: 0%;
+  top: 4%;
+  width: 350px;
+  height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 53;
+  display: block;
+
 }
 
 .logo-droit img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+
+.logo-bamis-dig {
+  position: absolute;
+  left: 15%;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 53;
+}
+
+.logo-bamis-dig img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.logo-bamis {
+  position: absolute;
+  right: 15%;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 53;
+}
+
+.logo-bamis img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+/* Coin superieur gauche : Version francaise */
+.fete-nationale-gauche {
+  position: fixed;
+  left: 30px;
+  top: 20%;
+  z-index: 55;
+  text-align: left;
+  pointer-events: none;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  padding: 3rem 3rem;
+  border-radius: 0 0 2rem 0;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 3px rgba(0, 168, 84, 0.2);
+  border-left: 5px solid var(--mauritanie-vert);
+  border-bottom: 5px solid var(--mauritanie-rouge);
+  transform: rotate(-2deg);
+  transition: all 0.3s ease;
+  animation: apparition-gauche 1s ease-out, flottement-gauche 4s ease-in-out 1s infinite;
+}
+
+.fete-nationale-gauche:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 3px rgba(0, 168, 84, 0.3);
+  animation-play-state: paused;
+}
+
+.fete-nationale-gauche .date {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--mauritanie-rouge);
+  line-height: 0.9;
+  margin-bottom: 0.1rem;
+  text-shadow: 3px 3px 6px rgba(210, 16, 52, 0.3);
+  font-family: 'Georgia', serif;
+  animation: pulsation-rouge 2s ease-in-out infinite;
+}
+
+.fete-nationale-gauche .mois {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  animation: fadeIn 1.5s ease-out 0.3s both;
+}
+
+.fete-nationale-gauche .message {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--mauritanie-rouge);
+  line-height: 1.1;
+  font-style: italic;
+  font-family: 'Brush Script MT', cursive, 'Georgia', serif;
+  text-shadow: 2px 2px 4px rgba(210, 16, 52, 0.2);
+  animation: fadeIn 1.5s ease-out 0.6s both;
+}
+
+.fete-nationale-gauche .pays {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--mauritanie-vert);
+  margin-top: 0.5rem;
+  font-style: italic;
+  font-family: 'Brush Script MT', cursive, 'Georgia', serif;
+  text-shadow: 2px 2px 4px rgba(0, 168, 84, 0.3);
+  letter-spacing: 1px;
+  animation: fadeIn 1.5s ease-out 0.9s both, pulsation-vert 3s ease-in-out 2s infinite;
+}
+
+/* Coin superieur droit : Version arabe */
+.fete-nationale-droite {
+  position: fixed;
+  right: 30px;
+  top: 20%;
+  z-index: 9999;
+  text-align: right;
+  direction: rtl;
+  font-family: 'Amiri', 'Arial', 'Helvetica', sans-serif;
+  pointer-events: none;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  padding: 3rem 3rem;
+  border-radius: 0 0 0 2rem;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 3px rgba(0, 168, 84, 0.2);
+  border-right: 5px solid var(--mauritanie-vert);
+  border-bottom: 5px solid var(--mauritanie-rouge);
+  transform: rotate(2deg);
+  transition: all 0.3s ease;
+  animation: apparition-droite 1s ease-out, flottement-droite 4s ease-in-out 1s infinite;
+}
+
+.fete-nationale-droite:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 3px rgba(0, 168, 84, 0.3);
+  animation-play-state: paused;
+}
+
+.fete-nationale-droite .date-ar {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--mauritanie-rouge);
+  line-height: 0.9;
+  margin-bottom: 0.1rem;
+  text-shadow: 3px 3px 6px rgba(210, 16, 52, 0.3);
+  animation: pulsation-rouge 2s ease-in-out infinite;
+}
+
+.fete-nationale-droite .mois-ar {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+  animation: fadeIn 1.5s ease-out 0.3s both;
+}
+
+.fete-nationale-droite .message-ar {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--mauritanie-rouge);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(210, 16, 52, 0.2);
+  animation: fadeIn 1.5s ease-out 0.6s both;
+}
+
+.fete-nationale-droite .pays-ar {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--mauritanie-vert);
+  text-shadow: 2px 2px 4px rgba(0, 168, 84, 0.3);
+  animation: fadeIn 1.5s ease-out 0.9s both, pulsation-vert 3s ease-in-out 2s infinite;
+}
+
+/* Effet de brillance animee */
+.fete-nationale-gauche::before,
+.fete-nationale-droite::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 215, 0, 0.3) 50%,
+    transparent 100%
+  );
+  animation: brillance 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ANIMATIONS */
+
+/* Apparition depuis la gauche */
+@keyframes apparition-gauche {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) rotate(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(-2deg);
+  }
+}
+
+/* Apparition depuis la droite */
+@keyframes apparition-droite {
+  0% {
+    opacity: 0;
+    transform: translateX(100px) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(2deg);
+  }
+}
+
+/* Flottement doux gauche */
+@keyframes flottement-gauche {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-3deg);
+  }
+  50% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+/* Flottement doux droite */
+@keyframes flottement-droite {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+  50% {
+    transform: translateY(0) rotate(2deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+/* Pulsation rouge pour les dates */
+@keyframes pulsation-rouge {
+  0%, 100% {
+    text-shadow: 3px 3px 6px rgba(210, 16, 52, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 
+      3px 3px 6px rgba(210, 16, 52, 0.5),
+      0 0 20px rgba(210, 16, 52, 0.4);
+    transform: scale(1.05);
+  }
+}
+
+/* Pulsation verte pour les pays */
+@keyframes pulsation-vert {
+  0%, 100% {
+    text-shadow: 2px 2px 4px rgba(0, 168, 84, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 
+      2px 2px 4px rgba(0, 168, 84, 0.5),
+      0 0 15px rgba(0, 168, 84, 0.4);
+    transform: scale(1.03);
+  }
+}
+
+/* Fade in progressif */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Brillance qui traverse */
+@keyframes brillance {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 200%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .fete-nationale-gauche,
+  .fete-nationale-droite {
+    padding: 1.2rem 1.5rem;
+    top: 110px;
+  }
+  
+  .fete-nationale-gauche .date,
+  .fete-nationale-droite .date-ar {
+    font-size: 2.8rem;
+  }
+  
+  .fete-nationale-gauche .mois,
+  .fete-nationale-droite .mois-ar {
+    font-size: 0.95rem;
+  }
+  
+  .fete-nationale-gauche .message,
+  .fete-nationale-droite .message-ar {
+    font-size: 1.2rem;
+  }
+  
+  .fete-nationale-gauche .pays,
+  .fete-nationale-droite .pays-ar {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .fete-nationale-gauche {
+    left: 10px;
+    top: 100px;
+    padding: 1rem 1.2rem;
+    transform: rotate(-1deg);
+  }
+  
+  .fete-nationale-droite {
+    right: 10px;
+    top: 100px;
+    padding: 1rem 1.2rem;
+    transform: rotate(1deg);
+  }
+  
+  .fete-nationale-gauche .date,
+  .fete-nationale-droite .date-ar {
+    font-size: 2.2rem;
+  }
+  
+  .fete-nationale-gauche .mois,
+  .fete-nationale-droite .mois-ar {
+    font-size: 0.8rem;
+  }
+  
+  .fete-nationale-gauche .message,
+  .fete-nationale-droite .message-ar {
+    font-size: 1rem;
+  }
+  
+  .fete-nationale-gauche .pays,
+  .fete-nationale-droite .pays-ar {
+    font-size: 1.3rem;
+  }
 }

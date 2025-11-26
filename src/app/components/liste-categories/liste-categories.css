@@ -748,3 +748,17 @@ h1.titre-bilingue .texte-fr {
   max-height: 100%;
   object-fit: contain;
 }
+
+@media (max-width: 768px) {
+  .logo-bamis-dig,
+  .logo-bamis {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .logo-gauche,
+  .logo-droit {
+    width: 150px;
+    height: 150px;
+  }
+}
