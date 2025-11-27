@@ -280,7 +280,7 @@
 }
 
 .btn-retour,
-.btn-imprimer {
+.btn-telecharger-pdf {
   flex: 1;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
@@ -301,14 +301,20 @@
   box-shadow: 0 4px 15px rgba(0, 168, 84, 0.3);
 }
 
-.btn-imprimer {
+.btn-telecharger-pdf {
   background: linear-gradient(135deg, var(--mauritanie-rouge) 0%, #b01030 100%);
   color: white;
   box-shadow: 0 4px 15px rgba(210, 16, 52, 0.3);
 }
 
+.btn-telecharger-pdf:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .btn-retour .texte-ar,
-.btn-imprimer .texte-ar {
+.btn-telecharger-pdf .texte-ar {
   font-size: 1.3rem;
   font-weight: 700;
   direction: rtl;
@@ -316,7 +322,7 @@
 }
 
 .btn-retour .texte-fr,
-.btn-imprimer .texte-fr {
+.btn-telecharger-pdf .texte-fr {
   font-size: 0.95rem;
   opacity: 0.9;
 }
@@ -327,7 +333,7 @@
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
 }
 
-.btn-imprimer:hover {
+.btn-telecharger-pdf:hover:not(:disabled) {
   background: linear-gradient(135deg, #e01040 0%, var(--mauritanie-rouge) 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);

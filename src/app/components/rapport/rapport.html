@@ -106,9 +106,9 @@
       <span class="texte-fr">Retour à la sélection</span>
     </button>
 
-    <!-- <button class="btn-imprimer" (click)="imprimer()">
-      <span class="texte-ar">طباعة</span>
-      <span class="texte-fr">Imprimer</span>
-    </button> -->
+    <button class="btn-telecharger-pdf" (click)="telechargerPDF()" [disabled]="isGeneratingPDF">
+      <span class="texte-ar">{{ isGeneratingPDF ? 'جاري الإنشاء...' : 'تحميل PDF' }}</span>
+      <span class="texte-fr">{{ isGeneratingPDF ? 'Génération en cours...' : 'Télécharger PDF' }}</span>
+    </button>
   </div>
 </div>
