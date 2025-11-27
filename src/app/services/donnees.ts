@@ -62,6 +62,36 @@ export class DonneesService {
     });
   }
 
+  chargerFichierClientsSeuls(fichierClients: File): Promise<void> {
+    return new Promise((resolve, reject) => {
+      // Charger uniquement le fichier des clients (délimiteur: point-virgule)
+      Papa.parse(fichierClients, {
+        delimiter: ';',
+        skipEmptyLines: true,
+        complete: (resultClients) => {
+          try {
+            console.log('[DonneesService] Résultat parsing clients (tirage libre):', resultClients.data);
+            const clients = this.traiterFichierClients(resultClients.data as string[][]);
+
+            // Trier les clients par score décroissant
+            const clientsTries = clients.sort((a, b) => b.score - a.score);
+
+            // Publier les données
+            this.categoriesSubject.next([]); // Pas de catégories en mode libre
+            this.clientsSubject.next(clientsTries);
+
+            resolve();
+          } catch (error) {
+            reject(error);
+          }
+        },
+        error: (error) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
   private traiterFichierCategories(data: string[][]): Categorie[] {
     const categories: Categorie[] = [];
 
