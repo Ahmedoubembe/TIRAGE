@@ -221,6 +221,21 @@ h1.titre-bilingue .texte-fr {
   color: #999;
 }
 
+/* Categorie vide (sans clients) */
+.categorie-item.vide {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #fff8e1;
+  border-color: #ffa726;
+  pointer-events: none;
+}
+
+.categorie-item.vide .categorie-info h3,
+.categorie-item.vide .details span,
+.categorie-item.vide .prix {
+  color: #ff6f00;
+}
+
 /* ====================================
    INFORMATIONS DE LA CATEGORIE
    ==================================== */
@@ -272,6 +287,13 @@ h1.titre-bilingue .texte-fr {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   white-space: nowrap;
+}
+
+.statut-vide {
+  background: #ff6f00;
+  color: white;
+  border: 2px solid #ffa726;
+  box-shadow: 0 2px 8px rgba(255, 111, 0, 0.3);
 }
 
 /* ====================================

@@ -11,7 +11,8 @@
         class="categorie-item"
         [class.selectionnee]="categorieChoisie === categorie.categorie"
         [class.tiree]="categorie.tiree"
-        (click)="!categorie.tiree && selectionnerCategorie(categorie.categorie)">
+        [class.vide]="categorie.vide"
+        (click)="!categorie.tiree && !categorie.vide && selectionnerCategorie(categorie.categorie)">
 
         <div class="categorie-info">
           <h3>{{ categorie.categorie }}</h3>
@@ -24,6 +25,10 @@
 
         <div class="statut" *ngIf="categorie.tiree">
           ✓ Tirage effectué
+        </div>
+
+        <div class="statut statut-vide" *ngIf="categorie.vide && !categorie.tiree">
+          ⚠ Catégorie vide
         </div>
       </div>
     </div>

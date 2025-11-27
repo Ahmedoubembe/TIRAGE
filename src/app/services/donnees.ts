@@ -38,6 +38,9 @@ export class DonneesService {
                   // Assigner les catégories aux clients
                   this.assignerCategories(clients, categories);
 
+                  // Marquer les catégories vides
+                  this.marquerCategoriesVides(clients, categories);
+
                   // Publier les données
                   this.categoriesSubject.next(categories);
                   this.clientsSubject.next(clients);
@@ -144,6 +147,24 @@ export class DonneesService {
       }
       if (!client.id_categorie) {
         console.warn(`[DonneesService] ATTENTION: Client ${client.nom} (score: ${client.score}) n'a pas été assigné à une catégorie`);
+      }
+    }
+  }
+
+  private marquerCategoriesVides(clients: Client[], categories: Categorie[]): void {
+    console.log('[DonneesService] Marquage des catégories vides');
+
+    for (const categorie of categories) {
+      const clientsDansCategorie = clients.filter(
+        client => client.id_categorie === categorie.categorie
+      );
+
+      if (clientsDansCategorie.length === 0) {
+        categorie.vide = true;
+        console.log(`[DonneesService] ⚠️ Catégorie "${categorie.categorie}" marquée comme VIDE (0 clients)`);
+      } else {
+        categorie.vide = false;
+        console.log(`[DonneesService] ✓ Catégorie "${categorie.categorie}" contient ${clientsDansCategorie.length} client(s)`);
       }
     }
   }
