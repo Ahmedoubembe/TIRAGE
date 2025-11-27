@@ -16,13 +16,12 @@ import { HeaderComponent } from './components/header/header';
 import { TeleversementCsvComponent } from './components/televersement-csv/televersement-csv';
 import { ListeCategoriesComponent } from './components/liste-categories/liste-categories';
 import { TirageComponent } from './components/tirage/tirage';
-import { TirageLibreComponent } from './components/tirage-libre/tirage-libre';
 import { AffichageGagnantsComponent } from './components/affichage-gagnants/affichage-gagnants';
 import { RapportComponent } from './components/rapport/rapport';
 import { Client } from './models/client.model';
 import { DonneesService } from './services/donnees';
 
-type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE' | 'TIRAGE_LIBRE' | 'RAPPORT';
+type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE' | 'RAPPORT';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +32,6 @@ type EtapeApplication = 'UPLOAD' | 'SELECTION' | 'TIRAGE' | 'TIRAGE_LIBRE' | 'RA
     TeleversementCsvComponent,
     ListeCategoriesComponent,
     TirageComponent,
-    TirageLibreComponent,
     AffichageGagnantsComponent,
     RapportComponent
   ],
@@ -57,8 +55,12 @@ export class AppComponent {
     this.typeTirage = typeTirage as 'categories' | 'libre';
 
     if (typeTirage === 'libre') {
-      // Aller directement au tirage libre
-      this.etapeActuelle = 'TIRAGE_LIBRE';
+      // Aller directement au tirage avec la catégorie LIBRE
+      this.categorieSelectionnee = 'LIBRE';
+      this.gagnantsAffiches = [];
+      this.tirageTermine = false;
+      this.tirageEnCours = true;
+      this.etapeActuelle = 'TIRAGE';
     } else {
       // Aller à la sélection de catégories
       this.etapeActuelle = 'SELECTION';
@@ -126,7 +128,16 @@ export class AppComponent {
       this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
     }
 
-    this.etapeActuelle = 'SELECTION';
+    // En mode libre, retourner à l'accueil
+    if (this.typeTirage === 'libre') {
+      this.donneesService.reinitialiser();
+      this.etapeActuelle = 'UPLOAD';
+      this.typeTirage = null;
+    } else {
+      // En mode catégories, retourner à la sélection
+      this.etapeActuelle = 'SELECTION';
+    }
+
     this.categorieSelectionnee = '';
     this.gagnantsAffiches = [];
     this.tirageTermine = false;
@@ -138,11 +149,5 @@ export class AppComponent {
 
   onRetourDepuisRapport(): void {
     this.etapeActuelle = 'SELECTION';
-  }
-
-  onRetourDepuisTirageLibre(): void {
-    this.donneesService.reinitialiser();
-    this.etapeActuelle = 'UPLOAD';
-    this.typeTirage = null;
   }
 }

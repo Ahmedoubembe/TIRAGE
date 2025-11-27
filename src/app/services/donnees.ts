@@ -76,9 +76,28 @@ export class DonneesService {
             // Trier les clients par score décroissant
             const clientsTries = clients.sort((a, b) => b.score - a.score);
 
+            // Assigner tous les clients à une catégorie virtuelle "LIBRE"
+            clientsTries.forEach(client => {
+              client.id_categorie = 'LIBRE';
+            });
+
+            // Créer une catégorie virtuelle pour le mode libre
+            const categorieFictive: Categorie = {
+              categorie: 'LIBRE',
+              interval: 'Tous',
+              nombre_gagnants: clientsTries.length,
+              prix: 'Tirage Libre',
+              tiree: false
+            };
+
+            // Stocker les clients triés dans le cache
+            this.clientsParCategorieMap.set('LIBRE', [...clientsTries]);
+
             // Publier les données
-            this.categoriesSubject.next([]); // Pas de catégories en mode libre
+            this.categoriesSubject.next([categorieFictive]);
             this.clientsSubject.next(clientsTries);
+
+            console.log('[DonneesService] Tirage libre chargé:', clientsTries.length, 'clients');
 
             resolve();
           } catch (error) {

@@ -31,11 +31,6 @@
   </app-affichage-gagnants>
 </div>
 
-<app-tirage-libre
-  *ngIf="etapeActuelle === 'TIRAGE_LIBRE'"
-  (retourAccueil)="onRetourDepuisTirageLibre()">
-</app-tirage-libre>
-
 <app-rapport
   *ngIf="etapeActuelle === 'RAPPORT'"
   (retourSelection)="onRetourDepuisRapport()">
