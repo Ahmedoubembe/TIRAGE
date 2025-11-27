@@ -2214,3 +2214,45 @@
     font-size: 1.3rem;
   }
 }
+
+
+/* INFO POUSSÉ - style discret entre numéro et score */
+.info-pousse {
+  margin: 0;
+  color: #e79b05;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+  flex: 0.6;
+  min-width: 80px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 1;
+}
+
+.plein-ecran .info-pousse {
+  font-size: 1.1rem;
+  min-width: 100px;
+}
+
+.icone-monte {
+  margin-right: 4px;
+  font-size: inherit;
+  color: #999;
+}
+
+/* Style pour nouveau gagnant */
+.gagnant-item.nouveau-gagnant .info-pousse {
+  color: #e79b05;
+}
+
+.gagnant-item.nouveau-gagnant .icone-monte {
+  color: #e79b05;
+}
+
+/* Style pour gagnant historique */
+.gagnant-item.gagnant-historique .info-pousse {
+  color: #bbb;
+}

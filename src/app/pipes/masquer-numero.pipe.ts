@@ -14,9 +14,9 @@ export class MasquerNumeroPipe implements PipeTransform {
       return numero;
     }
 
-    const debut = numero.substring(0, 2);
+    const debut = numero.substring(0, 3);
     const fin = numero.substring(numero.length - 2);
-    const nombreEtoiles = numero.length - 4;
+    const nombreEtoiles = numero.length - 5;
     const etoiles = '*'.repeat(nombreEtoiles);
 
     return `${debut}${etoiles}${fin}`;

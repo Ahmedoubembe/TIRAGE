@@ -40,8 +40,8 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
       fr: 'Gagnant suivant'
     },
     pousser: {
-      ar: 'دفع',
-      fr: 'Pousser'
+      ar: 'اسحب من الفئة الموالية',
+      fr: 'Tirer de la catégorie suivante'
     },
     retour: {
       ar: 'العودة إلى الاختيار',
@@ -49,11 +49,7 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     }
   };
 
-  // Traduction pour le badge "Poussé"
-  traductionBadgePousse = {
-    ar: 'مدفوع',
-    fr: 'Poussé'
-  };
+
 
   // Traduction pour "de" (pour "Poussé de X")
   traductionDe = {
@@ -204,27 +200,6 @@ export class AffichageGagnantsComponent implements OnChanges, OnInit, OnDestroy 
     this.gagnantSelectionne = null;
   }
 
-  // ====================================
-  // BADGE POUSSÉ AVEC CATÉGORIE
-  // ====================================
 
-  /**
-   * Génère le texte du badge "Poussé de [catégorie]" en français
-   */
-  getTexteBadgePousseFr(gagnant: Client): string {
-    if (gagnant.pushedFrom) {
-      return `${this.traductionBadgePousse.fr} ${this.traductionDe.fr} ${gagnant.pushedFrom}`;
-    }
-    return this.traductionBadgePousse.fr;
-  }
-
-  /**
-   * Génère le texte du badge "Poussé de [catégorie]" en arabe
-   */
-  getTexteBadgePousseAr(gagnant: Client): string {
-    if (gagnant.pushedFrom) {
-      return `${this.traductionBadgePousse.ar} ${this.traductionDe.ar} ${gagnant.pushedFrom}`;
-    }
-    return this.traductionBadgePousse.ar;
-  }
+  
 }
