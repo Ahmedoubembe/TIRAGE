@@ -129,11 +129,9 @@ export class AppComponent {
       this.donneesService.marquerCategorieTiree(this.categorieSelectionnee);
     }
 
-    // En mode libre, retourner à l'accueil
+    // En mode libre, aller au rapport
     if (this.typeTirage === 'libre') {
-      this.donneesService.reinitialiser();
-      this.etapeActuelle = 'UPLOAD';
-      this.typeTirage = null;
+      this.etapeActuelle = 'RAPPORT';
     } else {
       // En mode catégories, retourner à la sélection
       this.etapeActuelle = 'SELECTION';
@@ -149,6 +147,14 @@ export class AppComponent {
   }
 
   onRetourDepuisRapport(): void {
-    this.etapeActuelle = 'SELECTION';
+    // En mode libre, retourner à l'accueil et réinitialiser
+    if (this.typeTirage === 'libre') {
+      this.donneesService.reinitialiser();
+      this.etapeActuelle = 'UPLOAD';
+      this.typeTirage = null;
+    } else {
+      // En mode catégories, retourner à la sélection
+      this.etapeActuelle = 'SELECTION';
+    }
   }
 }

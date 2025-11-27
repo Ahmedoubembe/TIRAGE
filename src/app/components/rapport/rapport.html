@@ -9,7 +9,7 @@
 
   <!-- Vue d'ensemble (statistiques globales) -->
   <div class="vue-ensemble">
-    <div class="stat-card">
+    <div class="stat-card" *ngIf="typeTirage !== 'libre'">
       <div class="stat-label">
         <span class="ar">إجمالي الفئات</span>
         <span class="fr">Total catégories</span>
@@ -17,7 +17,7 @@
       <div class="stat-value">{{ totalCategories }}</div>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card" *ngIf="typeTirage !== 'libre'">
       <div class="stat-label">
         <span class="ar">الفئات المسحوبة</span>
         <span class="fr">Catégories tirées</span>
@@ -28,12 +28,19 @@
     <div class="stat-card">
       <div class="stat-label">
         <span class="ar">إجمالي الفائزين</span>
-        <span class="fr">Total gagnants</span>
+        <span class="fr" *ngIf="typeTirage !== 'libre'">Total gagnants</span>
+        <span class="fr" *ngIf="typeTirage === 'libre'">Total clients révélés</span>
       </div>
       <div class="stat-value">{{ totalGagnants }}</div>
     </div>
 
- 
+    <div class="stat-card">
+      <div class="stat-label">
+        <span class="ar">العملاء المتصلون</span>
+        <span class="fr">Clients joints</span>
+      </div>
+      <div class="stat-value">{{ clientsJoints }}</div>
+    </div>
 
     <div class="stat-card">
       <div class="stat-label">
@@ -60,9 +67,9 @@
       </div>
 
       <div class="categorie-info">
-        <p><strong>Intervalle :</strong> {{ cat.interval }}</p>
+        <p *ngIf="cat.interval"><strong>Intervalle :</strong> {{ cat.interval }}</p>
         <p><strong>Prix :</strong> {{ cat.prix }}</p>
-        <p><strong>Gagnants :</strong> {{ cat.gagnantsTires }} / {{ cat.gagnantsPrevu }}</p>
+        <p *ngIf="typeTirage !== 'libre'"><strong>Gagnants :</strong> {{ cat.gagnantsTires }} / {{ cat.gagnantsPrevu }}</p>
       </div>
 
       <!-- Tableau des gagnants (seulement si catégorie tirée) -->
@@ -70,7 +77,7 @@
         <table class="table-gagnants">
           <thead>
             <tr>
-              <th>Position</th>
+              <th *ngIf="typeTirage !== 'libre'">Position</th>
               <th>Téléphone</th>
               <th>Nom</th>
               <th>Score</th>
@@ -79,7 +86,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let gagnant of cat.gagnants; let i = index">
-              <td class="position">{{ i + 1 }}</td>
+              <td *ngIf="typeTirage !== 'libre'" class="position">{{ i + 1 }}</td>
               <td>{{ gagnant.numero_telephone }}</td>
               <td>{{ gagnant.nom }}</td>
               <td class="score">{{ gagnant.score.toFixed(2) }}</td>

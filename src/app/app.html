@@ -34,5 +34,6 @@
 
 <app-rapport
   *ngIf="etapeActuelle === 'RAPPORT'"
+  [typeTirage]="typeTirage"
   (retourSelection)="onRetourDepuisRapport()">
 </app-rapport>
