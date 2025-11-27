@@ -59,19 +59,42 @@ export class RapportComponent implements OnInit {
         return;
       }
 
+      // Sauvegarder les styles originaux
+      const originalOverflow = element.style.overflow;
+      const originalMaxHeight = element.style.maxHeight;
+      const originalMinHeight = element.style.minHeight;
+      const originalHeight = element.style.height;
+
       // Cacher temporairement les boutons d'action
       const actionsElement = document.querySelector('.actions-rapport') as HTMLElement;
       if (actionsElement) {
         actionsElement.style.display = 'none';
       }
 
+      // Modifier temporairement les styles pour capturer tout le contenu
+      element.style.overflow = 'visible';
+      element.style.maxHeight = 'none';
+      element.style.minHeight = 'auto';
+      element.style.height = 'auto';
+
+      // Attendre un moment pour que le DOM se mette à jour
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       // Capturer le contenu HTML avec html2canvas
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight
       });
+
+      // Restaurer les styles originaux
+      element.style.overflow = originalOverflow;
+      element.style.maxHeight = originalMaxHeight;
+      element.style.minHeight = originalMinHeight;
+      element.style.height = originalHeight;
 
       // Réafficher les boutons
       if (actionsElement) {
