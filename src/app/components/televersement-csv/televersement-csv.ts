@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DonneesService } from '../../services/donnees';
 
@@ -9,7 +9,7 @@ import { DonneesService } from '../../services/donnees';
   templateUrl: './televersement-csv.html',
   styleUrl: './televersement-csv.css'
 })
-export class TeleversementCsvComponent {
+export class TeleversementCsvComponent implements OnDestroy {
   @Output() fichierCharge = new EventEmitter<void>();
 
   chargementEnCours = false;
@@ -21,6 +21,8 @@ export class TeleversementCsvComponent {
   fichierClientsCharge = false;
   nomFichierCategories = '';
   nomFichierClients = '';
+
+  private fullscreenChangeHandler: (() => void) | null = null;
 
   constructor(private donneesService: DonneesService) {}
 
@@ -55,12 +57,60 @@ export class TeleversementCsvComponent {
 
     try {
       await this.donneesService.chargerFichiersCSV(this.fichierCategories, this.fichierClients);
+
+      // Activer le mode plein écran automatiquement après le chargement
+      await this.activerPleinEcran();
+
       this.fichierCharge.emit();
     } catch (error) {
       this.erreur = 'Erreur lors du chargement des fichiers CSV';
       console.error(error);
     } finally {
       this.chargementEnCours = false;
+    }
+  }
+
+  private async activerPleinEcran(): Promise<void> {
+    try {
+      const element = document.documentElement;
+
+      // Demander le mode plein écran
+      if (element.requestFullscreen) {
+        await element.requestFullscreen();
+      } else if ((element as any).webkitRequestFullscreen) {
+        await (element as any).webkitRequestFullscreen();
+      } else if ((element as any).mozRequestFullScreen) {
+        await (element as any).mozRequestFullScreen();
+      } else if ((element as any).msRequestFullscreen) {
+        await (element as any).msRequestFullscreen();
+      }
+
+      // Écouter les tentatives de sortie du mode plein écran
+      this.fullscreenChangeHandler = () => {
+        if (!document.fullscreenElement) {
+          // Si l'utilisateur tente de sortir du plein écran, le réactiver
+          this.activerPleinEcran();
+        }
+      };
+
+      document.addEventListener('fullscreenchange', this.fullscreenChangeHandler);
+      document.addEventListener('webkitfullscreenchange', this.fullscreenChangeHandler);
+      document.addEventListener('mozfullscreenchange', this.fullscreenChangeHandler);
+      document.addEventListener('MSFullscreenChange', this.fullscreenChangeHandler);
+
+      console.log('Mode plein écran activé');
+    } catch (error) {
+      console.error('Erreur lors de l\'activation du mode plein écran:', error);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Nettoyer les écouteurs d'événements
+    if (this.fullscreenChangeHandler) {
+      document.removeEventListener('fullscreenchange', this.fullscreenChangeHandler);
+      document.removeEventListener('webkitfullscreenchange', this.fullscreenChangeHandler);
+      document.removeEventListener('mozfullscreenchange', this.fullscreenChangeHandler);
+      document.removeEventListener('MSFullscreenChange', this.fullscreenChangeHandler);
     }
   }
 }
