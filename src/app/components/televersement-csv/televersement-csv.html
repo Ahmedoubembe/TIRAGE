@@ -1,109 +1,52 @@
 <div class="container">
   <div class="upload-card">
     <h1>Tirage au Sort</h1>
+    <p>Importez vos fichiers CSV pour commencer</p>
 
-    <!-- Étape 1: Sélection du type de tirage -->
-    <div *ngIf="!typeTirageSelectionne" class="selection-type">
-      <p>Choisissez le type de tirage :</p>
-      <div class="type-buttons">
-        <button class="btn-type" (click)="selectionnerTypeTirage('categories')">
-          <h3>Tirage par Catégories</h3>
-          <p>Avec fichier catégories et fichier clients</p>
-        </button>
-        <button class="btn-type" (click)="selectionnerTypeTirage('libre')">
-          <h3>Tirage Libre</h3>
-          <p>Uniquement le fichier clients</p>
-        </button>
-      </div>
+    <!-- Zone pour le fichier des catégories -->
+    <div class="upload-zone">
+      <h3>1. Fichier des catégories</h3>
+      <input
+        type="file"
+        accept=".csv"
+        (change)="onCategoriesFileSelected($event)"
+        id="categoriesFileInput"
+        [disabled]="chargementEnCours">
+
+      <label for="categoriesFileInput" class="upload-label">
+        <span *ngIf="!fichierCategoriesCharge">Choisir le fichier des catégories</span>
+        <span *ngIf="fichierCategoriesCharge && !chargementEnCours">✓ {{ nomFichierCategories }}</span>
+        <span *ngIf="chargementEnCours">Chargement en cours...</span>
+      </label>
     </div>
 
-    <!-- Étape 2: Téléversement des fichiers selon le type -->
-    <div *ngIf="typeTirageSelectionne">
-      <div class="type-selectionne">
-        <p>Type sélectionné : <strong>{{ typeTirage === 'categories' ? 'Tirage par Catégories' : 'Tirage Libre' }}</strong></p>
-        <button class="btn-changer" (click)="changerTypeTirage()">Changer</button>
-      </div>
+    <!-- Zone pour le fichier des clients -->
+    <div class="upload-zone">
+      <h3>2. Fichier des clients</h3>
+      <input
+        type="file"
+        accept=".csv"
+        (change)="onClientsFileSelected($event)"
+        id="clientsFileInput"
+        [disabled]="chargementEnCours">
 
-      <!-- Formulaire pour Tirage par Catégories -->
-      <div *ngIf="typeTirage === 'categories'">
-        <p>Importez vos fichiers CSV pour commencer</p>
+      <label for="clientsFileInput" class="upload-label">
+        <span *ngIf="!fichierClientsCharge">Choisir le fichier des clients</span>
+        <span *ngIf="fichierClientsCharge && !chargementEnCours">✓ {{ nomFichierClients }}</span>
+        <span *ngIf="chargementEnCours">Chargement en cours...</span>
+      </label>
+    </div>
 
-        <!-- Zone pour le fichier des catégories -->
-        <div class="upload-zone">
-          <h3>1. Fichier des catégories</h3>
-          <input
-            type="file"
-            accept=".csv"
-            (change)="onCategoriesFileSelected($event)"
-            id="categoriesFileInput"
-            [disabled]="chargementEnCours">
+    <!-- Bouton pour valider -->
+    <button
+      class="btn-valider"
+      *ngIf="fichierCategoriesCharge && fichierClientsCharge && !chargementEnCours"
+      (click)="chargerLesFichiers()">
+      Charger les données
+    </button>
 
-          <label for="categoriesFileInput" class="upload-label">
-            <span *ngIf="!fichierCategoriesCharge">Choisir le fichier des catégories</span>
-            <span *ngIf="fichierCategoriesCharge && !chargementEnCours">✓ {{ nomFichierCategories }}</span>
-            <span *ngIf="chargementEnCours">Chargement en cours...</span>
-          </label>
-        </div>
-
-        <!-- Zone pour le fichier des clients -->
-        <div class="upload-zone">
-          <h3>2. Fichier des clients</h3>
-          <input
-            type="file"
-            accept=".csv"
-            (change)="onClientsFileSelected($event)"
-            id="clientsFileInput"
-            [disabled]="chargementEnCours">
-
-          <label for="clientsFileInput" class="upload-label">
-            <span *ngIf="!fichierClientsCharge">Choisir le fichier des clients</span>
-            <span *ngIf="fichierClientsCharge && !chargementEnCours">✓ {{ nomFichierClients }}</span>
-            <span *ngIf="chargementEnCours">Chargement en cours...</span>
-          </label>
-        </div>
-
-        <!-- Bouton pour valider -->
-        <button
-          class="btn-valider"
-          *ngIf="fichierCategoriesCharge && fichierClientsCharge && !chargementEnCours"
-          (click)="chargerLesFichiers()">
-          Charger les données
-        </button>
-      </div>
-
-      <!-- Formulaire pour Tirage Libre -->
-      <div *ngIf="typeTirage === 'libre'">
-        <p>Importez le fichier des clients</p>
-
-        <!-- Zone pour le fichier des clients uniquement -->
-        <div class="upload-zone">
-          <h3>Fichier des clients</h3>
-          <input
-            type="file"
-            accept=".csv"
-            (change)="onClientsFileSelected($event)"
-            id="clientsFileInputLibre"
-            [disabled]="chargementEnCours">
-
-          <label for="clientsFileInputLibre" class="upload-label">
-            <span *ngIf="!fichierClientsCharge">Choisir le fichier des clients</span>
-            <span *ngIf="fichierClientsCharge && !chargementEnCours">✓ {{ nomFichierClients }}</span>
-            <span *ngIf="chargementEnCours">Chargement en cours...</span>
-          </label>
-        </div>
-
-        <!-- Bouton pour valider -->
-        <button
-          class="btn-valider"
-          *ngIf="fichierClientsCharge && !chargementEnCours"
-          (click)="chargerFichierClientsSeuls()">
-          Charger les clients
-        </button>
-      </div>
-
-      <div *ngIf="erreur" class="erreur">
-        {{ erreur }}
-      </div>
+    <div *ngIf="erreur" class="erreur">
+      {{ erreur }}
     </div>
   </div>
 </div>

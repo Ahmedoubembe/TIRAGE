@@ -51,20 +51,21 @@ export class AppComponent {
 
   constructor(private donneesService: DonneesService) {}
 
-  onFichierCharge(typeTirage: string): void {
-    this.typeTirage = typeTirage as 'categories' | 'libre';
+  onFichierCharge(): void {
+    this.etapeActuelle = 'SELECTION';
+  }
 
-    if (typeTirage === 'libre') {
-      // Aller directement au tirage avec la catégorie LIBRE
-      this.categorieSelectionnee = 'LIBRE';
-      this.gagnantsAffiches = [];
-      this.tirageTermine = false;
-      this.tirageEnCours = true;
-      this.etapeActuelle = 'TIRAGE';
-    } else {
-      // Aller à la sélection de catégories
-      this.etapeActuelle = 'SELECTION';
-    }
+  onTirageLibre(): void {
+    // Créer une catégorie virtuelle "LIBRE" avec tous les clients
+    this.donneesService.creerCategorieTirageLibre();
+
+    // Lancer le tirage avec la catégorie LIBRE
+    this.typeTirage = 'libre';
+    this.categorieSelectionnee = 'LIBRE';
+    this.gagnantsAffiches = [];
+    this.tirageTermine = false;
+    this.tirageEnCours = true;
+    this.etapeActuelle = 'TIRAGE';
   }
 
   onCategorieSelectionnee(categorie: string): void {

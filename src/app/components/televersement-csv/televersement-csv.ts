@@ -10,14 +10,10 @@ import { DonneesService } from '../../services/donnees';
   styleUrl: './televersement-csv.css'
 })
 export class TeleversementCsvComponent {
-  @Output() fichierCharge = new EventEmitter<string>(); // Émet le type de tirage
+  @Output() fichierCharge = new EventEmitter<void>();
 
   chargementEnCours = false;
   erreur: string | null = null;
-
-  // Type de tirage
-  typeTirage: 'categories' | 'libre' | null = null;
-  typeTirageSelectionne = false;
 
   fichierCategories: File | null = null;
   fichierClients: File | null = null;
@@ -27,28 +23,6 @@ export class TeleversementCsvComponent {
   nomFichierClients = '';
 
   constructor(private donneesService: DonneesService) {}
-
-  selectionnerTypeTirage(type: 'categories' | 'libre'): void {
-    this.typeTirage = type;
-    this.typeTirageSelectionne = true;
-    this.resetFichiers();
-  }
-
-  changerTypeTirage(): void {
-    this.typeTirageSelectionne = false;
-    this.typeTirage = null;
-    this.resetFichiers();
-  }
-
-  resetFichiers(): void {
-    this.fichierCategories = null;
-    this.fichierClients = null;
-    this.fichierCategoriesCharge = false;
-    this.fichierClientsCharge = false;
-    this.nomFichierCategories = '';
-    this.nomFichierClients = '';
-    this.erreur = null;
-  }
 
   onCategoriesFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -81,29 +55,9 @@ export class TeleversementCsvComponent {
 
     try {
       await this.donneesService.chargerFichiersCSV(this.fichierCategories, this.fichierClients);
-      this.fichierCharge.emit('categories');
+      this.fichierCharge.emit();
     } catch (error) {
       this.erreur = 'Erreur lors du chargement des fichiers CSV';
-      console.error(error);
-    } finally {
-      this.chargementEnCours = false;
-    }
-  }
-
-  async chargerFichierClientsSeuls(): Promise<void> {
-    if (!this.fichierClients) {
-      this.erreur = 'Veuillez sélectionner le fichier des clients';
-      return;
-    }
-
-    this.chargementEnCours = true;
-    this.erreur = null;
-
-    try {
-      await this.donneesService.chargerFichierClientsSeuls(this.fichierClients);
-      this.fichierCharge.emit('libre');
-    } catch (error) {
-      this.erreur = 'Erreur lors du chargement du fichier clients';
       console.error(error);
     } finally {
       this.chargementEnCours = false;

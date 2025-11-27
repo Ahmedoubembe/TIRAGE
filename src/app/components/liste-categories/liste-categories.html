@@ -37,6 +37,13 @@
     </button>
 
     <button
+      class="btn-tirage-libre"
+      (click)="lancerTirageLibre()">
+      <span class="texte-ar">{{ texteBoutonTirageLibre.ar }}</span>
+      <span class="texte-fr">{{ texteBoutonTirageLibre.fr }}</span>
+    </button>
+
+    <button
       class="btn-voir-rapport"
       *ngIf="aDesGagnants"
       (click)="allerAuRapport()">

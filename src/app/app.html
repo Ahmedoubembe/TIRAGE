@@ -3,12 +3,13 @@
 
 <app-televersement-csv
   *ngIf="etapeActuelle === 'UPLOAD'"
-  (fichierCharge)="onFichierCharge($event)">
+  (fichierCharge)="onFichierCharge()">
 </app-televersement-csv>
 
 <app-liste-categories
   *ngIf="etapeActuelle === 'SELECTION'"
   (categorieSelectionnee)="onCategorieSelectionnee($event)"
+  (tirageLibre)="onTirageLibre()"
   (voirRapport)="onVoirRapport()">
 </app-liste-categories>
 

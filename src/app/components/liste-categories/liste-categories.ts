@@ -12,6 +12,7 @@ import { Categorie } from '../../models/categorie.model';
 })
 export class ListeCategoriesComponent implements OnInit {
   @Output() categorieSelectionnee = new EventEmitter<string>();
+  @Output() tirageLibre = new EventEmitter<void>();
   @Output() voirRapport = new EventEmitter<void>();
 
   categories: Categorie[] = [];
@@ -27,6 +28,12 @@ export class ListeCategoriesComponent implements OnInit {
   texteBouton = {
     ar: 'بدء برنامج وفائي',
     fr: 'Lancer le programme WEVAI'
+  };
+
+  // Traductions pour le bouton Tirage Libre
+  texteBoutonTirageLibre = {
+    ar: 'سحب حر',
+    fr: 'Tirage Libre'
   };
 
   constructor(private donneesService: DonneesService) {}
@@ -45,6 +52,10 @@ export class ListeCategoriesComponent implements OnInit {
     if (this.categorieChoisie) {
       this.categorieSelectionnee.emit(this.categorieChoisie);
     }
+  }
+
+  lancerTirageLibre(): void {
+    this.tirageLibre.emit();
   }
 
   allerAuRapport(): void {

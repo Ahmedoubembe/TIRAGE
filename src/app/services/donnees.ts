@@ -62,53 +62,36 @@ export class DonneesService {
     });
   }
 
-  chargerFichierClientsSeuls(fichierClients: File): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // Charger uniquement le fichier des clients (délimiteur: point-virgule)
-      Papa.parse(fichierClients, {
-        delimiter: ';',
-        skipEmptyLines: true,
-        complete: (resultClients) => {
-          try {
-            console.log('[DonneesService] Résultat parsing clients (tirage libre):', resultClients.data);
-            const clients = this.traiterFichierClients(resultClients.data as string[][]);
+  creerCategorieTirageLibre(): void {
+    // Récupérer tous les clients déjà chargés
+    const tousLesClients = this.clientsSubject.value;
 
-            // Trier les clients par score décroissant
-            const clientsTries = clients.sort((a, b) => b.score - a.score);
+    if (tousLesClients.length === 0) {
+      console.error('[DonneesService] Aucun client disponible pour le tirage libre');
+      return;
+    }
 
-            // Assigner tous les clients à une catégorie virtuelle "LIBRE"
-            clientsTries.forEach(client => {
-              client.id_categorie = 'LIBRE';
-            });
+    // Trier les clients par score décroissant
+    const clientsTries = [...tousLesClients].sort((a, b) => b.score - a.score);
 
-            // Créer une catégorie virtuelle pour le mode libre
-            const categorieFictive: Categorie = {
-              categorie: 'LIBRE',
-              interval: 'Tous',
-              nombre_gagnants: clientsTries.length,
-              prix: 'Tirage Libre',
-              tiree: false
-            };
-
-            // Stocker les clients triés dans le cache
-            this.clientsParCategorieMap.set('LIBRE', [...clientsTries]);
-
-            // Publier les données
-            this.categoriesSubject.next([categorieFictive]);
-            this.clientsSubject.next(clientsTries);
-
-            console.log('[DonneesService] Tirage libre chargé:', clientsTries.length, 'clients');
-
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
-        },
-        error: (error) => {
-          reject(error);
-        }
-      });
+    // Assigner tous les clients à une catégorie virtuelle "LIBRE"
+    clientsTries.forEach(client => {
+      client.id_categorie = 'LIBRE';
     });
+
+    // Créer une catégorie virtuelle pour le mode libre
+    const categorieFictive: Categorie = {
+      categorie: 'LIBRE',
+      interval: 'Tous',
+      nombre_gagnants: clientsTries.length,
+      prix: 'Tirage Libre',
+      tiree: false
+    };
+
+    // Stocker les clients triés dans le cache
+    this.clientsParCategorieMap.set('LIBRE', [...clientsTries]);
+
+    console.log('[DonneesService] Catégorie LIBRE créée avec', clientsTries.length, 'clients');
   }
 
   private traiterFichierCategories(data: string[][]): Categorie[] {
